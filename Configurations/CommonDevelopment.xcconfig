@@ -1,0 +1,15 @@
+// 
+// ZeroKit
+// CommonDevelopment.xcconfig
+// 
+// Created by Eric Czarny on Thursday, February 25, 2010.
+// Copyright (c) 2010 Divisible by Zero.
+// 
+
+#include "Common.xcconfig"
+
+ONLY_ACTIVE_ARCH = YES
+
+DEBUG_INFORMATION_FORMAT = dwarf
+
+GCC_OPTIMIZATION_LEVEL = 0

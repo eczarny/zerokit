@@ -1,0 +1,20 @@
+// 
+// ZeroKit
+// ZeroKit.xcconfig
+// 
+// Created by Eric Czarny on Thursday, February 25, 2010.
+// Copyright (c) 2010 Divisible by Zero.
+// 
+
+PRODUCT_NAME = ZeroKit
+INFOPLIST_FILE = Resources/Property Lists/ZeroKit-Info.plist
+
+FRAMEWORK_VERSION = A
+DYLIB_CURRENT_VERSION = 1
+DYLIB_COMPATIBILITY_VERSION = 1
+
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+GCC_PREFIX_HEADER = ZeroKit.pch
+GCC_ENABLE_OBJC_GC = supported
+
+INSTALL_PATH = @executable_path/../Frameworks

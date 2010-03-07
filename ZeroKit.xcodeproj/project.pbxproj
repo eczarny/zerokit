@@ -1,0 +1,377 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		070D7A04113AFA6D007645BB /* ZeroKitConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 070D7A03113AFA6D007645BB /* ZeroKitConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		070D7AFB113B11C2007645BB /* ZeroKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 070D7AFA113B11C2007645BB /* ZeroKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0715853711432B88003D3454 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0715853511432B88003D3454 /* InfoPlist.strings */; };
+		07172B7B11377CD90058CFF9 /* ZeroKitUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 07172B7911377CD90058CFF9 /* ZeroKitUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07172B7C11377CD90058CFF9 /* ZeroKitUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 07172B7A11377CD90058CFF9 /* ZeroKitUtilities.m */; };
+		07172B7F11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 07172B7D11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h */; };
+		07172B8011377CF90058CFF9 /* ZeroKitPreferencePaneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07172B7E11377CF90058CFF9 /* ZeroKitPreferencePaneManager.m */; };
+		07172B8311377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 07172B8211377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07172B8A11377D490058CFF9 /* ZeroKitPreferencesWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07172B8811377D490058CFF9 /* ZeroKitPreferencesWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07172B8B11377D490058CFF9 /* ZeroKitPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07172B8911377D490058CFF9 /* ZeroKitPreferencesWindowController.m */; };
+		07D91E371138E29B00FA237A /* ZeroKitPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D91E351138E29B00FA237A /* ZeroKitPreferencesWindow.xib */; };
+		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		070D7A03113AFA6D007645BB /* ZeroKitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitConstants.h; sourceTree = "<group>"; };
+		070D7AFA113B11C2007645BB /* ZeroKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKit.h; sourceTree = "<group>"; };
+		0715853611432B88003D3454 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = Languages/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		07172B12113777CC0058CFF9 /* ZeroKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ZeroKit-Info.plist"; path = "Resources/Property Lists/ZeroKit-Info.plist"; sourceTree = "<group>"; };
+		07172B23113777FF0058CFF9 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = Configurations/Common.xcconfig; sourceTree = "<group>"; };
+		07172B24113777FF0058CFF9 /* CommonDevelopment.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CommonDevelopment.xcconfig; path = Configurations/CommonDevelopment.xcconfig; sourceTree = "<group>"; };
+		07172B25113777FF0058CFF9 /* CommonRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CommonRelease.xcconfig; path = Configurations/CommonRelease.xcconfig; sourceTree = "<group>"; };
+		07172B26113777FF0058CFF9 /* ZeroKit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = ZeroKit.xcconfig; path = Configurations/ZeroKit.xcconfig; sourceTree = "<group>"; };
+		07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = ZeroKitDevelopment.xcconfig; path = Configurations/ZeroKitDevelopment.xcconfig; sourceTree = "<group>"; };
+		07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = ZeroKitRelease.xcconfig; path = Configurations/ZeroKitRelease.xcconfig; sourceTree = "<group>"; };
+		07172B7911377CD90058CFF9 /* ZeroKitUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitUtilities.h; sourceTree = "<group>"; };
+		07172B7A11377CD90058CFF9 /* ZeroKitUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitUtilities.m; sourceTree = "<group>"; };
+		07172B7D11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitPreferencePaneManager.h; sourceTree = "<group>"; };
+		07172B7E11377CF90058CFF9 /* ZeroKitPreferencePaneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitPreferencePaneManager.m; sourceTree = "<group>"; };
+		07172B8211377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitPreferencePaneProtocol.h; sourceTree = "<group>"; };
+		07172B8811377D490058CFF9 /* ZeroKitPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitPreferencesWindowController.h; sourceTree = "<group>"; };
+		07172B8911377D490058CFF9 /* ZeroKitPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitPreferencesWindowController.m; sourceTree = "<group>"; };
+		07D91E361138E29B00FA237A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Languages/English.lproj/ZeroKitPreferencesWindow.xib; sourceTree = "<group>"; };
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF5E0370ADEE00C91783 /* ZeroKit.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKit.pch; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* ZeroKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZeroKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* ZeroKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		07172B0B113776480058CFF9 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				07172B23113777FF0058CFF9 /* Common.xcconfig */,
+				07172B24113777FF0058CFF9 /* CommonDevelopment.xcconfig */,
+				07172B25113777FF0058CFF9 /* CommonRelease.xcconfig */,
+				07172B26113777FF0058CFF9 /* ZeroKit.xcconfig */,
+				07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */,
+				07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */,
+			);
+			name = Configurations;
+			sourceTree = "<group>";
+		};
+		07172B0C113776520058CFF9 /* Localized Strings */ = {
+			isa = PBXGroup;
+			children = (
+				0715853511432B88003D3454 /* InfoPlist.strings */,
+			);
+			name = "Localized Strings";
+			sourceTree = "<group>";
+		};
+		07172B0D1137765B0058CFF9 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				07172B12113777CC0058CFF9 /* ZeroKit-Info.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		07172B7211377C260058CFF9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				07172B7D11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h */,
+				07172B7E11377CF90058CFF9 /* ZeroKitPreferencePaneManager.m */,
+				07172B7911377CD90058CFF9 /* ZeroKitUtilities.h */,
+				07172B7A11377CD90058CFF9 /* ZeroKitUtilities.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		07172B7311377C2D0058CFF9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				07172B8811377D490058CFF9 /* ZeroKitPreferencesWindowController.h */,
+				07172B8911377D490058CFF9 /* ZeroKitPreferencesWindowController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		07172B7411377C490058CFF9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				07172B8111377D0B0058CFF9 /* Protocols */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		07172B7511377C500058CFF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		07172B8111377D0B0058CFF9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				07172B8211377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		07D91E341138E28B00FA237A /* Interface Builder */ = {
+			isa = PBXGroup;
+			children = (
+				07D91E351138E29B00FA237A /* ZeroKitPreferencesWindow.xib */,
+			);
+			name = "Interface Builder";
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* ZeroKit */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = ZeroKit;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				07172B0B113776480058CFF9 /* Configurations */,
+				07D91E341138E28B00FA237A /* Interface Builder */,
+				07172B0C113776520058CFF9 /* Localized Strings */,
+				07172B0D1137765B0058CFF9 /* Property Lists */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				07172B7211377C260058CFF9 /* Common */,
+				07172B7311377C2D0058CFF9 /* Controllers */,
+				07172B7411377C490058CFF9 /* Models */,
+				07172B7511377C500058CFF9 /* Views */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				D2F7E79907B2D74100F64583 /* CoreData.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				070D7AFA113B11C2007645BB /* ZeroKit.h */,
+				32DBCF5E0370ADEE00C91783 /* ZeroKit.pch */,
+				070D7A03113AFA6D007645BB /* ZeroKitConstants.h */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				070D7AFB113B11C2007645BB /* ZeroKit.h in Headers */,
+				070D7A04113AFA6D007645BB /* ZeroKitConstants.h in Headers */,
+				07172B7F11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h in Headers */,
+				07172B8311377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h in Headers */,
+				07172B8A11377D490058CFF9 /* ZeroKitPreferencesWindowController.h in Headers */,
+				07172B7B11377CD90058CFF9 /* ZeroKitUtilities.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* ZeroKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "ZeroKit" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZeroKit;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = ZeroKit;
+			productReference = 8DC2EF5B0486A6940098B216 /* ZeroKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ZeroKit" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* ZeroKit */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* ZeroKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0715853711432B88003D3454 /* InfoPlist.strings in Resources */,
+				07D91E371138E29B00FA237A /* ZeroKitPreferencesWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07172B8011377CF90058CFF9 /* ZeroKitPreferencePaneManager.m in Sources */,
+				07172B8B11377D490058CFF9 /* ZeroKitPreferencesWindowController.m in Sources */,
+				07172B7C11377CD90058CFF9 /* ZeroKitUtilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0715853511432B88003D3454 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0715853611432B88003D3454 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		07D91E351138E29B00FA237A /* ZeroKitPreferencesWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				07D91E361138E29B00FA237A /* English */,
+			);
+			name = ZeroKitPreferencesWindow.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91AE08733DA50010E9CD /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */;
+			buildSettings = {
+				VERSION_INFO_FILE = "";
+			};
+			name = Development;
+		};
+		1DEB91AF08733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */;
+			buildSettings = {
+				VERSION_INFO_FILE = "";
+			};
+			name = Release;
+		};
+		1DEB91B208733DA50010E9CD /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07172B24113777FF0058CFF9 /* CommonDevelopment.xcconfig */;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07172B25113777FF0058CFF9 /* CommonRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "ZeroKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91AE08733DA50010E9CD /* Development */,
+				1DEB91AF08733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ZeroKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Development */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
