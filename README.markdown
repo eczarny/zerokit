@@ -1,6 +1,7 @@
 # ZeroKit
 
-A small framework that provides common functionality to Cocoa applications.
+A  small  framework  that  provides  generic  functionality  to my Mac OS X (and
+perhaps even iPhone) projects.
 
 # What if I find a bug, or what if I want to help?
 
@@ -13,7 +14,8 @@ make contributions. Simply create a fork and make your changes.
 
 # Acknowledgments
 
-The preferences window controller is based on software provided by Matt Gemmel.
+The preferences window controller is based on source code provided generously by
+[Matt Legend Gemmel] [1].
 
 Please refer to the LICENSES file for third-party license information.
 
@@ -21,7 +23,9 @@ Please refer to the LICENSES file for third-party license information.
 
 Copyright (c) 2010 Eric Czarny.
 
-Emergence  should  be  accompanied  by  a  LICENSES file containing the licenses
+ZeroKit  should  be  accompanied  by  a  LICENSES  file  containing the licenses
 relevant to this distribution.
 
 If no LICENSES exists please contact Eric Czarny <eczarny@gmail.com>.
+
+[1]: http://mattgemmell.com/source
