@@ -15,7 +15,7 @@ make contributions. Simply create a fork and make your changes.
 # Acknowledgments
 
 The preferences window controller is based on source code provided generously by
-[Matt Legend Gemmel] [1].
+[Matt Legend Gemmell] [1].
 
 Please refer to the LICENSES file for third-party license information.
 
