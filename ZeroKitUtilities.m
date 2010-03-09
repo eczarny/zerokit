@@ -53,9 +53,9 @@
 + (void)registerDefaults {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *path = [[ZeroKitUtilities applicationBundle] pathForResource: ZeroKitDefaultPreferencesFile ofType: ZeroKitPropertyListFileExtension];
-    NSDictionary *emergenceDefaults = [[[NSDictionary alloc] initWithContentsOfFile: path] autorelease];
+    NSDictionary *applicationDefaults = [[[NSDictionary alloc] initWithContentsOfFile: path] autorelease];
     
-    [defaults registerDefaults: emergenceDefaults];
+    [defaults registerDefaults: applicationDefaults];
 }
 
 #pragma mark -
