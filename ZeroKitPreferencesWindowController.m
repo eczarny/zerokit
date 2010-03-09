@@ -224,7 +224,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
     if (![myPreferencePaneManager preferencePanesAreReady]) {
         NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
         
-        NSRunAlertPanel(ZeroKitLocalizedString(@"Preferences"), [NSString stringWithFormat: ZeroKitLocalizedString(@"Preferences are not available for %@."), applicationName], ZeroKitLocalizedString(@"OK"), nil, nil);
+        NSLog(@"No preference panes are available for %@.", applicationName);
     }
     
     [myToolbar setSelectedItemIdentifier: preferencePaneName];
