@@ -6,7 +6,7 @@ perhaps even iPhone) projects.
 # What if I find a bug, or what if I want to help?
 
 Please, contact me with any questions, comments, suggestions, or problems. I try
-to  make the time to answer every request.
+to make the time to answer every request.
 
 Those  wishing to contribute to the project should begin by obtaining the latest
 source  with  Git. The project is hosted on GitHub, making it easy for anyone to
