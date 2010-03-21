@@ -61,11 +61,13 @@
 #pragma mark -
 
 + (NSString *)applicationSupportPath {
+    NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
+    NSString *applicationName = [applicationBundle objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *applicationSupportPath = ([paths count] > 0) ? [paths objectAtIndex: 0] : NSTemporaryDirectory();
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    applicationSupportPath = [applicationSupportPath stringByAppendingPathComponent: ZeroKitFrameworkName];
+    applicationSupportPath = [applicationSupportPath stringByAppendingPathComponent: applicationName];
     
     if (![fileManager fileExistsAtPath: applicationSupportPath isDirectory: nil]) {
         NSLog(@"The application support directory does not exist, it will be created.");
