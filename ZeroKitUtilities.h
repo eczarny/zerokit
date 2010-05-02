@@ -54,6 +54,10 @@
 
 #pragma mark -
 
++ (NSString *)pathForSystemPreferencePaneNamed: (NSString *)preferencePaneName;
+
+#pragma mark -
+
 + (BOOL)isLoginItemEnabled;
 
 #pragma mark -

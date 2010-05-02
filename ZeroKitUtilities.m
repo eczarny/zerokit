@@ -82,6 +82,27 @@
 
 #pragma mark -
 
++ (NSString *)pathForSystemPreferencePaneNamed: (NSString *)preferencePaneName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSSystemDomainMask, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *preferencePanePath = nil;
+    
+    if (preferencePaneName) {
+        preferencePaneName = [preferencePaneName stringByAppendingFormat: @".%@", ZeroKitPreferencePaneExtension];
+        
+        preferencePanePath = ([paths count] > 0) ? [paths objectAtIndex: 0] : nil;
+        preferencePanePath = [preferencePanePath stringByAppendingPathComponent: preferencePaneName];
+        
+        if (!preferencePanePath || ![fileManager fileExistsAtPath: preferencePanePath isDirectory: nil]) {
+            NSLog(@"There was a problem obtaining the path for the specified preference pane: %@", preferencePaneName);
+        }
+    }
+    
+    return preferencePanePath;
+}
+
+#pragma mark -
+
 + (BOOL)isLoginItemEnabled {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];

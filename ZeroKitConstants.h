@@ -32,6 +32,7 @@
 #define ZeroKitBundleIdentifier                       @"com.divisiblebyzero.ZeroKit"
 
 #define ZeroKitPropertyListFileExtension              @"plist"
+#define ZeroKitPreferencePaneExtension                @"prefPane"
 
 #pragma mark -
 
