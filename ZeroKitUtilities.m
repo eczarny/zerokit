@@ -85,7 +85,7 @@
 + (BOOL)isLoginItemEnabled {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     BOOL result = NO;
     
     if (sharedFileList) {
@@ -125,7 +125,7 @@
 + (void)enableLoginItem {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
         LSSharedFileListItemRef sharedFileListItem = LSSharedFileListInsertItemURL(sharedFileList, kLSSharedFileListItemLast, NULL, NULL, applicationPathURL, NULL, NULL);
@@ -143,7 +143,7 @@
 + (void)disableLoginItem {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
         NSArray *sharedFileListArray = nil;
