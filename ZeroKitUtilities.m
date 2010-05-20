@@ -37,6 +37,8 @@
     return [NSBundle mainBundle];
 }
 
+#pragma mark -
+
 + (NSString *)applicationVersion {
     NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
     NSString *applicationVersion = [applicationBundle objectForInfoDictionaryKey: ZeroKitApplicationBundleShortVersionString];
@@ -50,9 +52,9 @@
 
 #pragma mark -
 
-+ (void)registerDefaults {
++ (void)registerDefaultsForBundle: (NSBundle *)bundle {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = [[ZeroKitUtilities applicationBundle] pathForResource: ZeroKitDefaultPreferencesFile ofType: ZeroKitPropertyListFileExtension];
+    NSString *path = [bundle pathForResource: ZeroKitDefaultPreferencesFile ofType: ZeroKitPropertyListFileExtension];
     NSDictionary *applicationDefaults = [[[NSDictionary alloc] initWithContentsOfFile: path] autorelease];
     
     [defaults registerDefaults: applicationDefaults];
@@ -60,9 +62,8 @@
 
 #pragma mark -
 
-+ (NSString *)applicationSupportPath {
-    NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
-    NSString *applicationName = [applicationBundle objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
++ (NSString *)applicationSupportPathForBundle: (NSBundle *)bundle {
+    NSString *applicationName = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *applicationSupportPath = ([paths count] > 0) ? [paths objectAtIndex: 0] : NSTemporaryDirectory();
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -103,9 +104,9 @@
 
 #pragma mark -
 
-+ (BOOL)isLoginItemEnabled {
++ (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
+    NSString *applicationPath = [bundle bundlePath];
     CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     BOOL result = NO;
     
@@ -143,9 +144,9 @@
 
 #pragma mark -
 
-+ (void)enableLoginItem {
++ (void)enableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
+    NSString *applicationPath = [bundle bundlePath];
     CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
@@ -161,9 +162,9 @@
     CFRelease(sharedFileList);
 }
 
-+ (void)disableLoginItem {
++ (void)disableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [[ZeroKitUtilities applicationBundle] bundlePath];
+    NSString *applicationPath = [bundle bundlePath];
     CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
@@ -198,10 +199,8 @@
 
 #pragma mark -
 
-+ (NSImage *)imageFromBundledImageResource: (NSString *)resource {
-    NSString *resourcePath = [[ZeroKitUtilities applicationBundle] pathForImageResource: resource];
-    
-    return [[[NSImage alloc] initWithContentsOfFile: resourcePath] autorelease];
++ (NSImage *)imageFromResource: (NSString *)resource inBundle: (NSBundle *)bundle {
+    return [[[NSImage alloc] initWithContentsOfFile: [bundle pathForImageResource: resource]] autorelease];
 }
 
 #pragma mark -

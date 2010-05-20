@@ -42,15 +42,17 @@
 
 + (NSBundle *)applicationBundle;
 
+#pragma mark -
+
 + (NSString *)applicationVersion;
 
 #pragma mark -
 
-+ (void)registerDefaults;
++ (void)registerDefaultsForBundle: (NSBundle *)bundle;
 
 #pragma mark -
 
-+ (NSString *)applicationSupportPath;
++ (NSString *)applicationSupportPathForBundle: (NSBundle *)bundle;
 
 #pragma mark -
 
@@ -58,17 +60,17 @@
 
 #pragma mark -
 
-+ (BOOL)isLoginItemEnabled;
++ (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle;
 
 #pragma mark -
 
-+ (void)enableLoginItem;
++ (void)enableLoginItemForBundle: (NSBundle *)bundle;
 
-+ (void)disableLoginItem;
++ (void)disableLoginItemForBundle: (NSBundle *)bundle;
 
 #pragma mark -
 
-+ (NSImage *)imageFromBundledImageResource: (NSString *)resource;
++ (NSImage *)imageFromResource: (NSString *)resource inBundle: (NSBundle *)bundle;
 
 #pragma mark -
 
