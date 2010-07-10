@@ -155,11 +155,11 @@
         if (sharedFileListItem) {
             CFRelease(sharedFileListItem);
         }
+        
+        CFRelease(sharedFileList);
     } else {
         NSLog(@"Unable to create the shared file list.");
     }
-    
-    CFRelease(sharedFileList);
 }
 
 + (void)disableLoginItemForBundle: (NSBundle *)bundle {
@@ -190,11 +190,11 @@
         }
         
         [sharedFileListArray release];
+        
+        CFRelease(sharedFileList);
     } else {
         NSLog(@"Unable to create the shared file list.");
     }
-    
-    CFRelease(sharedFileList);
 }
 
 #pragma mark -
