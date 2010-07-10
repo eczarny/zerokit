@@ -83,8 +83,8 @@
 
 #pragma mark -
 
-+ (NSString *)pathForSystemPreferencePaneNamed: (NSString *)preferencePaneName {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSSystemDomainMask, YES);
++ (NSString *)pathForPreferencePaneNamed: (NSString *)preferencePaneName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSAllDomainsMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *preferencePanePath = nil;
     

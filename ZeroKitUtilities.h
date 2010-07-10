@@ -56,7 +56,7 @@
 
 #pragma mark -
 
-+ (NSString *)pathForSystemPreferencePaneNamed: (NSString *)preferencePaneName;
++ (NSString *)pathForPreferencePaneNamed: (NSString *)preferencePaneName;
 
 #pragma mark -
 
