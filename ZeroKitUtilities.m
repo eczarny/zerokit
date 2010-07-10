@@ -91,10 +91,17 @@
     if (preferencePaneName) {
         preferencePaneName = [preferencePaneName stringByAppendingFormat: @".%@", ZeroKitPreferencePaneExtension];
         
-        preferencePanePath = ([paths count] > 0) ? [paths objectAtIndex: 0] : nil;
-        preferencePanePath = [preferencePanePath stringByAppendingPathComponent: preferencePaneName];
+        for (NSString *path in paths) {
+            path = [path stringByAppendingPathComponent: preferencePaneName];
+            
+            if (path && [fileManager fileExistsAtPath: path isDirectory: nil]) {
+                preferencePanePath = path;
+                
+                break;
+            }
+        }
         
-        if (!preferencePanePath || ![fileManager fileExistsAtPath: preferencePanePath isDirectory: nil]) {
+        if (!preferencePanePath) {
             NSLog(@"There was a problem obtaining the path for the specified preference pane: %@", preferencePaneName);
         }
     }
