@@ -247,7 +247,7 @@
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
 				0715863F1143460D003D3454 /* Run Script: Include Git commit hash */,
-				078B0F23118D12C9004EE86C /* ShellScript */,
+				078B0F23118D12C9004EE86C /* Run Script: Install framework */,
 			);
 			buildRules = (
 			);
@@ -302,15 +302,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "raise \"Must be executed from within Xcode.\" unless ENV['XCODE_VERSION_ACTUAL']\n\ninfo_plist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Resources/Info.plist\"\n\nif !File.exist?('/usr/local/bin/git')\n    exit\nend\n\ncommit = `/usr/local/bin/git rev-parse --short HEAD`.chomp!\n\nif commit.nil? or commit.empty?\n    exit\nend\n\nlines = IO.readlines(info_plist).join\n\nlines.gsub! /(<key>CFBundleShortVersionString<\\/key>\\n\\t)<string>(\\d+\\.\\d+(?:\\.\\d)*[a-z])<\\/string>/, \"\\\\1<string>\\\\2 rev. #{commit}</string>\"\n\nFile.open(info_plist, 'w') { |f| f.puts lines }";
+			shellScript = "raise \"Must be executed from within Xcode.\" unless ENV['XCODE_VERSION_ACTUAL']\n\ninfo_plist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Resources/Info.plist\"\n\nif !File.exist?('/usr/local/bin/git')\n    exit\nend\n\ncommit = `/usr/local/bin/git rev-parse --short HEAD`.chomp!\n\nif commit.nil? or commit.empty?\n    exit\nend\n\nlines = IO.readlines(info_plist).join\n\nlines.gsub! /(<key>CFBundleShortVersionString<\\/key>\\W*)<string>(\\d+\\.\\d+(?:\\.\\d)*[a-z]?)<\\/string>/, \"\\\\1<string>\\\\2 rev. #{commit}</string>\"\n\nFile.open(info_plist, 'w') { |f| f.puts lines }";
 		};
-		078B0F23118D12C9004EE86C /* ShellScript */ = {
+		078B0F23118D12C9004EE86C /* Run Script: Install framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script: Install framework";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
