@@ -31,6 +31,7 @@
 #import <Cocoa/Cocoa.h>
 
 #define ZeroKitLocalizedString(string) NSLocalizedString(string, string)
+#define ZeroKitLocalizedStringFromCurrentBundle(string) NSLocalizedStringFromTableInBundle(string, nil, [NSBundle bundleForClass: [self class]], string)
 
 #pragma mark -
 
