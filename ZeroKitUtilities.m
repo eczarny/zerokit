@@ -114,7 +114,7 @@
 + (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     BOOL result = NO;
     
     if (sharedFileList) {
@@ -130,8 +130,6 @@
             
             if (applicationPathURL != NULL) {
                 NSString *resolvedApplicationPath = [(NSURL *)applicationPathURL path];
-                
-                CFRelease(applicationPathURL);
                 
                 if ([resolvedApplicationPath compare: applicationPath] == NSOrderedSame) {
                     result = YES;
@@ -154,7 +152,7 @@
 + (void)enableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
         LSSharedFileListItemRef sharedFileListItem = LSSharedFileListInsertItemURL(sharedFileList, kLSSharedFileListItemLast, NULL, NULL, applicationPathURL, NULL, NULL);
@@ -172,7 +170,7 @@
 + (void)disableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL= (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
     
     if (sharedFileList) {
         NSArray *sharedFileListArray = nil;
@@ -187,8 +185,6 @@
             
             if (applicationPathURL != NULL) {
                 NSString *resolvedApplicationPath = [(NSURL *)applicationPathURL path];
-                
-                CFRelease(applicationPathURL);
                 
                 if ([resolvedApplicationPath compare: applicationPath] == NSOrderedSame) {
                     LSSharedFileListItemRemove(sharedFileList, sharedFileListItem);
