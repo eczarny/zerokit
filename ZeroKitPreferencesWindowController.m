@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2010 Eric Czarny <eczarny@gmail.com>
+// Copyright (c) 2011 Eric Czarny <eczarny@gmail.com>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of  this  software  and  associated documentation files (the "Software"), to
@@ -18,14 +18,6 @@
 // LIABILITY,  WHETHER  IN  AN  ACTION  OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
-// 
-
-// 
-// ZeroKit
-// ZeroKitPreferencesWindowController.m
-// 
-// Created by Eric Czarny on Thursday, February 25, 2010.
-// Copyright (c) 2010 Divisible by Zero.
 // 
 
 #import "ZeroKitPreferencesWindowController.h"
@@ -65,7 +57,7 @@
 static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 - (id)init {
-    if (self = [super initWithWindowNibName: ZeroKitPreferencesWindowNibName]) {
+    if ((self = [super initWithWindowNibName: ZeroKitPreferencesWindowNibName])) {
         myToolbarItems = [[NSMutableDictionary alloc] init];
         myPreferencePaneManager = [ZeroKitPreferencePaneManager sharedManager];
         
@@ -243,7 +235,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
     NSEnumerator *preferencePaneEnumerator = [preferencePanes objectEnumerator];
     id<ZeroKitPreferencePaneProtocol> preferencePane;
     
-    while (preferencePane = [preferencePaneEnumerator nextObject]) {
+    while ((preferencePane = [preferencePaneEnumerator nextObject])) {
         NSString *preferencePaneName = [preferencePane name];
         NSString *preferencePaneToolTip = [preferencePane toolTip];
         NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier: preferencePaneName];

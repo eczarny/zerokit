@@ -20,35 +20,35 @@
 // IN THE SOFTWARE.
 // 
 
-#import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
+#import <Foundation/Foundation.h>
+#import "ZeroKitURLConnectionDelegate.h"
 
-@class ZeroKitPreferencePaneManager;
+@class ZeroKitURLConnection;
 
-@interface ZeroKitPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZeroKitPreferencePaneManager *myPreferencePaneManager;
-    NSToolbar *myToolbar;
-    NSMutableDictionary *myToolbarItems;
+@interface ZeroKitURLConnectionManager : NSObject {
+    NSMutableDictionary *myConnections;
 }
 
-+ (ZeroKitPreferencesWindowController *)sharedController;
++ (ZeroKitURLConnectionManager *)sharedManager;
 
 #pragma mark -
 
-- (void)showPreferencesWindow: (id)sender;
-
-- (void)hidePreferencesWindow: (id)sender;
+- (NSString *)spawnConnectionWithURLRequest: (NSURLRequest *)request delegate: (id<ZeroKitURLConnectionDelegate>)delegate;
 
 #pragma mark -
 
-- (void)togglePreferencesWindow: (id)sender;
+- (NSArray *)activeConnectionIdentifiers;
+
+- (int)numberOfActiveConnections;
 
 #pragma mark -
 
-- (void)loadPreferencePanes;
+- (ZeroKitURLConnection *)connectionForIdentifier: (NSString *)identifier;
 
 #pragma mark -
 
-- (NSArray *)loadedPreferencePanes;
+- (void)closeConnectionForIdentifier: (NSString *)identifier;
+
+- (void)closeConnections;
 
 @end

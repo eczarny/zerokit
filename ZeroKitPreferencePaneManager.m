@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2010 Eric Czarny <eczarny@gmail.com>
+// Copyright (c) 2011 Eric Czarny <eczarny@gmail.com>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of  this  software  and  associated documentation files (the "Software"), to
@@ -20,14 +20,6 @@
 // IN THE SOFTWARE.
 // 
 
-// 
-// ZeroKit
-// ZeroKitPreferencePaneManager.m
-// 
-// Created by Eric Czarny on Thursday, February 25, 2010.
-// Copyright (c) 2010 Divisible by Zero.
-// 
-
 #import "ZeroKitPreferencePaneManager.h"
 #import "ZeroKitPreferencePaneProtocol.h"
 #import "ZeroKitUtilities.h"
@@ -38,7 +30,7 @@
 static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 - (id)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         myPreferencePanes = [[NSMutableDictionary alloc] init];
         myPreferencePaneOrder = [[NSMutableArray alloc] init];
     }
@@ -78,7 +70,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
     
     [myPreferencePanes removeAllObjects];
     
-    while (preferencePaneName = [preferencePaneNameEnumerator nextObject]) {
+    while ((preferencePaneName = [preferencePaneNameEnumerator nextObject])) {
         NSString *preferencePaneClassName = [preferencePanes objectForKey: preferencePaneName];
         
         if (preferencePaneClassName) {
@@ -95,7 +87,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
                     NSLog(@"Failed initializing preference pane named: %@", preferencePaneName);
                 }
             } else {
-                NSLog(@"Unable to load preference pane with class named: ", preferencePaneClassName);
+                NSLog(@"Unable to load preference pane with class named: %@", preferencePaneClassName);
             }
         } else {
             NSLog(@"The preference pane, %@, is missing a class name!", preferencePaneName);
@@ -104,13 +96,13 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
     
     [myPreferencePaneOrder removeAllObjects];
     
-    while (preferencePaneName = [preferencePaneNameOrderEnumerator nextObject]) {
+    while ((preferencePaneName = [preferencePaneNameOrderEnumerator nextObject])) {
         if ([myPreferencePanes objectForKey: preferencePaneName]) {
             NSLog(@"Adding %@ to the preference pane order.", preferencePaneName);
             
             [myPreferencePaneOrder addObject: preferencePaneName];
         } else {
-            NSLog(@"Unable to set the preference pane order for preference pane named: ", preferencePaneName);
+            NSLog(@"Unable to set the preference pane order for preference pane named: %@", preferencePaneName);
         }
     }
 }

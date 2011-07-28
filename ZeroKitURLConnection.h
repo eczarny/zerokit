@@ -20,35 +20,36 @@
 // IN THE SOFTWARE.
 // 
 
-#import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
+#import <Foundation/Foundation.h>
+#import "ZeroKitURLConnectionDelegate.h"
 
-@class ZeroKitPreferencePaneManager;
+@class ZeroKitURLConnectionManager;
 
-@interface ZeroKitPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZeroKitPreferencePaneManager *myPreferencePaneManager;
-    NSToolbar *myToolbar;
-    NSMutableDictionary *myToolbarItems;
+@interface ZeroKitURLConnection : NSObject {
+    ZeroKitURLConnectionManager *myManager;
+    NSURLRequest *myRequest;
+    NSString *myIdentifier;
+    NSMutableData *myData;
+    NSURLConnection *myConnection;
+    id<ZeroKitURLConnectionDelegate> myDelegate;
 }
 
-+ (ZeroKitPreferencesWindowController *)sharedController;
+- (id)initWithURLRequest: (NSURLRequest *)request delegate: (id<ZeroKitURLConnectionDelegate>)delegate manager: (ZeroKitURLConnectionManager *)manager;
 
 #pragma mark -
 
-- (void)showPreferencesWindow: (id)sender;
-
-- (void)hidePreferencesWindow: (id)sender;
++ (NSData *)sendSynchronousURLRequest: (NSURLRequest *)request error: (NSError **)error;
 
 #pragma mark -
 
-- (void)togglePreferencesWindow: (id)sender;
+- (NSString *)identifier;
 
 #pragma mark -
 
-- (void)loadPreferencePanes;
+- (id<ZeroKitURLConnectionDelegate>)delegate;
 
 #pragma mark -
 
-- (NSArray *)loadedPreferencePanes;
+- (void)cancel;
 
 @end

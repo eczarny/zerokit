@@ -20,35 +20,22 @@
 // IN THE SOFTWARE.
 // 
 
-#import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
+#import <Foundation/Foundation.h>
 
-@class ZeroKitPreferencePaneManager;
+@class ZeroKitURLConnection;
 
-@interface ZeroKitPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZeroKitPreferencePaneManager *myPreferencePaneManager;
-    NSToolbar *myToolbar;
-    NSMutableDictionary *myToolbarItems;
-}
+@protocol ZeroKitURLConnectionDelegate<NSObject>
 
-+ (ZeroKitPreferencesWindowController *)sharedController;
+- (void)request: (NSURLRequest *)request didReceiveData: (NSData *)data;
+
+- (void)request: (NSURLRequest *)request didFailWithError: (NSError *)error;
 
 #pragma mark -
 
-- (void)showPreferencesWindow: (id)sender;
+- (BOOL)request: (NSURLRequest *)request canAuthenticateAgainstProtectionSpace: (NSURLProtectionSpace *)protectionSpace;
 
-- (void)hidePreferencesWindow: (id)sender;
+- (void)request: (NSURLRequest *)request didReceiveAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge;
 
-#pragma mark -
-
-- (void)togglePreferencesWindow: (id)sender;
-
-#pragma mark -
-
-- (void)loadPreferencePanes;
-
-#pragma mark -
-
-- (NSArray *)loadedPreferencePanes;
+- (void)request: (NSURLRequest *)request didCancelAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge;
 
 @end

@@ -20,35 +20,17 @@
 // IN THE SOFTWARE.
 // 
 
-#import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
+#import "NSStringAdditions.h"
 
-@class ZeroKitPreferencePaneManager;
+@implementation NSString (NSStringAdditions)
 
-@interface ZeroKitPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZeroKitPreferencePaneManager *myPreferencePaneManager;
-    NSToolbar *myToolbar;
-    NSMutableDictionary *myToolbarItems;
++ (NSString *)stringByGeneratingUUID {
+    CFUUIDRef UUIDReference = CFUUIDCreate(nil);
+    CFStringRef temporaryUUIDString = CFUUIDCreateString(nil, UUIDReference);
+    
+    CFRelease(UUIDReference);
+    
+    return [NSMakeCollectable(temporaryUUIDString) autorelease];
 }
-
-+ (ZeroKitPreferencesWindowController *)sharedController;
-
-#pragma mark -
-
-- (void)showPreferencesWindow: (id)sender;
-
-- (void)hidePreferencesWindow: (id)sender;
-
-#pragma mark -
-
-- (void)togglePreferencesWindow: (id)sender;
-
-#pragma mark -
-
-- (void)loadPreferencePanes;
-
-#pragma mark -
-
-- (NSArray *)loadedPreferencePanes;
 
 @end

@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2010 Eric Czarny <eczarny@gmail.com>
+// Copyright (c) 2011 Eric Czarny <eczarny@gmail.com>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of  this  software  and  associated documentation files (the "Software"), to
@@ -18,14 +18,6 @@
 // LIABILITY,  WHETHER  IN  AN  ACTION  OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
-// 
-
-// 
-// ZeroKit
-// ZeroKitConstants.h
-// 
-// Created by Eric Czarny on Sunday, February 28, 2010.
-// Copyright (c) 2010 Divisible by Zero.
 // 
 
 #define ZeroKitFrameworkName                          @"ZeroKit"

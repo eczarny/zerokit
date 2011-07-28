@@ -18,6 +18,13 @@
 		07172B8A11377D490058CFF9 /* ZeroKitPreferencesWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07172B8811377D490058CFF9 /* ZeroKitPreferencesWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07172B8B11377D490058CFF9 /* ZeroKitPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07172B8911377D490058CFF9 /* ZeroKitPreferencesWindowController.m */; };
 		07D91E371138E29B00FA237A /* ZeroKitPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D91E351138E29B00FA237A /* ZeroKitPreferencesWindow.xib */; };
+		07E9256F13552F3F00ECC319 /* ZeroKitURLConnectionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9256D13552F3F00ECC319 /* ZeroKitURLConnectionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E9257013552F3F00ECC319 /* ZeroKitURLConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E9256E13552F3F00ECC319 /* ZeroKitURLConnectionManager.m */; };
+		07E9257313552F5100ECC319 /* ZeroKitURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9257113552F5100ECC319 /* ZeroKitURLConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E9257413552F5100ECC319 /* ZeroKitURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E9257213552F5100ECC319 /* ZeroKitURLConnection.m */; };
+		07E9257D13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9257C13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E925871355344A00ECC319 /* NSStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E925851355344A00ECC319 /* NSStringAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E925861355344A00ECC319 /* NSStringAdditions.m */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +47,13 @@
 		07172B8811377D490058CFF9 /* ZeroKitPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitPreferencesWindowController.h; sourceTree = "<group>"; };
 		07172B8911377D490058CFF9 /* ZeroKitPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitPreferencesWindowController.m; sourceTree = "<group>"; };
 		07D91E361138E29B00FA237A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Languages/English.lproj/ZeroKitPreferencesWindow.xib; sourceTree = "<group>"; };
+		07E9256D13552F3F00ECC319 /* ZeroKitURLConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitURLConnectionManager.h; sourceTree = "<group>"; };
+		07E9256E13552F3F00ECC319 /* ZeroKitURLConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitURLConnectionManager.m; sourceTree = "<group>"; };
+		07E9257113552F5100ECC319 /* ZeroKitURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitURLConnection.h; sourceTree = "<group>"; };
+		07E9257213552F5100ECC319 /* ZeroKitURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitURLConnection.m; sourceTree = "<group>"; };
+		07E9257C13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitURLConnectionDelegate.h; sourceTree = "<group>"; };
+		07E925851355344A00ECC319 /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
+		07E925861355344A00ECC319 /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -100,6 +114,9 @@
 		07172B7211377C260058CFF9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				07E925841355343A00ECC319 /* Additions */,
+				07E9256D13552F3F00ECC319 /* ZeroKitURLConnectionManager.h */,
+				07E9256E13552F3F00ECC319 /* ZeroKitURLConnectionManager.m */,
 				07172B7D11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h */,
 				07172B7E11377CF90058CFF9 /* ZeroKitPreferencePaneManager.m */,
 				07172B7911377CD90058CFF9 /* ZeroKitUtilities.h */,
@@ -120,7 +137,10 @@
 		07172B7411377C490058CFF9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				07E9257B13552F7E00ECC319 /* Delegates */,
 				07172B8111377D0B0058CFF9 /* Protocols */,
+				07E9257113552F5100ECC319 /* ZeroKitURLConnection.h */,
+				07E9257213552F5100ECC319 /* ZeroKitURLConnection.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -146,6 +166,23 @@
 				07D91E351138E29B00FA237A /* ZeroKitPreferencesWindow.xib */,
 			);
 			name = "Interface Builder";
+			sourceTree = "<group>";
+		};
+		07E9257B13552F7E00ECC319 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				07E9257C13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		07E925841355343A00ECC319 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				07E925851355344A00ECC319 /* NSStringAdditions.h */,
+				07E925861355344A00ECC319 /* NSStringAdditions.m */,
+			);
+			name = Additions;
 			sourceTree = "<group>";
 		};
 		0867D691FE84028FC02AAC07 /* ZeroKit */ = {
@@ -226,11 +263,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E925871355344A00ECC319 /* NSStringAdditions.h in Headers */,
 				070D7AFB113B11C2007645BB /* ZeroKit.h in Headers */,
 				070D7A04113AFA6D007645BB /* ZeroKitConstants.h in Headers */,
 				07172B7F11377CF90058CFF9 /* ZeroKitPreferencePaneManager.h in Headers */,
-				07172B8311377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h in Headers */,
 				07172B8A11377D490058CFF9 /* ZeroKitPreferencesWindowController.h in Headers */,
+				07172B8311377D1B0058CFF9 /* ZeroKitPreferencePaneProtocol.h in Headers */,
+				07E9257313552F5100ECC319 /* ZeroKitURLConnection.h in Headers */,
+				07E9257D13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h in Headers */,
+				07E9256F13552F3F00ECC319 /* ZeroKitURLConnectionManager.h in Headers */,
 				07172B7B11377CD90058CFF9 /* ZeroKitUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +307,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ZeroKit" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* ZeroKit */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
@@ -325,8 +373,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */,
 				07172B8011377CF90058CFF9 /* ZeroKitPreferencePaneManager.m in Sources */,
 				07172B8B11377D490058CFF9 /* ZeroKitPreferencesWindowController.m in Sources */,
+				07E9257413552F5100ECC319 /* ZeroKitURLConnection.m in Sources */,
+				07E9257013552F3F00ECC319 /* ZeroKitURLConnectionManager.m in Sources */,
 				07172B7C11377CD90058CFF9 /* ZeroKitUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
