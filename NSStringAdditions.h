@@ -26,4 +26,8 @@
 
 + (NSString *)stringByGeneratingUUID;
 
+#pragma mark -
+
+- (BOOL)contains: (NSString *)string;
+
 @end

@@ -33,4 +33,10 @@
     return [NSMakeCollectable(temporaryUUIDString) autorelease];
 }
 
+#pragma mark -
+
+- (BOOL)contains: (NSString *)string {
+    return [self rangeOfString: string].location != NSNotFound;
+}
+
 @end
