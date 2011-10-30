@@ -79,7 +79,9 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
             if (preferencePaneClass) {
                 id<ZeroKitPreferencePaneProtocol> preferencePane = [[[preferencePaneClass alloc] init] autorelease];
                 
-                if (preferencePane && [NSBundle loadNibNamed: preferencePaneClassName owner: preferencePane]) {
+                if (preferencePane) {
+                    [NSBundle loadNibNamed: preferencePaneClassName owner: preferencePane];
+                    
                     [preferencePane preferencePaneDidLoad];
                     
                     [myPreferencePanes setObject: preferencePane forKey: preferencePaneName];
