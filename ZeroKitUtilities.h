@@ -47,4 +47,8 @@
 
 + (BOOL)isStringEmpty: (NSString *)string;
 
+#pragma mark -
+
++ (NSMutableDictionary *)createStringAttributesWithShadow;
+
 @end

@@ -21,3 +21,10 @@
 #define ZeroKitApplicationBundleName               @"CFBundleName"
 #define ZeroKitApplicationBundleVersion            @"CFBundleVersion"
 #define ZeroKitApplicationBundleShortVersionString @"CFBundleShortVersionString"
+
+#pragma mark -
+
+#define ZeroKitHotKeyTranslationsPropertyListFile  @"SpecialHotKeyTranslations"
+
+#define ZeroKitHotKeyTranslationsKey               @"SpecialHotKeyTranslations"
+#define ZeroKitHotKeyGlyphTranslationsKey          @"SpecialHotKeyGlyphTranslations"

@@ -1,10 +1,2 @@
-// 
-// ZeroKit
-// ZeroKitDevelopment.xcconfig
-// 
-// Created by Eric Czarny on Thursday, February 25, 2011.
-// Copyright (c) 2011 Divisible by Zero.
-// 
-
 #include "ZeroKit.xcconfig"
 #include "CommonDevelopment.xcconfig"
