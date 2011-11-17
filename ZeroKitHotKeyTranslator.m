@@ -234,7 +234,7 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 
 - (void)buildKeyCodeConvertorDictionary {
     if (!mySpecialHotKeyTranslations) {
-        NSBundle *bundle = [ZeroKitUtilities applicationBundle];
+        NSBundle *bundle = [NSBundle bundleForClass: [self class]];
         NSString *path = [bundle pathForResource: ZeroKitHotKeyTranslationsPropertyListFile ofType: ZeroKitPropertyListFileExtension];
         
         mySpecialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
