@@ -16,6 +16,12 @@
 
 #pragma mark -
 
++ (ZeroKitHotKey *)clearedHotKey;
+
++ (ZeroKitHotKey *)clearedHotKeyWithName: (NSString *)name;
+
+#pragma mark -
+
 - (NSInteger)handle;
 
 - (void)setHandle: (NSInteger)handle;
@@ -49,6 +55,10 @@
 - (EventHotKeyRef)hotKeyRef;
 
 - (void)setHotKeyRef: (EventHotKeyRef)hotKeyRef;
+
+#pragma mark -
+
+- (BOOL)isClearedHotKey;
 
 #pragma mark -
 

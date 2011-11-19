@@ -62,6 +62,20 @@
 
 #pragma mark -
 
++ (ZeroKitHotKey *)clearedHotKey {
+    return [[[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0] autorelease];
+}
+
++ (ZeroKitHotKey *)clearedHotKeyWithName: (NSString *)name {
+    ZeroKitHotKey *hotKey = [[[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0] autorelease];
+    
+    [hotKey setHotKeyName: name];
+    
+    return hotKey;
+}
+
+#pragma mark -
+
 - (NSInteger)handle {
     return myHandle;
 }
@@ -126,6 +140,12 @@
 
 - (void)setHotKeyRef: (EventHotKeyRef)hotKeyRef {
     myHotKeyRef = hotKeyRef;
+}
+
+#pragma mark -
+
+- (BOOL)isClearedHotKey {
+    return (myHotKeyCode == 0) && (myHotKeyModifiers == 0);
 }
 
 #pragma mark -
