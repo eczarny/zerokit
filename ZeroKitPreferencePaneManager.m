@@ -37,7 +37,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 - (void)loadPreferencePanes {
     NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
     NSString *path = [applicationBundle pathForResource: ZeroKitPreferencePanesFile ofType: ZeroKitPropertyListFileExtension];
-    NSDictionary *preferencePaneDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    NSDictionary *preferencePaneDictionary = [[[NSMutableDictionary alloc] initWithContentsOfFile: path] autorelease];
     NSDictionary *preferencePanes = [preferencePaneDictionary objectForKey: ZeroKitPreferencePanesKey];
     NSArray *preferencePaneOrder = [preferencePaneDictionary objectForKey: ZeroKitPreferencePaneOrderKey];
     NSEnumerator *preferencePaneNameEnumerator = [preferencePanes keyEnumerator];

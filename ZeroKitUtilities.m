@@ -109,7 +109,7 @@
             }
         }
         
-        [sharedFileListArray release];
+        CFRelease(sharedFileListArray);
     } else {
         NSLog(@"Unable to create the shared file list.");
     }
@@ -162,8 +162,7 @@
             }
         }
         
-        [sharedFileListArray release];
-        
+        CFRelease(sharedFileListArray);
         CFRelease(sharedFileList);
     } else {
         NSLog(@"Unable to create the shared file list.");
