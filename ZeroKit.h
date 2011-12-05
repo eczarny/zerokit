@@ -1,3 +1,5 @@
+#import <ZeroKit/NSAttributedStringAdditions.h>
+#import <ZeroKit/NSStringAdditions.h>
 #import <ZeroKit/ZeroKitAccessibilityElement.h>
 #import <ZeroKit/ZeroKitConstants.h>
 #import <ZeroKit/ZeroKitHotKey.h>
