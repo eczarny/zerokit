@@ -26,6 +26,8 @@
 		07E9257D13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9257C13552F8C00ECC319 /* ZeroKitURLConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E925871355344A00ECC319 /* NSStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E925851355344A00ECC319 /* NSStringAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E925861355344A00ECC319 /* NSStringAdditions.m */; };
+		2D8AA346148D49430032D9E3 /* NSAttributedStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D8AA344148D49430032D9E3 /* NSAttributedStringAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2D8AA347148D49430032D9E3 /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8AA345148D49430032D9E3 /* NSAttributedStringAdditions.m */; };
 		2DBF58DF14742BAE00419F7E /* ZeroKitAccessibilityElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DBF58DD14742BAE00419F7E /* ZeroKitAccessibilityElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2DBF58E014742BAE00419F7E /* ZeroKitAccessibilityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF58DE14742BAE00419F7E /* ZeroKitAccessibilityElement.m */; };
 		2DBF58E714742C7700419F7E /* ZeroKitHotKeyTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DBF58E314742C7700419F7E /* ZeroKitHotKeyTranslator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -74,6 +76,8 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2D8AA344148D49430032D9E3 /* NSAttributedStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAttributedStringAdditions.h; sourceTree = "<group>"; };
+		2D8AA345148D49430032D9E3 /* NSAttributedStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAttributedStringAdditions.m; sourceTree = "<group>"; };
 		2DBF58DD14742BAE00419F7E /* ZeroKitAccessibilityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitAccessibilityElement.h; sourceTree = "<group>"; };
 		2DBF58DE14742BAE00419F7E /* ZeroKitAccessibilityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitAccessibilityElement.m; sourceTree = "<group>"; };
 		2DBF58E314742C7700419F7E /* ZeroKitHotKeyTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitHotKeyTranslator.h; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 		07E925841355343A00ECC319 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				2D8AA344148D49430032D9E3 /* NSAttributedStringAdditions.h */,
+				2D8AA345148D49430032D9E3 /* NSAttributedStringAdditions.m */,
 				07E925851355344A00ECC319 /* NSStringAdditions.h */,
 				07E925861355344A00ECC319 /* NSStringAdditions.m */,
 			);
@@ -366,6 +372,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D8AA346148D49430032D9E3 /* NSAttributedStringAdditions.h in Headers */,
 				07E925871355344A00ECC319 /* NSStringAdditions.h in Headers */,
 				070D7AFB113B11C2007645BB /* ZeroKit.h in Headers */,
 				070D7A04113AFA6D007645BB /* ZeroKitConstants.h in Headers */,
@@ -473,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D8AA347148D49430032D9E3 /* NSAttributedStringAdditions.m in Sources */,
 				07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */,
 				07172B8011377CF90058CFF9 /* ZeroKitPreferencePaneManager.m in Sources */,
 				07172B8B11377D490058CFF9 /* ZeroKitPreferencesWindowController.m in Sources */,
