@@ -13,6 +13,7 @@
     NSTrackingArea *myTrackingArea;
     BOOL isMouseAboveBadge;
     BOOL isMouseDown;
+    void *myHotKeyMode;
 }
 
 - (void)setHotKeyRecorder: (ZeroKitHotKeyRecorder *)hotKeyRecorder;

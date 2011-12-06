@@ -13,6 +13,14 @@
 
 + (BOOL)hotKey: (ZeroKitHotKey *)hotKey containsModifiers: (NSInteger)modifiers;
 
+#pragma mark -
+
++ (NSError *)errorWithHotKey: (ZeroKitHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion;
+
+#pragma mark -
+
++ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error;
+
 @end
 
 #pragma mark -
@@ -43,24 +51,16 @@
         
         if (([hotKey hotKeyCode] == keyCode) && [ZeroKitHotKeyValidator hotKey: hotKey containsModifiers: modifiers]) {
             if (error) {
-                NSString *hotKeyString = [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
-                NSString *description = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(@"The hot key %@ is already in use."), hotKeyString];
-                NSString *recoverySuggestion = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(@"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."), hotKeyString];
-                NSArray *recoveryOptions = [NSArray arrayWithObject: ZeroKitLocalizedStringFromCurrentBundle(@"OK")];
-                NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-                
-                [userInfo setObject: description forKey: NSLocalizedDescriptionKey];
-                [userInfo setObject: recoverySuggestion forKey: NSLocalizedRecoverySuggestionErrorKey];
-                [userInfo setObject: recoveryOptions forKey: NSLocalizedRecoveryOptionsErrorKey];
-                
-                *error = [NSError errorWithDomain: NSCocoaErrorDomain code: 0 userInfo: userInfo];
+                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                                                     description: @"Hot key %@ already in use."
+                                              recoverySuggestion: @"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."];
             }
             
             return NO;
         }
     }
     
-    return YES;
+    return [self isHotKey: hotKey availableInMenu: [[NSApplication sharedApplication] mainMenu] error: error];
 }
 
 @end
@@ -91,6 +91,55 @@
 
 + (BOOL)hotKey: (ZeroKitHotKey *)hotKey containsModifiers: (NSInteger)modifiers {
     return [hotKey hotKeyModifiers] == [ZeroKitHotKeyTranslator convertModifiersToCarbonIfNecessary: modifiers];
+}
+
+#pragma mark -
+
++ (NSError *)errorWithHotKey: (ZeroKitHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion {
+    NSString *hotKeyString = [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    
+    [userInfo setObject: [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(description), hotKeyString]
+                 forKey: NSLocalizedDescriptionKey];
+    
+    [userInfo setObject: [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(recoverySuggestion), hotKeyString]
+                 forKey: NSLocalizedRecoverySuggestionErrorKey];
+    
+    [userInfo setObject: [NSArray arrayWithObject: ZeroKitLocalizedStringFromCurrentBundle(@"OK")]
+                 forKey: NSLocalizedRecoveryOptionsErrorKey];
+    
+    return [NSError errorWithDomain: NSCocoaErrorDomain code: 0 userInfo: userInfo];
+}
+
+#pragma mark -
+
++ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error {
+    for (NSMenuItem *menuItem in [menu itemArray]) {
+        if ([menuItem hasSubmenu] && ![self isHotKey: hotKey availableInMenu: [menuItem submenu] error: error]) {
+            return NO;
+        }
+        
+        NSString *keyEquivalent = [menuItem keyEquivalent];
+        
+        if (!keyEquivalent || [keyEquivalent isEqualToString: @""]) {
+            continue;
+        }
+        
+        NSString *keyCode = [[ZeroKitHotKeyTranslator sharedTranslator] translateKeyCode: [hotKey hotKeyCode]];
+        
+        if ([[keyEquivalent uppercaseString] isEqualToString: keyCode]
+                && [ZeroKitHotKeyValidator hotKey: hotKey containsModifiers: [menuItem keyEquivalentModifierMask]]) {
+            if (error) {
+                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                                                     description: @"Hot key %@ already in use."
+                                              recoverySuggestion: @"The hot key \"%@\" is already used in the menu."];
+            }
+            
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

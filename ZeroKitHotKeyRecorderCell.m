@@ -107,6 +107,8 @@
 
 - (BOOL)resignFirstResponder {
     if (isRecording) {
+        PopSymbolicHotKeyMode(myHotKeyMode);
+        
         isRecording = NO;
         
         [[self controlView] setNeedsDisplay: YES];
@@ -130,18 +132,20 @@
             
             if (![ZeroKitHotKeyValidator isHotKey: hotKey validWithError: &error]) {
                 [[NSAlert alertWithError: error] runModal];
+            } else {
+                [hotKey setHotKeyName: myHotKeyName];
+                
+                [self setHotKey: hotKey];
+                
+                [myDelegate hotKeyRecorder: myHotKeyRecorder didReceiveNewHotKey: hotKey];
             }
-            
-            [hotKey setHotKeyName: myHotKeyName];
-            
-            [self setHotKey: hotKey];
-            
-            [myDelegate hotKeyRecorder: myHotKeyRecorder didReceiveNewHotKey: hotKey];
         } else {
             NSBeep();
         }
         
         myModifierFlags = 0;
+        
+        PopSymbolicHotKeyMode(myHotKeyMode);
         
         isRecording = NO;
         
@@ -204,8 +208,12 @@
                 if ([view mouse: mouseLocation inRect: rect] && !isRecording && !isMouseAboveBadge) {
                     isRecording = YES;
                     
+                    myHotKeyMode = PushSymbolicHotKeyMode(kHIHotKeyModeAllDisabled);
+                    
                     [[view window] makeFirstResponder: view];
                 } else if (isRecording && isMouseAboveBadge) {
+                    PopSymbolicHotKeyMode(myHotKeyMode);
+                    
                     isRecording = NO;
                 } else if (!isRecording && myHotKey && isMouseAboveBadge) {
                     [myDelegate hotKeyRecorder: myHotKeyRecorder didClearExistingHotKey: myHotKey];
