@@ -1,6 +1,7 @@
 #import "ZeroKitHotKeyRecorderCell.h"
 #import "ZeroKitHotKey.h"
 #import "ZeroKitHotKeyTranslator.h"
+#import "ZeroKitHotKeyValidator.h"
 #import "ZeroKitHotKeyRecorderDelegate.h"
 #import "ZeroKitUtilities.h"
 
@@ -125,6 +126,11 @@
         
         if ([characters length]) {
             ZeroKitHotKey *hotKey = [[[ZeroKitHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags] autorelease];
+            NSError *error = nil;
+            
+            if (![ZeroKitHotKeyValidator isHotKey: hotKey validWithError: &error]) {
+                [[NSAlert alertWithError: error] runModal];
+            }
             
             [hotKey setHotKeyName: myHotKeyName];
             

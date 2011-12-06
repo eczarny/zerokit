@@ -5,3 +5,8 @@
 "Stop recording" = "Stop recording";
 "Use existing" = "Use existing";
 "Click to record" = "Click to record";
+
+/* Hot Key Validation Errors */
+"The hot key %@ is already in use." = "The hot key %@ is already in use.";
+"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences." = "The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences.";
+"OK" = "OK";
