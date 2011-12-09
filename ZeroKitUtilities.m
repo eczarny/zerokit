@@ -10,14 +10,19 @@
 #pragma mark -
 
 + (NSString *)applicationVersion {
-    NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
-    NSString *applicationVersion = [applicationBundle objectForInfoDictionaryKey: ZeroKitApplicationBundleShortVersionString];
+    return [ZeroKitUtilities versionOfBundle: [ZeroKitUtilities applicationBundle]];
+}
+
+#pragma mark -
+
++ (NSString *)versionOfBundle: (NSBundle *)bundle {
+    NSString *bundleVersion = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleShortVersionString];
     
-    if (!applicationVersion) {
-        applicationVersion = [applicationBundle objectForInfoDictionaryKey: ZeroKitApplicationBundleVersion];
+    if (!bundleVersion) {
+        bundleVersion = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleVersion];
     }
     
-    return applicationVersion;
+    return bundleVersion;
 }
 
 #pragma mark -

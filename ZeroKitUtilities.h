@@ -19,6 +19,10 @@
 
 #pragma mark -
 
++ (NSString *)versionOfBundle: (NSBundle *)bundle;
+
+#pragma mark -
+
 + (void)registerDefaultsForBundle: (NSBundle *)bundle;
 
 #pragma mark -
