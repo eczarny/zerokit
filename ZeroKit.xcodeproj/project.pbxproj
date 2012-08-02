@@ -421,7 +421,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ZeroKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -531,6 +531,7 @@
 			baseConfigurationReference = 07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer: Eric Czarny (BZBL6437G2)";
+				COMBINE_HIDPI_IMAGES = YES;
 				PROVISIONING_PROFILE = "913F3134-D5F3-4460-9B0B-52DEC36FF649";
 				VERSION_INFO_FILE = "";
 			};
@@ -541,6 +542,7 @@
 			baseConfigurationReference = 07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
 				PROVISIONING_PROFILE = "";
 				VERSION_INFO_FILE = "";
 			};
