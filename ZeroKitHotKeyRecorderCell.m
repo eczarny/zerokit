@@ -45,6 +45,7 @@
         myHotKeyName = nil;
         myHotKey = nil;
         myDelegate = nil;
+        myAdditionalHotKeyValidators = [[NSArray alloc] init];
         myModifierFlags = 0;
         isRecording = NO;
         myTrackingArea = nil;
@@ -105,6 +106,16 @@
 
 #pragma mark -
 
+- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators {
+    if (myAdditionalHotKeyValidators != additionalHotKeyValidators) {
+        [myAdditionalHotKeyValidators release];
+        
+        myAdditionalHotKeyValidators = [additionalHotKeyValidators retain];
+    }
+}
+
+#pragma mark -
+
 - (BOOL)resignFirstResponder {
     if (isRecording) {
         PopSymbolicHotKeyMode(myHotKeyMode);
@@ -130,7 +141,7 @@
             ZeroKitHotKey *hotKey = [[[ZeroKitHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags] autorelease];
             NSError *error = nil;
             
-            if (![ZeroKitHotKeyValidator isHotKey: hotKey validWithError: &error]) {
+            if (![ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: myAdditionalHotKeyValidators error: &error]) {
                 [[NSAlert alertWithError: error] runModal];
             } else {
                 [hotKey setHotKeyName: myHotKeyName];
@@ -269,6 +280,7 @@
 
 - (void)dealloc {
     [myHotKey release];
+    [myAdditionalHotKeyValidators release];
     [myTrackingArea release];
     
     [super dealloc];

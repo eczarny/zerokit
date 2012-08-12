@@ -4,6 +4,8 @@
 
 @interface ZeroKitHotKeyValidator : NSObject
 
-+ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey validWithError: (NSError **)error;
++ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey error: (NSError **)error;
+
++ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error;
 
 @end

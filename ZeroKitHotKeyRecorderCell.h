@@ -8,6 +8,7 @@
     NSString *myHotKeyName;
     ZeroKitHotKey *myHotKey;
     id<ZeroKitHotKeyRecorderDelegate> myDelegate;
+    NSArray *myAdditionalHotKeyValidators;
     NSInteger myModifierFlags;
     BOOL isRecording;
     NSTrackingArea *myTrackingArea;
@@ -35,6 +36,10 @@
 - (id<ZeroKitHotKeyRecorderDelegate>)delegate;
 
 - (void)setDelegate: (id<ZeroKitHotKeyRecorderDelegate>)delegate;
+
+#pragma mark -
+
+- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators;
 
 #pragma mark -
 

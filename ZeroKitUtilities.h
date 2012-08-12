@@ -1,4 +1,4 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 #define ZeroKitLocalizedString(string) NSLocalizedString(string, string)
 #define ZeroKitLocalizedStringFromCurrentBundle(string) NSLocalizedStringFromTableInBundle(string, nil, [NSBundle bundleForClass: [self class]], string)

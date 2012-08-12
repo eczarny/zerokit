@@ -1,6 +1,6 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
-@protocol ZeroKitPreferencePaneProtocol
+@protocol ZeroKitPreferencePaneProtocol<NSObject>
 
 - (void)preferencePaneDidLoad;
 

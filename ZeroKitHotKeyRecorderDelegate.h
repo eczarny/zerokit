@@ -1,8 +1,8 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class ZeroKitHotKeyRecorder, ZeroKitHotKey;
 
-@protocol ZeroKitHotKeyRecorderDelegate
+@protocol ZeroKitHotKeyRecorderDelegate<NSObject>
 
 - (void)hotKeyRecorder: (ZeroKitHotKeyRecorder *)hotKeyRecorder didReceiveNewHotKey: (ZeroKitHotKey *)hotKey;
 

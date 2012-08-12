@@ -1,4 +1,4 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
 @class ZeroKitHotKeyAction;
@@ -67,5 +67,11 @@
 #pragma mark -
 
 + (BOOL)validCocoaModifiers: (NSInteger)modifiers;
+
+#pragma mark -
+
+- (BOOL)isEqual: (id)object;
+
+- (BOOL)isEqualToHotKey: (ZeroKitHotKey *)hotKey;
 
 @end

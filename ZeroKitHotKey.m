@@ -162,6 +162,36 @@
 
 #pragma mark -
 
+- (BOOL)isEqual: (id)object {
+    if (object == self) {
+        return YES;
+    }
+    
+    if (!object || ![object isKindOfClass: [self class]]) {
+        return NO;
+    }
+    
+    return [self isEqualToHotKey: object];
+}
+
+- (BOOL)isEqualToHotKey: (ZeroKitHotKey *)hotKey {
+    if (hotKey == self) {
+        return YES;
+    }
+    
+    if ([hotKey hotKeyCode] != myHotKeyCode) {
+        return NO;
+    }
+    
+    if ([hotKey hotKeyModifiers] != myHotKeyModifiers) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark -
+
 - (void)dealloc {
     [myHotKeyName release];
     [myHotKeyAction release];

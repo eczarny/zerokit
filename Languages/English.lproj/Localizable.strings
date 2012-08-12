@@ -10,4 +10,5 @@
 "Hot key %@ already in use." = "Hot key %@ already in use.";
 "The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences." = "The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences.";
 "The hot key \"%@\" is already used in the menu." = "The hot key \"%@\" is already used in the menu.";
+"The hot key \"%@\" is already in use. Please select a new hot key." = "The hot key \"%@\" is already in use. Please select a new hot key.";
 "OK" = "OK";

@@ -55,6 +55,12 @@
 
 #pragma mark -
 
+- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators {
+    [MyCell setAdditionalHotKeyValidators: additionalHotKeyValidators];
+}
+
+#pragma mark -
+
 - (BOOL)acceptsFirstResponder {
     return YES;
 }

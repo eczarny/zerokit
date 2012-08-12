@@ -1,4 +1,5 @@
 #import "ZeroKitHotKeyValidator.h"
+#import "ZeroKitHotKeyValidatorProtocol.h"
 #import "ZeroKitHotKeyTranslator.h"
 #import "ZeroKitHotKey.h"
 #import "ZeroKitUtilities.h"
@@ -27,7 +28,11 @@
 
 @implementation ZeroKitHotKeyValidator
 
-+ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey validWithError: (NSError **)error {
++ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey error: (NSError **)error {
+    return [ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: [NSArray array] error: error];
+}
+
++ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error {
     CFArrayRef hotKeys = NULL;
     OSStatus err = CopySymbolicHotKeys(&hotKeys);
     
@@ -54,6 +59,18 @@
                 *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
                                                      description: @"Hot key %@ already in use."
                                               recoverySuggestion: @"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."];
+            }
+            
+            return NO;
+        }
+    }
+    
+    for (id<ZeroKitHotKeyValidatorProtocol> validator in validators) {
+        if ([validator conformsToProtocol: @protocol(ZeroKitHotKeyValidatorProtocol)] && ![validator isHotKeyValid: hotKey]) {
+            if (error) {
+                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                                                     description: @"Hot key %@ already in use."
+                                              recoverySuggestion: @"The hot key \"%@\" is already in use. Please select a new hot key."];
             }
             
             return NO;

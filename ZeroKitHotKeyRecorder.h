@@ -23,4 +23,8 @@
 
 - (void)setDelegate: (id<ZeroKitHotKeyRecorderDelegate>)delegate;
 
+#pragma mark -
+
+- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators;
+
 @end
