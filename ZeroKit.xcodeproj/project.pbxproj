@@ -534,9 +534,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Eric Czarny";
 				COMBINE_HIDPI_IMAGES = YES;
-				PROVISIONING_PROFILE = "";
 				VERSION_INFO_FILE = "";
 			};
 			name = Development;
@@ -545,9 +543,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Eric Czarny";
 				COMBINE_HIDPI_IMAGES = YES;
-				PROVISIONING_PROFILE = "";
 				VERSION_INFO_FILE = "";
 			};
 			name = Release;
