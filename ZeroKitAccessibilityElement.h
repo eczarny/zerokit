@@ -13,7 +13,11 @@
 
 #pragma mark -
 
+- (NSString *)stringValueOfAttribute: (CFStringRef)attribute;
+
 - (AXValueRef)valueOfAttribute: (CFStringRef)attribute type: (AXValueType)type;
+
+#pragma mark -
 
 - (void)setValue: (AXValueRef)value forAttribute: (CFStringRef)attribute;
 

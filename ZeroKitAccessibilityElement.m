@@ -50,6 +50,23 @@
 
 #pragma mark -
 
+- (NSString *)stringValueOfAttribute: (CFStringRef)attribute {
+    if (CFGetTypeID(myElement) == AXUIElementGetTypeID()) {
+        NSString *value = nil;
+        AXError result;
+        
+        result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&value);
+        
+        if (result == kAXErrorSuccess) {
+            return value;
+        } else {
+            NSLog(@"There was a problem getting the string value of the specified attribute: %@", attribute);
+        }
+    }
+    
+    return nil;
+}
+
 - (AXValueRef)valueOfAttribute: (CFStringRef)attribute type: (AXValueType)type {
     if (CFGetTypeID(myElement) == AXUIElementGetTypeID()) {
         CFTypeRef value;
@@ -66,6 +83,8 @@
     
     return NULL;
 }
+
+#pragma mark -
 
 - (void)setValue: (AXValueRef)value forAttribute: (CFStringRef)attribute {
     AXError result = AXUIElementSetAttributeValue(myElement, attribute, (CFTypeRef *)value);
