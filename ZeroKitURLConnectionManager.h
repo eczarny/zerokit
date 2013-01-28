@@ -17,7 +17,7 @@
 
 - (NSArray *)activeConnectionIdentifiers;
 
-- (int)numberOfActiveConnections;
+- (NSInteger)numberOfActiveConnections;
 
 #pragma mark -
 

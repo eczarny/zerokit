@@ -425,7 +425,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ZeroKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -534,8 +534,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B27113777FF0058CFF9 /* ZeroKitDevelopment.xcconfig */;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				VERSION_INFO_FILE = "";
 			};
 			name = Development;
 		};
@@ -543,8 +541,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B28113777FF0058CFF9 /* ZeroKitRelease.xcconfig */;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				VERSION_INFO_FILE = "";
 			};
 			name = Release;
 		};
@@ -552,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B24113777FF0058CFF9 /* CommonDevelopment.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Development;
 		};
@@ -559,6 +556,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07172B25113777FF0058CFF9 /* CommonRelease.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};

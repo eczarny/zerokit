@@ -102,7 +102,7 @@
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse: (NSURLResponse *)response {
     if([response respondsToSelector: @selector(statusCode)]) {
-        int statusCode = [(NSHTTPURLResponse *)response statusCode];
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
         
         if(statusCode >= 400) {
             NSError *error = [NSError errorWithDomain: @"HTTP" code: statusCode userInfo: nil];

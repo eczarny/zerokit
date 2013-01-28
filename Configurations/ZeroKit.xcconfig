@@ -9,3 +9,5 @@ GCC_PREFIX_HEADER = ZeroKit.pch
 GCC_ENABLE_OBJC_GC = supported
 
 INSTALL_PATH = @loader_path/../Frameworks
+
+COMBINE_HIDPI_IMAGES = YES

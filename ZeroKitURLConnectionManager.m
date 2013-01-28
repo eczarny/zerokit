@@ -58,7 +58,7 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
     return [myConnections allKeys];
 }
 
-- (int)numberOfActiveConnections {
+- (NSInteger)numberOfActiveConnections {
     return [myConnections count];
 }
 
