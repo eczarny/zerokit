@@ -120,13 +120,13 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     
     [self buildKeyCodeConvertorDictionary];
     
-    keyCodeTranslations = [mySpecialHotKeyTranslations objectForKey: ZeroKitHotKeyTranslationsKey];
+    keyCodeTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyTranslationsKey];
     
-    result = [keyCodeTranslations objectForKey: [NSString stringWithFormat: @"%ld", keyCode]];
+    result = keyCodeTranslations[[NSString stringWithFormat: @"%ld", keyCode]];
     
     if (result) {
-        NSDictionary *glyphTranslations = [mySpecialHotKeyTranslations objectForKey: ZeroKitHotKeyGlyphTranslationsKey];
-        id translatedGlyph = [glyphTranslations objectForKey: result];
+        NSDictionary *glyphTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyGlyphTranslationsKey];
+        id translatedGlyph = glyphTranslations[result];
         
         if (translatedGlyph) {
             result = [NSString stringWithFormat: @"%ld", [translatedGlyph integerValue]];

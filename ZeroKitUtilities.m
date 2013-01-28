@@ -40,7 +40,7 @@
 + (NSString *)applicationSupportPathForBundle: (NSBundle *)bundle {
     NSString *applicationName = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *applicationSupportPath = ([paths count] > 0) ? [paths objectAtIndex: 0] : NSTemporaryDirectory();
+    NSString *applicationSupportPath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     applicationSupportPath = [applicationSupportPath stringByAppendingPathComponent: applicationName];
@@ -204,8 +204,8 @@
     [textShadow setShadowOffset: NSMakeSize(0.0f, -1.0)];
     [textShadow setShadowBlurRadius: 0.0f];
     
-    [stringAttributes setObject: paragraphStyle forKey: NSParagraphStyleAttributeName];
-    [stringAttributes setObject: textShadow forKey: NSShadowAttributeName];
+    stringAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
+    stringAttributes[NSShadowAttributeName] = textShadow;
     
     return stringAttributes;
 }

@@ -135,7 +135,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 }
 
 - (NSToolbarItem *)toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag {
-    return [myToolbarItems objectForKey: itemIdentifier];
+    return myToolbarItems[itemIdentifier];
 }
 
 @end
@@ -179,8 +179,8 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
         
         [preferencesWindow setFrame: preferencesWindowFrame display: YES animate: YES];
         
-        NSDictionary *preferencePaneViewAnimation = [NSDictionary dictionaryWithObjectsAndKeys: preferencePaneView, NSViewAnimationTargetKey, NSViewAnimationFadeInEffect, NSViewAnimationEffectKey, nil];
-        NSArray *preferencePaneViewAnimations = [NSArray arrayWithObjects: preferencePaneViewAnimation, nil];
+        NSDictionary *preferencePaneViewAnimation = @{NSViewAnimationTargetKey: preferencePaneView, NSViewAnimationEffectKey: NSViewAnimationFadeInEffect};
+        NSArray *preferencePaneViewAnimations = @[preferencePaneViewAnimation];
         NSViewAnimation *viewAnimation = [[NSViewAnimation alloc] initWithViewAnimations: preferencePaneViewAnimations];
         
         [preferencesWindow setContentView: preferencePaneView];
@@ -205,7 +205,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 - (void)preparePreferencesWindow {
     NSWindow *preferencesWindow = [self window];
     NSArray *preferencePaneOrder = [myPreferencePaneManager preferencePaneOrder];
-    NSString *preferencePaneName = [preferencePaneOrder objectAtIndex: 0];
+    NSString *preferencePaneName = preferencePaneOrder[0];
     
     if (![myPreferencePaneManager preferencePanesAreReady]) {
         NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
@@ -246,7 +246,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
         [toolbarItem setTarget: self];
         [toolbarItem setAction: @selector(toolbarItemWasSelected:)];
         
-        [myToolbarItems setObject: toolbarItem forKey: preferencePaneName];
+        myToolbarItems[preferencePaneName] = toolbarItem;
         
         [toolbarItem release];
     }

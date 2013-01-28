@@ -472,8 +472,8 @@
     NSMutableDictionary *attributes = [ZeroKitUtilities createStringAttributesWithShadow];
     NSRect labelRect = rect;
     
-    [attributes setObject: [NSFont systemFontOfSize: [NSFont smallSystemFontSize]] forKey: NSFontAttributeName];
-    [attributes setObject: foregroundColor forKey: NSForegroundColorAttributeName];
+    attributes[NSFontAttributeName] = [NSFont systemFontOfSize: [NSFont smallSystemFontSize]];
+    attributes[NSForegroundColorAttributeName] = foregroundColor;
     
     labelRect.origin.y = -(NSMidY(rect) - [string sizeWithAttributes: attributes].height / 2.0f);
     

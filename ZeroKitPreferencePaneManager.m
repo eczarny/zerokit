@@ -54,8 +54,8 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
     NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
     NSString *path = [applicationBundle pathForResource: ZeroKitPreferencePanesFile ofType: ZeroKitPropertyListFileExtension];
     NSDictionary *preferencePaneDictionary = [[[NSMutableDictionary alloc] initWithContentsOfFile: path] autorelease];
-    NSDictionary *preferencePanes = [preferencePaneDictionary objectForKey: ZeroKitPreferencePanesKey];
-    NSArray *preferencePaneOrder = [preferencePaneDictionary objectForKey: ZeroKitPreferencePaneOrderKey];
+    NSDictionary *preferencePanes = preferencePaneDictionary[ZeroKitPreferencePanesKey];
+    NSArray *preferencePaneOrder = preferencePaneDictionary[ZeroKitPreferencePaneOrderKey];
     NSEnumerator *preferencePaneNameEnumerator = [preferencePanes keyEnumerator];
     NSEnumerator *preferencePaneNameOrderEnumerator = [preferencePaneOrder objectEnumerator];
     NSString *preferencePaneName;
@@ -65,7 +65,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
     [myPreferencePanes removeAllObjects];
     
     while ((preferencePaneName = [preferencePaneNameEnumerator nextObject])) {
-        NSString *preferencePaneClassName = [preferencePanes objectForKey: preferencePaneName];
+        NSString *preferencePaneClassName = preferencePanes[preferencePaneName];
         
         if (preferencePaneClassName) {
             Class preferencePaneClass = [applicationBundle classNamed: preferencePaneClassName];
@@ -78,7 +78,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
                     
                     [preferencePane preferencePaneDidLoad];
                     
-                    [myPreferencePanes setObject: preferencePane forKey: preferencePaneName];
+                    myPreferencePanes[preferencePaneName] = preferencePane;
                 } else {
                     NSLog(@"Failed initializing preference pane named: %@", preferencePaneName);
                 }
@@ -93,7 +93,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
     [myPreferencePaneOrder removeAllObjects];
     
     while ((preferencePaneName = [preferencePaneNameOrderEnumerator nextObject])) {
-        if ([myPreferencePanes objectForKey: preferencePaneName]) {
+        if (myPreferencePanes[preferencePaneName]) {
             NSLog(@"Adding %@ to the preference pane order.", preferencePaneName);
             
             [myPreferencePaneOrder addObject: preferencePaneName];
@@ -106,7 +106,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 #pragma mark -
 
 - (id<ZeroKitPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
-    return [myPreferencePanes objectForKey: name];
+    return myPreferencePanes[name];
 }
 
 #pragma mark -

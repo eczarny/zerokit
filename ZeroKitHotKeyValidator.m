@@ -29,7 +29,7 @@
 @implementation ZeroKitHotKeyValidator
 
 + (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey error: (NSError **)error {
-    return [ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: [NSArray array] error: error];
+    return [ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: @[] error: error];
 }
 
 + (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error {
@@ -116,14 +116,11 @@
     NSString *hotKeyString = [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     
-    [userInfo setObject: [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(description), hotKeyString]
-                 forKey: NSLocalizedDescriptionKey];
+    userInfo[NSLocalizedDescriptionKey] = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(description), hotKeyString];
     
-    [userInfo setObject: [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(recoverySuggestion), hotKeyString]
-                 forKey: NSLocalizedRecoverySuggestionErrorKey];
+    userInfo[NSLocalizedRecoverySuggestionErrorKey] = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(recoverySuggestion), hotKeyString];
     
-    [userInfo setObject: [NSArray arrayWithObject: ZeroKitLocalizedStringFromCurrentBundle(@"OK")]
-                 forKey: NSLocalizedRecoveryOptionsErrorKey];
+    userInfo[NSLocalizedRecoveryOptionsErrorKey] = @[ZeroKitLocalizedStringFromCurrentBundle(@"OK")];
     
     return [NSError errorWithDomain: NSCocoaErrorDomain code: 0 userInfo: userInfo];
 }
