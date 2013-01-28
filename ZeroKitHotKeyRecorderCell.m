@@ -2,6 +2,7 @@
 #import "ZeroKitHotKey.h"
 #import "ZeroKitHotKeyTranslator.h"
 #import "ZeroKitHotKeyValidator.h"
+#import "ZeroKitHotKeyRecorder.h"
 #import "ZeroKitHotKeyRecorderDelegate.h"
 #import "ZeroKitUtilities.h"
 
@@ -45,7 +46,7 @@
         myHotKeyName = nil;
         myHotKey = nil;
         myDelegate = nil;
-        myAdditionalHotKeyValidators = [[NSArray alloc] init];
+        myAdditionalHotKeyValidators = [NSArray new];
         myModifierFlags = 0;
         isRecording = NO;
         myTrackingArea = nil;
@@ -60,9 +61,8 @@
 
 - (void)setHotKeyRecorder: (ZeroKitHotKeyRecorder *)hotKeyRecorder {
     if (myHotKeyRecorder != hotKeyRecorder) {
-        [myHotKeyRecorder release];
         
-        myHotKeyRecorder = [hotKeyRecorder retain];
+        myHotKeyRecorder = hotKeyRecorder;
     }
 }
 
@@ -74,9 +74,8 @@
 
 - (void)setHotKeyName: (NSString *)hotKeyName {
     if (myHotKeyName != hotKeyName) {
-        [myHotKeyName release];
         
-        myHotKeyName = [hotKeyName retain];
+        myHotKeyName = hotKeyName;
     }
 }
 
@@ -88,9 +87,8 @@
 
 - (void)setHotKey: (ZeroKitHotKey *)hotKey {
     if (myHotKey != hotKey) {
-        [myHotKey release];
         
-        myHotKey = [hotKey retain];
+        myHotKey = hotKey;
     }
 }
 
@@ -108,9 +106,8 @@
 
 - (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators {
     if (myAdditionalHotKeyValidators != additionalHotKeyValidators) {
-        [myAdditionalHotKeyValidators release];
         
-        myAdditionalHotKeyValidators = [additionalHotKeyValidators retain];
+        myAdditionalHotKeyValidators = additionalHotKeyValidators;
     }
 }
 
@@ -138,7 +135,7 @@
         NSString *characters = [[event charactersIgnoringModifiers] uppercaseString];
         
         if ([characters length]) {
-            ZeroKitHotKey *hotKey = [[[ZeroKitHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags] autorelease];
+            ZeroKitHotKey *hotKey = [[ZeroKitHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags];
             NSError *error = nil;
             
             if (![ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: myAdditionalHotKeyValidators error: &error]) {
@@ -276,16 +273,6 @@
     [self drawLabelInRect: frame];
 }
 
-#pragma mark -
-
-- (void)dealloc {
-    [myHotKey release];
-    [myAdditionalHotKeyValidators release];
-    [myTrackingArea release];
-    
-    [super dealloc];
-}
-
 @end
 
 #pragma mark -
@@ -325,9 +312,9 @@
     }
     
     if (!isRecording && isMouseDown && !isMouseAboveBadge) {
-        gradient = [[[NSGradient alloc] initWithStartingColor: gradientEndingColor endingColor: gradientStartingColor] autorelease];
+        gradient = [[NSGradient alloc] initWithStartingColor: gradientEndingColor endingColor: gradientStartingColor];
     } else {
-        gradient = [[[NSGradient alloc] initWithStartingColor: gradientStartingColor endingColor: gradientEndingColor] autorelease];
+        gradient = [[NSGradient alloc] initWithStartingColor: gradientStartingColor endingColor: gradientEndingColor];
     }
     
     [gradient drawInRect: rect angle: 90.0f];
@@ -384,7 +371,7 @@
     
     [[NSColor whiteColor] setStroke];
     
-    NSBezierPath *cross = [[[NSBezierPath alloc] init] autorelease];
+    NSBezierPath *cross = [NSBezierPath new];
     
     [cross setLineWidth: horizontalScale * 1.4f];
     
@@ -404,7 +391,7 @@
     
     [[NSGraphicsContext currentContext] saveGraphicsState];
     
-    NSBezierPath *swoosh = [[[NSBezierPath alloc] init] autorelease];
+    NSBezierPath *swoosh = [NSBezierPath new];
     
     [swoosh setLineWidth: horizontalScale];
     

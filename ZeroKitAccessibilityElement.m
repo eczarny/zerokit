@@ -21,11 +21,14 @@
 #pragma mark -
 
 + (ZeroKitAccessibilityElement *)systemWideElement {
-    ZeroKitAccessibilityElement *systemWideElement = [[[ZeroKitAccessibilityElement alloc] init] autorelease];
+    ZeroKitAccessibilityElement *element = [ZeroKitAccessibilityElement new];
+    AXUIElementRef systemWideElement = AXUIElementCreateSystemWide();
     
-    [systemWideElement setElement: AXUIElementCreateSystemWide()];
+    [element setElement: systemWideElement];
     
-    return systemWideElement;
+    CFRelease(systemWideElement);
+    
+    return element;
 }
 
 #pragma mark -
@@ -38,9 +41,11 @@
     result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&childElement);
     
     if (result == kAXErrorSuccess) {
-        element = [[[ZeroKitAccessibilityElement alloc] init] autorelease];
+        element = [ZeroKitAccessibilityElement new];
         
         [element setElement: childElement];
+        
+        CFRelease(childElement);
     } else {
         NSLog(@"Unable to obtain the accessibility element with the specified attribute: %@", attribute);
     }
@@ -52,13 +57,13 @@
 
 - (NSString *)stringValueOfAttribute: (CFStringRef)attribute {
     if (CFGetTypeID(myElement) == AXUIElementGetTypeID()) {
-        NSString *value = nil;
+        CFTypeRef value;
         AXError result;
         
-        result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&value);
+        result = AXUIElementCopyAttributeValue(myElement, attribute, &value);
         
         if (result == kAXErrorSuccess) {
-            return value;
+            return CFBridgingRelease(value);
         } else {
             NSLog(@"There was a problem getting the string value of the specified attribute: %@", attribute);
         }
@@ -94,6 +99,14 @@
     }
 }
 
+#pragma mark -
+
+- (void)dealloc {
+    if (myElement != NULL) {
+        CFRelease(myElement);
+    }
+}
+
 @end
 
 #pragma mark -
@@ -101,7 +114,11 @@
 @implementation ZeroKitAccessibilityElement (ZeroKitAccessibilityElementPrivate)
 
 - (void)setElement: (AXUIElementRef)element {
-    myElement = element;
+    if (myElement != NULL) {
+        CFRelease(myElement);
+    }
+    
+    myElement = CFRetain(element);
 }
 
 @end

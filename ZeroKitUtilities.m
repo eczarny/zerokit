@@ -30,7 +30,7 @@
 + (void)registerDefaultsForBundle: (NSBundle *)bundle {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *path = [bundle pathForResource: ZeroKitDefaultPreferencesFile ofType: ZeroKitPropertyListFileExtension];
-    NSDictionary *applicationDefaults = [[[NSDictionary alloc] initWithContentsOfFile: path] autorelease];
+    NSDictionary *applicationDefaults = [[NSDictionary alloc] initWithContentsOfFile: path];
     
     [defaults registerDefaults: applicationDefaults];
 }
@@ -66,7 +66,7 @@
     if (preferencePaneName) {
         preferencePaneName = [preferencePaneName stringByAppendingFormat: @".%@", ZeroKitPreferencePaneExtension];
         
-        for (NSString *path in paths) {
+        for (__strong NSString *path in paths) {
             path = [path stringByAppendingPathComponent: preferencePaneName];
             
             if (path && [fileManager fileExistsAtPath: path isDirectory: nil]) {
@@ -89,22 +89,24 @@
 + (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     BOOL result = NO;
     
     if (sharedFileList) {
         NSArray *sharedFileListArray = nil;
         UInt32 seedValue;
         
-        sharedFileListArray = (NSArray *)LSSharedFileListCopySnapshot(sharedFileList, &seedValue);
+        sharedFileListArray = CFBridgingRelease(LSSharedFileListCopySnapshot(sharedFileList, &seedValue));
         
         for (id sharedFile in sharedFileListArray) {
-            LSSharedFileListItemRef sharedFileListItem = (LSSharedFileListItemRef)sharedFile;
+            LSSharedFileListItemRef sharedFileListItem = (__bridge LSSharedFileListItemRef)sharedFile;
             
             LSSharedFileListItemResolve(sharedFileListItem, 0, (CFURLRef *)&applicationPathURL, NULL);
             
             if (applicationPathURL != NULL) {
-                NSString *resolvedApplicationPath = [(NSURL *)applicationPathURL path];
+                NSString *resolvedApplicationPath = [(__bridge NSURL *)applicationPathURL path];
+                
+                CFRelease(applicationPathURL);
                 
                 if ([resolvedApplicationPath compare: applicationPath] == NSOrderedSame) {
                     result = YES;
@@ -114,7 +116,7 @@
             }
         }
         
-        CFRelease(sharedFileListArray);
+        CFRelease(sharedFileList);
     } else {
         NSLog(@"Unable to create the shared file list.");
     }
@@ -127,7 +129,7 @@
 + (void)enableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     
     if (sharedFileList) {
         LSSharedFileListItemRef sharedFileListItem = LSSharedFileListInsertItemURL(sharedFileList, kLSSharedFileListItemLast, NULL, NULL, applicationPathURL, NULL, NULL);
@@ -145,21 +147,21 @@
 + (void)disableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL = (CFURLRef)[NSURL fileURLWithPath: applicationPath];
+    CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     
     if (sharedFileList) {
         NSArray *sharedFileListArray = nil;
         UInt32 seedValue;
         
-        sharedFileListArray = (NSArray *)LSSharedFileListCopySnapshot(sharedFileList, &seedValue);
+        sharedFileListArray = CFBridgingRelease(LSSharedFileListCopySnapshot(sharedFileList, &seedValue));
         
         for (id sharedFile in sharedFileListArray) {
-            LSSharedFileListItemRef sharedFileListItem = (LSSharedFileListItemRef)sharedFile;
+            LSSharedFileListItemRef sharedFileListItem = (__bridge LSSharedFileListItemRef)sharedFile;
             
             LSSharedFileListItemResolve(sharedFileListItem, 0, (CFURLRef *)&applicationPathURL, NULL);
             
             if (applicationPathURL != NULL) {
-                NSString *resolvedApplicationPath = [(NSURL *)applicationPathURL path];
+                NSString *resolvedApplicationPath = [(__bridge NSURL *)applicationPathURL path];
                 
                 if ([resolvedApplicationPath compare: applicationPath] == NSOrderedSame) {
                     LSSharedFileListItemRemove(sharedFileList, sharedFileListItem);
@@ -167,7 +169,6 @@
             }
         }
         
-        CFRelease(sharedFileListArray);
         CFRelease(sharedFileList);
     } else {
         NSLog(@"Unable to create the shared file list.");
@@ -177,7 +178,7 @@
 #pragma mark -
 
 + (NSImage *)imageFromResource: (NSString *)resource inBundle: (NSBundle *)bundle {
-    return [[[NSImage alloc] initWithContentsOfFile: [bundle pathForImageResource: resource]] autorelease];
+    return [[NSImage alloc] initWithContentsOfFile: [bundle pathForImageResource: resource]];
 }
 
 #pragma mark -
@@ -193,9 +194,9 @@
 #pragma mark -
 
 + (NSMutableDictionary *)createStringAttributesWithShadow {
-    NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
-    NSShadow *textShadow = [[[NSShadow alloc] init] autorelease];
-    NSMutableDictionary *stringAttributes = [NSMutableDictionary dictionary];
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSShadow *textShadow = [NSShadow new];
+    NSMutableDictionary *stringAttributes = [NSMutableDictionary new];
     
     [paragraphStyle setLineBreakMode: NSLineBreakByTruncatingTail];
     [paragraphStyle setAlignment: NSCenterTextAlignment];

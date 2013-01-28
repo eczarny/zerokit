@@ -4,11 +4,11 @@
 
 + (NSString *)stringByGeneratingUUID {
     CFUUIDRef UUIDReference = CFUUIDCreate(nil);
-    CFStringRef temporaryUUIDString = CFUUIDCreateString(nil, UUIDReference);
+    NSString *result = CFBridgingRelease(CFUUIDCreateString(nil, UUIDReference));
     
     CFRelease(UUIDReference);
     
-    return [NSMakeCollectable(temporaryUUIDString) autorelease];
+    return result;
 }
 
 #pragma mark -

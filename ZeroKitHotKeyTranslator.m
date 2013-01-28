@@ -56,24 +56,10 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 
 #pragma mark -
 
-+ (id)allocWithZone: (NSZone *)zone {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [super allocWithZone: zone];
-            
-            return sharedInstance;
-        }
-    }
-    
-    return nil;
-}
-
-#pragma mark -
-
 + (ZeroKitHotKeyTranslator *)sharedTranslator {
     @synchronized(self) {
         if (!sharedInstance) {
-            [[self alloc] init];
+            sharedInstance = [self new];
         }
     }
     
@@ -93,7 +79,7 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 #pragma mark -
 
 + (NSString *)translateCocoaModifiers: (NSInteger)modifiers {
-    NSString *modifierGlyphs = [NSString string];
+    NSString *modifierGlyphs = @"";
     
     if (modifiers & NSControlKeyMask) {
         modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyControlGlyph];
@@ -167,6 +153,8 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
         }
         
         result = [[NSString stringWithCharacters: chars length: 1] uppercaseString];
+        
+        CFRelease(inputSource);
     }
     
     return result;
@@ -178,14 +166,6 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     NSInteger modifiers = [ZeroKitHotKeyTranslator convertCarbonModifiersToCocoa: [hotKey hotKeyModifiers]];
     
     return [NSString stringWithFormat: @"%@%@", [ZeroKitHotKeyTranslator translateCocoaModifiers: modifiers], [self translateKeyCode: [hotKey hotKeyCode]]];
-}
-
-#pragma mark -
-
-- (void)dealloc {
-    [mySpecialHotKeyTranslations release];
-    
-    [super dealloc];
 }
 
 @end

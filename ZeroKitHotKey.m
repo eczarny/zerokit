@@ -22,11 +22,11 @@
 - (id)initWithCoder: (NSCoder *)coder {
     if (self = [super init]) {
         if ([coder allowsKeyedCoding]) {
-            myHotKeyName = [[coder decodeObjectForKey: @"name"] retain];
+            myHotKeyName = [coder decodeObjectForKey: @"name"];
             myHotKeyCode = [coder decodeIntegerForKey: @"keyCode"];
             myHotKeyModifiers = [coder decodeIntegerForKey: @"modifiers"];
         } else {
-            myHotKeyName = [[coder decodeObject] retain];
+            myHotKeyName = [coder decodeObject];
             
             [coder decodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyCode];
             [coder decodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyModifiers];
@@ -63,11 +63,11 @@
 #pragma mark -
 
 + (ZeroKitHotKey *)clearedHotKey {
-    return [[[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0] autorelease];
+    return [[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
 }
 
 + (ZeroKitHotKey *)clearedHotKeyWithName: (NSString *)name {
-    ZeroKitHotKey *hotKey = [[[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0] autorelease];
+    ZeroKitHotKey *hotKey = [[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
     
     [hotKey setHotKeyName: name];
     
@@ -92,9 +92,7 @@
 
 - (void)setHotKeyName: (NSString *)hotKeyName {
     if (myHotKeyName != hotKeyName) {
-        [myHotKeyName release];
-        
-        myHotKeyName = [hotKeyName retain];
+        myHotKeyName = hotKeyName;
     }
 }
 
@@ -106,9 +104,7 @@
 
 - (void)setHotKeyAction: (ZeroKitHotKeyAction *)hotKeyAction {
     if (myHotKeyAction != hotKeyAction) {
-        [myHotKeyAction release];
-        
-        myHotKeyAction = [hotKeyAction retain];
+        myHotKeyAction = hotKeyAction;
     }
 }
 
@@ -188,15 +184,6 @@
     }
     
     return YES;
-}
-
-#pragma mark -
-
-- (void)dealloc {
-    [myHotKeyName release];
-    [myHotKeyAction release];
-    
-    [super dealloc];
 }
 
 @end

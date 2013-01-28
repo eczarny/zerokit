@@ -7,7 +7,7 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
-        myConnections = [[NSMutableDictionary alloc] init];
+        myConnections = [NSMutableDictionary new];
     }
     
     return self;
@@ -15,24 +15,10 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 #pragma mark -
 
-+ (id)allocWithZone: (NSZone *)zone {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [super allocWithZone: zone];
-            
-            return sharedInstance;
-        }
-    }
-    
-    return nil;
-}
-
-#pragma mark -
-
 + (ZeroKitURLConnectionManager *)sharedManager {
     @synchronized(self) {
         if (!sharedInstance) {
-            [[self alloc] init];
+            sharedInstance = [self new];
         }
     }
     
@@ -43,11 +29,9 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 - (NSString *)spawnConnectionWithURLRequest: (NSURLRequest *)request delegate: (id<ZeroKitURLConnectionDelegate>)delegate {
     ZeroKitURLConnection *newConnection = [[ZeroKitURLConnection alloc] initWithURLRequest: request delegate: delegate manager: self];
-    NSString *identifier = [[[newConnection identifier] retain] autorelease];
+    NSString *identifier = [newConnection identifier];
     
     myConnections[identifier] = newConnection;
-    
-    [newConnection release];
     
     return identifier;
 }
@@ -98,10 +82,6 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 - (void)dealloc {
     [self closeConnections];
-    
-    [myConnections release];
-    
-    [super dealloc];
 }
 
 @end

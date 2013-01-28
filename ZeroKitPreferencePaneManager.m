@@ -9,8 +9,8 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
-        myPreferencePanes = [[NSMutableDictionary alloc] init];
-        myPreferencePaneOrder = [[NSMutableArray alloc] init];
+        myPreferencePanes = [NSMutableDictionary new];
+        myPreferencePaneOrder = [NSMutableArray new];
     }
     
     return self;
@@ -18,24 +18,10 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 #pragma mark -
 
-+ (id)allocWithZone: (NSZone *)zone {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [super allocWithZone: zone];
-            
-            return sharedInstance;
-        }
-    }
-    
-    return nil;
-}
-
-#pragma mark -
-
 + (ZeroKitPreferencePaneManager *)sharedManager {
     @synchronized(self) {
         if (!sharedInstance) {
-            [[self alloc] init];
+            sharedInstance = [self new];
         }
     }
     
@@ -53,7 +39,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 - (void)loadPreferencePanes {
     NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
     NSString *path = [applicationBundle pathForResource: ZeroKitPreferencePanesFile ofType: ZeroKitPropertyListFileExtension];
-    NSDictionary *preferencePaneDictionary = [[[NSMutableDictionary alloc] initWithContentsOfFile: path] autorelease];
+    NSDictionary *preferencePaneDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
     NSDictionary *preferencePanes = preferencePaneDictionary[ZeroKitPreferencePanesKey];
     NSArray *preferencePaneOrder = preferencePaneDictionary[ZeroKitPreferencePaneOrderKey];
     NSEnumerator *preferencePaneNameEnumerator = [preferencePanes keyEnumerator];
@@ -71,7 +57,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
             Class preferencePaneClass = [applicationBundle classNamed: preferencePaneClassName];
             
             if (preferencePaneClass) {
-                id<ZeroKitPreferencePaneProtocol> preferencePane = [[[preferencePaneClass alloc] init] autorelease];
+                id<ZeroKitPreferencePaneProtocol> preferencePane = [preferencePaneClass new];
                 
                 if (preferencePane) {
                     [NSBundle loadNibNamed: preferencePaneClassName owner: preferencePane];
@@ -123,15 +109,6 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 - (NSArray *)preferencePaneOrder {
     return myPreferencePaneOrder;
-}
-
-#pragma mark -
-
-- (void)dealloc {
-    [myPreferencePanes release];
-    [myPreferencePaneOrder release];
-    
-    [super dealloc];
 }
 
 @end

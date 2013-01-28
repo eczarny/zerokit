@@ -36,7 +36,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super initWithWindowNibName: ZeroKitPreferencesWindowNibName])) {
-        myToolbarItems = [[NSMutableDictionary alloc] init];
+        myToolbarItems = [NSMutableDictionary new];
         myPreferencePaneManager = [ZeroKitPreferencePaneManager sharedManager];
         
         [self loadPreferencePanes];
@@ -47,24 +47,10 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-+ (id)allocWithZone: (NSZone *)zone {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [super allocWithZone: zone];
-            
-            return sharedInstance;
-        }
-    }
-    
-    return nil;
-}
-
-#pragma mark -
-
 + (ZeroKitPreferencesWindowController *)sharedController {
     @synchronized(self) {
         if (!sharedInstance) {
-            [[self alloc] init];
+            sharedInstance = [self new];
         }
     }
     
@@ -109,12 +95,6 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-- (void)dealloc {
-    [myToolbar release];
-    [myToolbarItems release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 
@@ -171,7 +151,6 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
         
         [preferencesWindow setContentView: transitionView];
         
-        [transitionView release]; 
         
         preferencesWindowFrame.size.height = [preferencePaneView frame].size.height + ([preferencesWindow frame].size.height - [[preferencesWindow contentView] frame].size.height);
         preferencesWindowFrame.size.width = [preferencePaneView frame].size.width;
@@ -190,7 +169,6 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
             [viewAnimation startAnimation];
         }
         
-        [viewAnimation release];
         
         [preferencesWindow setShowsResizeIndicator: YES];
         
@@ -248,7 +226,6 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
         
         myToolbarItems[preferencePaneName] = toolbarItem;
         
-        [toolbarItem release];
     }
     
     myToolbar = [[NSToolbar alloc] initWithIdentifier: bundleIdentifier];

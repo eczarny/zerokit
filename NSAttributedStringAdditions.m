@@ -15,7 +15,7 @@
     
     [attributedString endEditing];
     
-    return [attributedString autorelease];
+    return attributedString;
 }
 
 @end

@@ -14,7 +14,7 @@
 #pragma mark -
 
 + (ZeroKitHotKeyAction *)hotKeyActionFromTarget: (id)target selector: (SEL)selector {
-    return [[[ZeroKitHotKeyAction alloc] initWithTarget: target selector: selector] autorelease];
+    return [[ZeroKitHotKeyAction alloc] initWithTarget: target selector: selector];
 }
 
 #pragma mark -
@@ -25,7 +25,6 @@
     } else {
         NSLog(@"Unable to trigger hot key action, the target does not respond to the specified selector.");
     }
-
 }
 
 @end

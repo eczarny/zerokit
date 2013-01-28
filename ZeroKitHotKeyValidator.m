@@ -114,7 +114,7 @@
 
 + (NSError *)errorWithHotKey: (ZeroKitHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion {
     NSString *hotKeyString = [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
-    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    NSMutableDictionary *userInfo = [NSMutableDictionary new];
     
     userInfo[NSLocalizedDescriptionKey] = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(description), hotKeyString];
     
