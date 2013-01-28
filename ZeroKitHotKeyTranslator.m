@@ -96,19 +96,19 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     NSString *modifierGlyphs = [NSString string];
     
     if (modifiers & NSControlKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%d", ZeroKitHotKeyControlGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyControlGlyph];
     }
     
     if (modifiers & NSAlternateKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%d", ZeroKitHotKeyAlternateGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyAlternateGlyph];
     }
     
     if (modifiers & NSShiftKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%d", ZeroKitHotKeyShiftGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyShiftGlyph];
     }
     
     if (modifiers & NSCommandKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%d", ZeroKitHotKeyCommandGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyCommandGlyph];
     }
     
     return modifierGlyphs;
@@ -122,14 +122,14 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     
     keyCodeTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyTranslationsKey];
     
-    result = keyCodeTranslations[[NSString stringWithFormat: @"%ld", keyCode]];
+    result = keyCodeTranslations[[NSString stringWithFormat: @"%d", (UInt32)keyCode]];
     
     if (result) {
         NSDictionary *glyphTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyGlyphTranslationsKey];
         id translatedGlyph = glyphTranslations[result];
         
         if (translatedGlyph) {
-            result = [NSString stringWithFormat: @"%ld", [translatedGlyph integerValue]];
+            result = [NSString stringWithFormat: @"%C", (UInt16)[translatedGlyph integerValue]];
         }
     } else {
         TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource();
