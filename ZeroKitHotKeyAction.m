@@ -19,9 +19,9 @@
 
 #pragma mark -
 
-- (void)trigger {
+- (void)trigger: (id)sender {
     if ([myTarget respondsToSelector: mySelector]) {
-        [myTarget performSelector: mySelector];
+        [myTarget performSelector: mySelector withObject: sender];
     } else {
         NSLog(@"Unable to trigger hot key action, the target does not respond to the specified selector.");
     }

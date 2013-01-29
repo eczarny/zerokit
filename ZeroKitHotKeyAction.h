@@ -13,6 +13,6 @@
 
 #pragma mark -
 
-- (void)trigger;
+- (void)trigger: (id)sender;
 
 @end
