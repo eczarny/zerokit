@@ -3,7 +3,6 @@
 #import <ZeroKit/ZeroKitAccessibilityElement.h>
 #import <ZeroKit/ZeroKitConstants.h>
 #import <ZeroKit/ZeroKitHotKey.h>
-#import <ZeroKit/ZeroKitHotKeyAction.h>
 #import <ZeroKit/ZeroKitHotKeyRecorder.h>
 #import <ZeroKit/ZeroKitHotKeyRecorderDelegate.h>
 #import <ZeroKit/ZeroKitHotKeyTranslator.h>

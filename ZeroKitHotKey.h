@@ -1,12 +1,14 @@
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
-@class ZeroKitHotKeyAction;
+@class ZeroKitHotKey;
+
+typedef void(^ZeroKitHotKeyAction)(ZeroKitHotKey *);
 
 @interface ZeroKitHotKey : NSObject<NSCoding> {
     NSInteger myHandle;
     NSString *myHotKeyName;
-    ZeroKitHotKeyAction *myHotKeyAction;
+    ZeroKitHotKeyAction myHotKeyAction;
     NSInteger myHotKeyCode;
     NSInteger myHotKeyModifiers;
     EventHotKeyRef myHotKeyRef;
@@ -34,9 +36,13 @@
 
 #pragma mark -
 
-- (ZeroKitHotKeyAction *)hotKeyAction;
+- (ZeroKitHotKeyAction)hotKeyAction;
 
-- (void)setHotKeyAction: (ZeroKitHotKeyAction *)hotKeyAction;
+- (void)setHotKeyAction: (ZeroKitHotKeyAction)hotKeyAction;
+
+#pragma mark -
+
+- (void)triggerHotKeyAction;
 
 #pragma mark -
 

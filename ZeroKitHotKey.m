@@ -1,5 +1,4 @@
 #import "ZeroKitHotKey.h"
-#import "ZeroKitHotKeyAction.h"
 #import "ZeroKitHotKeyTranslator.h"
 
 @implementation ZeroKitHotKey
@@ -98,13 +97,19 @@
 
 #pragma mark -
 
-- (ZeroKitHotKeyAction *)hotKeyAction {
+- (ZeroKitHotKeyAction)hotKeyAction {
     return myHotKeyAction;
 }
 
-- (void)setHotKeyAction: (ZeroKitHotKeyAction *)hotKeyAction {
-    if (myHotKeyAction != hotKeyAction) {
-        myHotKeyAction = hotKeyAction;
+- (void)setHotKeyAction: (ZeroKitHotKeyAction)hotKeyAction {
+    myHotKeyAction = hotKeyAction;
+}
+
+#pragma mark -
+
+- (void)triggerHotKeyAction {
+    if (myHotKeyAction) {
+        myHotKeyAction(self);
     }
 }
 

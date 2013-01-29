@@ -42,8 +42,6 @@
 		2DBF58F214742C9300419F7E /* ZeroKitHotKeyRecorderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DBF58F114742C9300419F7E /* ZeroKitHotKeyRecorderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2DBF58F714742CA100419F7E /* ZeroKitHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DBF58F314742CA100419F7E /* ZeroKitHotKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2DBF58F814742CA100419F7E /* ZeroKitHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF58F414742CA100419F7E /* ZeroKitHotKey.m */; };
-		2DBF58F914742CA100419F7E /* ZeroKitHotKeyAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DBF58F514742CA100419F7E /* ZeroKitHotKeyAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2DBF58FA14742CA100419F7E /* ZeroKitHotKeyAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF58F614742CA100419F7E /* ZeroKitHotKeyAction.m */; };
 		2DBF5906147437D300419F7E /* SpecialHotKeyTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2DBF5905147437D300419F7E /* SpecialHotKeyTranslations.plist */; };
 		2DBF59081474381200419F7E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DBF59071474381200419F7E /* Carbon.framework */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -95,8 +93,6 @@
 		2DBF58F114742C9300419F7E /* ZeroKitHotKeyRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitHotKeyRecorderDelegate.h; sourceTree = "<group>"; };
 		2DBF58F314742CA100419F7E /* ZeroKitHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitHotKey.h; sourceTree = "<group>"; };
 		2DBF58F414742CA100419F7E /* ZeroKitHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitHotKey.m; sourceTree = "<group>"; };
-		2DBF58F514742CA100419F7E /* ZeroKitHotKeyAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKitHotKeyAction.h; sourceTree = "<group>"; };
-		2DBF58F614742CA100419F7E /* ZeroKitHotKeyAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroKitHotKeyAction.m; sourceTree = "<group>"; };
 		2DBF5905147437D300419F7E /* SpecialHotKeyTranslations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = SpecialHotKeyTranslations.plist; path = "Resources/Property Lists/SpecialHotKeyTranslations.plist"; sourceTree = "<group>"; };
 		2DBF59071474381200419F7E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		32DBCF5E0370ADEE00C91783 /* ZeroKit.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroKit.pch; sourceTree = "<group>"; };
@@ -186,8 +182,6 @@
 				07172B8111377D0B0058CFF9 /* Protocols */,
 				2DBF58F314742CA100419F7E /* ZeroKitHotKey.h */,
 				2DBF58F414742CA100419F7E /* ZeroKitHotKey.m */,
-				2DBF58F514742CA100419F7E /* ZeroKitHotKeyAction.h */,
-				2DBF58F614742CA100419F7E /* ZeroKitHotKeyAction.m */,
 				07E9257113552F5100ECC319 /* ZeroKitURLConnection.h */,
 				07E9257213552F5100ECC319 /* ZeroKitURLConnection.m */,
 			);
@@ -379,7 +373,6 @@
 				2DBF58DF14742BAE00419F7E /* ZeroKitAccessibilityElement.h in Headers */,
 				070D7A04113AFA6D007645BB /* ZeroKitConstants.h in Headers */,
 				2DBF58F714742CA100419F7E /* ZeroKitHotKey.h in Headers */,
-				2DBF58F914742CA100419F7E /* ZeroKitHotKeyAction.h in Headers */,
 				2DBF58ED14742C8600419F7E /* ZeroKitHotKeyRecorder.h in Headers */,
 				2DBF58F214742C9300419F7E /* ZeroKitHotKeyRecorderDelegate.h in Headers */,
 				2DBF58E714742C7700419F7E /* ZeroKitHotKeyTranslator.h in Headers */,
@@ -487,7 +480,6 @@
 				07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */,
 				2DBF58E014742BAE00419F7E /* ZeroKitAccessibilityElement.m in Sources */,
 				2DBF58F814742CA100419F7E /* ZeroKitHotKey.m in Sources */,
-				2DBF58FA14742CA100419F7E /* ZeroKitHotKeyAction.m in Sources */,
 				2DBF58EE14742C8600419F7E /* ZeroKitHotKeyRecorder.m in Sources */,
 				2DBF58F014742C8600419F7E /* ZeroKitHotKeyRecorderCell.m in Sources */,
 				2DBF58E814742C7700419F7E /* ZeroKitHotKeyTranslator.m in Sources */,
