@@ -1,11 +1,11 @@
-#import "ZeroKitPreferencePaneManager.h"
-#import "ZeroKitPreferencePaneProtocol.h"
-#import "ZeroKitUtilities.h"
-#import "ZeroKitConstants.h"
+#import "ZKPreferencePaneManager.h"
+#import "ZKPreferencePaneProtocol.h"
+#import "ZKUtilities.h"
+#import "ZKConstants.h"
 
-@implementation ZeroKitPreferencePaneManager
+@implementation ZKPreferencePaneManager
 
-static ZeroKitPreferencePaneManager *sharedInstance = nil;
+static ZKPreferencePaneManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
@@ -18,7 +18,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 #pragma mark -
 
-+ (ZeroKitPreferencePaneManager *)sharedManager {
++ (ZKPreferencePaneManager *)sharedManager {
     @synchronized(self) {
         if (!sharedInstance) {
             sharedInstance = [self new];
@@ -37,11 +37,11 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 #pragma mark -
 
 - (void)loadPreferencePanes {
-    NSBundle *applicationBundle = [ZeroKitUtilities applicationBundle];
-    NSString *path = [applicationBundle pathForResource: ZeroKitPreferencePanesFile ofType: ZeroKitPropertyListFileExtension];
+    NSBundle *applicationBundle = [ZKUtilities applicationBundle];
+    NSString *path = [applicationBundle pathForResource: ZKPreferencePanesFile ofType: ZKPropertyListFileExtension];
     NSDictionary *preferencePaneDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
-    NSDictionary *preferencePanes = preferencePaneDictionary[ZeroKitPreferencePanesKey];
-    NSArray *preferencePaneOrder = preferencePaneDictionary[ZeroKitPreferencePaneOrderKey];
+    NSDictionary *preferencePanes = preferencePaneDictionary[ZKPreferencePanesKey];
+    NSArray *preferencePaneOrder = preferencePaneDictionary[ZKPreferencePaneOrderKey];
     NSEnumerator *preferencePaneNameEnumerator = [preferencePanes keyEnumerator];
     NSEnumerator *preferencePaneNameOrderEnumerator = [preferencePaneOrder objectEnumerator];
     NSString *preferencePaneName;
@@ -57,7 +57,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
             Class preferencePaneClass = [applicationBundle classNamed: preferencePaneClassName];
             
             if (preferencePaneClass) {
-                id<ZeroKitPreferencePaneProtocol> preferencePane = [preferencePaneClass new];
+                id<ZKPreferencePaneProtocol> preferencePane = [preferencePaneClass new];
                 
                 if (preferencePane) {
                     [NSBundle loadNibNamed: preferencePaneClassName owner: preferencePane];
@@ -91,7 +91,7 @@ static ZeroKitPreferencePaneManager *sharedInstance = nil;
 
 #pragma mark -
 
-- (id<ZeroKitPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
+- (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
     return myPreferencePanes[name];
 }
 

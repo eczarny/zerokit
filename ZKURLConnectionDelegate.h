@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@class ZeroKitURLConnection;
-
-@protocol ZeroKitURLConnectionDelegate<NSObject>
+@protocol ZKURLConnectionDelegate<NSObject>
 
 - (void)request: (NSURLRequest *)request didReceiveData: (NSData *)data;
 

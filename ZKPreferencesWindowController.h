@@ -1,15 +1,15 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class ZeroKitPreferencePaneManager;
+@class ZKPreferencePaneManager;
 
-@interface ZeroKitPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZeroKitPreferencePaneManager *myPreferencePaneManager;
+@interface ZKPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
+    ZKPreferencePaneManager *myPreferencePaneManager;
     NSToolbar *myToolbar;
     NSMutableDictionary *myToolbarItems;
 }
 
-+ (ZeroKitPreferencesWindowController *)sharedController;
++ (ZKPreferencesWindowController *)sharedController;
 
 #pragma mark -
 

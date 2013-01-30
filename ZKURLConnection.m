@@ -1,8 +1,8 @@
-#import "ZeroKitURLConnection.h"
-#import "ZeroKitURLConnectionManager.h"
+#import "ZKURLConnection.h"
+#import "ZKURLConnectionManager.h"
 #import "NSStringAdditions.h"
 
-@interface ZeroKitURLConnection (ZeroKitURLConnectionPrivate)
+@interface ZKURLConnection (ZKURLConnectionPrivate)
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 
@@ -24,9 +24,9 @@
 
 #pragma mark -
 
-@implementation ZeroKitURLConnection
+@implementation ZKURLConnection
 
-- (id)initWithURLRequest: (NSURLRequest *)request delegate: (id<ZeroKitURLConnectionDelegate>)delegate manager: (ZeroKitURLConnectionManager *)manager {
+- (id)initWithURLRequest: (NSURLRequest *)request delegate: (id<ZKURLConnectionDelegate>)delegate manager: (ZKURLConnectionManager *)manager {
     if ((self = [super init])) {
         myManager = manager;
         myRequest = request;
@@ -69,7 +69,7 @@
 
 #pragma mark -
 
-- (id<ZeroKitURLConnectionDelegate>)delegate {
+- (id<ZKURLConnectionDelegate>)delegate {
     return myDelegate;
 }
 
@@ -83,7 +83,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitURLConnection (ZeroKitURLConnectionPrivate)
+@implementation ZKURLConnection (ZKURLConnectionPrivate)
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse: (NSURLResponse *)response {
     if([response respondsToSelector: @selector(statusCode)]) {

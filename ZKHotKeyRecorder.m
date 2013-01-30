@@ -1,11 +1,11 @@
-#import "ZeroKitHotKeyRecorder.h"
-#import "ZeroKitHotKeyRecorderCell.h"
+#import "ZKHotKeyRecorder.h"
+#import "ZKHotKeyRecorderCell.h"
 
-#define MyCell (ZeroKitHotKeyRecorderCell *)[self cell]
+#define MyCell (ZKHotKeyRecorderCell *)[self cell]
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyRecorder
+@implementation ZKHotKeyRecorder
 
 - (id)initWithFrame: (NSRect)frame {
     if (self = [super initWithFrame: frame]) {
@@ -18,7 +18,7 @@
 #pragma mark -
 
 + (Class)cellClass {
-    return [ZeroKitHotKeyRecorderCell class];
+    return [ZKHotKeyRecorderCell class];
 }
 
 #pragma mark -
@@ -33,11 +33,11 @@
 
 #pragma mark -
 
-- (ZeroKitHotKey *)hotKey {
+- (ZKHotKey *)hotKey {
     return [MyCell hotKey];
 }
 
-- (void)setHotKey: (ZeroKitHotKey *)hotKey {
+- (void)setHotKey: (ZKHotKey *)hotKey {
     [MyCell setHotKey: hotKey];
     
     [self updateCell: MyCell];
@@ -45,11 +45,11 @@
 
 #pragma mark -
 
-- (id<ZeroKitHotKeyRecorderDelegate>)delegate {
+- (id<ZKHotKeyRecorderDelegate>)delegate {
     return [MyCell delegate];
 }
 
-- (void)setDelegate: (id<ZeroKitHotKeyRecorderDelegate>)delegate {
+- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)delegate {
     [MyCell setDelegate: delegate];
 }
 

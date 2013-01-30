@@ -2,13 +2,13 @@
 #import <Carbon/Carbon.h>
 #import <CoreServices/CoreServices.h>
 
-@class ZeroKitHotKey;
+@class ZKHotKey;
 
-@interface ZeroKitHotKeyTranslator : NSObject {
+@interface ZKHotKeyTranslator : NSObject {
     NSDictionary *mySpecialHotKeyTranslations;
 }
 
-+ (ZeroKitHotKeyTranslator *)sharedTranslator;
++ (ZKHotKeyTranslator *)sharedTranslator;
 
 #pragma mark -
 
@@ -22,6 +22,6 @@
 
 #pragma mark -
 
-- (NSString *)translateHotKey: (ZeroKitHotKey *)hotKey;
+- (NSString *)translateHotKey: (ZKHotKey *)hotKey;
 
 @end

@@ -1,34 +1,34 @@
-#import "ZeroKitHotKeyTranslator.h"
-#import "ZeroKitHotKey.h"
-#import "ZeroKitUtilities.h"
-#import "ZeroKitConstants.h"
+#import "ZKHotKeyTranslator.h"
+#import "ZKHotKey.h"
+#import "ZKUtilities.h"
+#import "ZKConstants.h"
 
 enum {
-    ZeroKitHotKeyAlternateGlyph   = 0x2325,
-    ZeroKitHotKeyCommandGlyph     = 0x2318,
-    ZeroKitHotKeyControlGlyph     = 0x2303,
-    ZeroKitHotKeyDeleteLeftGlyph  = 0x232B,
-    ZeroKitHotKeyDeleteRightGlyph = 0x2326,
-    ZeroKitHotKeyDownArrowGlyph   = 0x2193,
-    ZeroKitHotKeyLeftArrowGlyph   = 0x2190,
-    ZeroKitHotKeyPageDownGlyph    = 0x21DF,
-    ZeroKitHotKeyPageUpGlyph      = 0x21DE,
-    ZeroKitHotKeyReturnGlyph      = 0x21A9,
-    ZeroKitHotKeyRightArrowGlyph  = 0x2192,
-    ZeroKitHotKeyShiftGlyph       = 0x21E7,
-    ZeroKitHotKeyTabLeftGlyph     = 0x21E4,
-    ZeroKitHotKeyTabRightGlyph    = 0x21E5,
-    ZeroKitHotKeyUpArrowGlyph     = 0x2191
+    ZKHotKeyAlternateGlyph   = 0x2325,
+    ZKHotKeyCommandGlyph     = 0x2318,
+    ZKHotKeyControlGlyph     = 0x2303,
+    ZKHotKeyDeleteLeftGlyph  = 0x232B,
+    ZKHotKeyDeleteRightGlyph = 0x2326,
+    ZKHotKeyDownArrowGlyph   = 0x2193,
+    ZKHotKeyLeftArrowGlyph   = 0x2190,
+    ZKHotKeyPageDownGlyph    = 0x21DF,
+    ZKHotKeyPageUpGlyph      = 0x21DE,
+    ZKHotKeyReturnGlyph      = 0x21A9,
+    ZKHotKeyRightArrowGlyph  = 0x2192,
+    ZKHotKeyShiftGlyph       = 0x21E7,
+    ZKHotKeyTabLeftGlyph     = 0x21E4,
+    ZKHotKeyTabRightGlyph    = 0x21E5,
+    ZKHotKeyUpArrowGlyph     = 0x2191
 };
 
 enum {
-    ZeroKitHotKeyAlternateCarbonKeyMask = 1 << 11,
-    ZeroKitHotKeyCommandCarbonKeyMask   = 1 << 8,
-    ZeroKitHotKeyControlCarbonKeyMask   = 1 << 12,
-    ZeroKitHotKeyShiftCarbonKeyMask     = 1 << 9,
+    ZKHotKeyAlternateCarbonKeyMask = 1 << 11,
+    ZKHotKeyCommandCarbonKeyMask   = 1 << 8,
+    ZKHotKeyControlCarbonKeyMask   = 1 << 12,
+    ZKHotKeyShiftCarbonKeyMask     = 1 << 9,
 };
 
-@interface ZeroKitHotKeyTranslator (ZeroKitHotKeyTranslatorPrivate)
+@interface ZKHotKeyTranslator (ZKHotKeyTranslatorPrivate)
 
 + (NSInteger)convertCocoaModifiersToCarbon: (NSInteger)modifiers;
 
@@ -42,9 +42,9 @@ enum {
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyTranslator
+@implementation ZKHotKeyTranslator
 
-static ZeroKitHotKeyTranslator *sharedInstance = nil;
+static ZKHotKeyTranslator *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
@@ -56,7 +56,7 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 
 #pragma mark -
 
-+ (ZeroKitHotKeyTranslator *)sharedTranslator {
++ (ZKHotKeyTranslator *)sharedTranslator {
     @synchronized(self) {
         if (!sharedInstance) {
             sharedInstance = [self new];
@@ -69,7 +69,7 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 #pragma mark -
 
 + (NSInteger)convertModifiersToCarbonIfNecessary: (NSInteger)modifiers {
-    if ([ZeroKitHotKey validCocoaModifiers: modifiers]) {
+    if ([ZKHotKey validCocoaModifiers: modifiers]) {
         modifiers = [self convertCocoaModifiersToCarbon: modifiers];
     }
     
@@ -82,19 +82,19 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     NSString *modifierGlyphs = @"";
     
     if (modifiers & NSControlKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyControlGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZKHotKeyControlGlyph];
     }
     
     if (modifiers & NSAlternateKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyAlternateGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZKHotKeyAlternateGlyph];
     }
     
     if (modifiers & NSShiftKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyShiftGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZKHotKeyShiftGlyph];
     }
     
     if (modifiers & NSCommandKeyMask) {
-        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZeroKitHotKeyCommandGlyph];
+        modifierGlyphs = [modifierGlyphs stringByAppendingFormat: @"%C", (UInt16)ZKHotKeyCommandGlyph];
     }
     
     return modifierGlyphs;
@@ -106,12 +106,12 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
     
     [self buildKeyCodeConvertorDictionary];
     
-    keyCodeTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyTranslationsKey];
+    keyCodeTranslations = mySpecialHotKeyTranslations[ZKHotKeyTranslationsKey];
     
     result = keyCodeTranslations[[NSString stringWithFormat: @"%d", (UInt32)keyCode]];
     
     if (result) {
-        NSDictionary *glyphTranslations = mySpecialHotKeyTranslations[ZeroKitHotKeyGlyphTranslationsKey];
+        NSDictionary *glyphTranslations = mySpecialHotKeyTranslations[ZKHotKeyGlyphTranslationsKey];
         id translatedGlyph = glyphTranslations[result];
         
         if (translatedGlyph) {
@@ -162,35 +162,35 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 
 #pragma mark -
 
-- (NSString *)translateHotKey: (ZeroKitHotKey *)hotKey {
-    NSInteger modifiers = [ZeroKitHotKeyTranslator convertCarbonModifiersToCocoa: [hotKey hotKeyModifiers]];
+- (NSString *)translateHotKey: (ZKHotKey *)hotKey {
+    NSInteger modifiers = [ZKHotKeyTranslator convertCarbonModifiersToCocoa: [hotKey hotKeyModifiers]];
     
-    return [NSString stringWithFormat: @"%@%@", [ZeroKitHotKeyTranslator translateCocoaModifiers: modifiers], [self translateKeyCode: [hotKey hotKeyCode]]];
+    return [NSString stringWithFormat: @"%@%@", [ZKHotKeyTranslator translateCocoaModifiers: modifiers], [self translateKeyCode: [hotKey hotKeyCode]]];
 }
 
 @end
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyTranslator (ZeroKitHotKeyTranslatorPrivate)
+@implementation ZKHotKeyTranslator (ZKHotKeyTranslatorPrivate)
 
 + (NSInteger)convertCocoaModifiersToCarbon: (NSInteger)modifiers {
     NSInteger convertedModifiers = 0;
     
     if (modifiers & NSControlKeyMask) {
-        convertedModifiers |= ZeroKitHotKeyControlCarbonKeyMask;
+        convertedModifiers |= ZKHotKeyControlCarbonKeyMask;
     }
     
     if (modifiers & NSAlternateKeyMask) {
-        convertedModifiers |= ZeroKitHotKeyAlternateCarbonKeyMask;
+        convertedModifiers |= ZKHotKeyAlternateCarbonKeyMask;
     }
     
     if (modifiers & NSShiftKeyMask) {
-        convertedModifiers |= ZeroKitHotKeyShiftCarbonKeyMask;
+        convertedModifiers |= ZKHotKeyShiftCarbonKeyMask;
     }
     
     if (modifiers & NSCommandKeyMask) {
-        convertedModifiers |= ZeroKitHotKeyCommandCarbonKeyMask;
+        convertedModifiers |= ZKHotKeyCommandCarbonKeyMask;
     }
     
     return convertedModifiers;
@@ -199,19 +199,19 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 + (NSInteger)convertCarbonModifiersToCocoa: (NSInteger)modifiers {
     NSInteger convertedModifiers = 0;
     
-    if (modifiers & ZeroKitHotKeyControlCarbonKeyMask) {
+    if (modifiers & ZKHotKeyControlCarbonKeyMask) {
         convertedModifiers |= NSControlKeyMask;
     }
     
-    if (modifiers & ZeroKitHotKeyAlternateCarbonKeyMask) {
+    if (modifiers & ZKHotKeyAlternateCarbonKeyMask) {
         convertedModifiers |= NSAlternateKeyMask;
     }
     
-    if (modifiers & ZeroKitHotKeyShiftCarbonKeyMask) {
+    if (modifiers & ZKHotKeyShiftCarbonKeyMask) {
         convertedModifiers |= NSShiftKeyMask;
     }
     
-    if (modifiers & ZeroKitHotKeyCommandCarbonKeyMask) {
+    if (modifiers & ZKHotKeyCommandCarbonKeyMask) {
         convertedModifiers |= NSCommandKeyMask;
     }
     
@@ -223,7 +223,7 @@ static ZeroKitHotKeyTranslator *sharedInstance = nil;
 - (void)buildKeyCodeConvertorDictionary {
     if (!mySpecialHotKeyTranslations) {
         NSBundle *bundle = [NSBundle bundleForClass: [self class]];
-        NSString *path = [bundle pathForResource: ZeroKitHotKeyTranslationsPropertyListFile ofType: ZeroKitPropertyListFileExtension];
+        NSString *path = [bundle pathForResource: ZKHotKeyTranslationsPropertyListFile ofType: ZKPropertyListFileExtension];
         
         mySpecialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
     }

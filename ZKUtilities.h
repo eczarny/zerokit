@@ -1,15 +1,11 @@
 #import <Foundation/Foundation.h>
 
-#define ZeroKitLocalizedString(string) NSLocalizedString(string, string)
-#define ZeroKitLocalizedStringFromCurrentBundle(string) NSLocalizedStringFromTableInBundle(string, nil, [NSBundle bundleForClass: [self class]], string)
+#define ZKLocalizedString(string) NSLocalizedString(string, string)
+#define ZKLocalizedStringFromCurrentBundle(string) NSLocalizedStringFromTableInBundle(string, nil, [NSBundle bundleForClass: [self class]], string)
 
 #pragma mark -
 
-@class ZeroKitProcess;
-
-@interface ZeroKitUtilities : NSObject {
-    
-}
+@interface ZKUtilities : NSObject
 
 + (NSBundle *)applicationBundle;
 

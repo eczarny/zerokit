@@ -1,7 +1,7 @@
-#import "ZeroKitHotKey.h"
-#import "ZeroKitHotKeyTranslator.h"
+#import "ZKHotKey.h"
+#import "ZKHotKeyTranslator.h"
 
-@implementation ZeroKitHotKey
+@implementation ZKHotKey
 
 - (id)initWithHotKeyCode: (NSInteger)hotKeyCode hotKeyModifiers: (NSInteger)hotKeyModifiers {
     if (self = [super init]) {
@@ -9,7 +9,7 @@
         myHotKeyName = nil;
         myHotKeyAction = nil;
         myHotKeyCode = hotKeyCode;
-        myHotKeyModifiers = [ZeroKitHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
+        myHotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
         myHotKeyRef = NULL;
     }
     
@@ -61,12 +61,12 @@
 
 #pragma mark -
 
-+ (ZeroKitHotKey *)clearedHotKey {
-    return [[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
++ (ZKHotKey *)clearedHotKey {
+    return [[ZKHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
 }
 
-+ (ZeroKitHotKey *)clearedHotKeyWithName: (NSString *)name {
-    ZeroKitHotKey *hotKey = [[ZeroKitHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
++ (ZKHotKey *)clearedHotKeyWithName: (NSString *)name {
+    ZKHotKey *hotKey = [[ZKHotKey alloc] initWithHotKeyCode: 0 hotKeyModifiers: 0];
     
     [hotKey setHotKeyName: name];
     
@@ -97,11 +97,11 @@
 
 #pragma mark -
 
-- (ZeroKitHotKeyAction)hotKeyAction {
+- (ZKHotKeyAction)hotKeyAction {
     return myHotKeyAction;
 }
 
-- (void)setHotKeyAction: (ZeroKitHotKeyAction)hotKeyAction {
+- (void)setHotKeyAction: (ZKHotKeyAction)hotKeyAction {
     myHotKeyAction = hotKeyAction;
 }
 
@@ -130,7 +130,7 @@
 }
 
 - (void)setHotKeyModifiers: (NSInteger)hotKeyModifiers {
-    myHotKeyModifiers = [ZeroKitHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
+    myHotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
 }
 
 #pragma mark -
@@ -152,7 +152,7 @@
 #pragma mark -
 
 - (NSString *)displayString {
-    return [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: self];
+    return [[ZKHotKeyTranslator sharedTranslator] translateHotKey: self];
 }
 
 #pragma mark -
@@ -175,7 +175,7 @@
     return [self isEqualToHotKey: object];
 }
 
-- (BOOL)isEqualToHotKey: (ZeroKitHotKey *)hotKey {
+- (BOOL)isEqualToHotKey: (ZKHotKey *)hotKey {
     if (hotKey == self) {
         return YES;
     }

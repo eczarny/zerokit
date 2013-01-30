@@ -1,15 +1,15 @@
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
-@interface ZeroKitAccessibilityElement : NSObject {
+@interface ZKAccessibilityElement : NSObject {
     AXUIElementRef myElement;
 }
 
-+ (ZeroKitAccessibilityElement *)systemWideElement;
++ (ZKAccessibilityElement *)systemWideElement;
 
 #pragma mark -
 
-- (ZeroKitAccessibilityElement *)elementWithAttribute: (CFStringRef)attribute;
+- (ZKAccessibilityElement *)elementWithAttribute: (CFStringRef)attribute;
 
 #pragma mark -
 

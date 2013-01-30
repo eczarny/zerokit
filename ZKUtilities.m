@@ -1,7 +1,7 @@
-#import "ZeroKitUtilities.h"
-#import "ZeroKitConstants.h"
+#import "ZKUtilities.h"
+#import "ZKConstants.h"
 
-@implementation ZeroKitUtilities
+@implementation ZKUtilities
 
 + (NSBundle *)applicationBundle {
     return [NSBundle mainBundle];
@@ -10,16 +10,16 @@
 #pragma mark -
 
 + (NSString *)applicationVersion {
-    return [ZeroKitUtilities versionOfBundle: [ZeroKitUtilities applicationBundle]];
+    return [ZKUtilities versionOfBundle: [ZKUtilities applicationBundle]];
 }
 
 #pragma mark -
 
 + (NSString *)versionOfBundle: (NSBundle *)bundle {
-    NSString *bundleVersion = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleShortVersionString];
+    NSString *bundleVersion = [bundle objectForInfoDictionaryKey: ZKApplicationBundleShortVersionString];
     
     if (!bundleVersion) {
-        bundleVersion = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleVersion];
+        bundleVersion = [bundle objectForInfoDictionaryKey: ZKApplicationBundleVersion];
     }
     
     return bundleVersion;
@@ -29,7 +29,7 @@
 
 + (void)registerDefaultsForBundle: (NSBundle *)bundle {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = [bundle pathForResource: ZeroKitDefaultPreferencesFile ofType: ZeroKitPropertyListFileExtension];
+    NSString *path = [bundle pathForResource: ZKDefaultPreferencesFile ofType: ZKPropertyListFileExtension];
     NSDictionary *applicationDefaults = [[NSDictionary alloc] initWithContentsOfFile: path];
     
     [defaults registerDefaults: applicationDefaults];
@@ -38,7 +38,7 @@
 #pragma mark -
 
 + (NSString *)applicationSupportPathForBundle: (NSBundle *)bundle {
-    NSString *applicationName = [bundle objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
+    NSString *applicationName = [bundle objectForInfoDictionaryKey: ZKApplicationBundleName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *applicationSupportPath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -64,7 +64,7 @@
     NSString *preferencePanePath = nil;
     
     if (preferencePaneName) {
-        preferencePaneName = [preferencePaneName stringByAppendingFormat: @".%@", ZeroKitPreferencePaneExtension];
+        preferencePaneName = [preferencePaneName stringByAppendingFormat: @".%@", ZKPreferencePaneExtension];
         
         for (__strong NSString *path in paths) {
             path = [path stringByAppendingPathComponent: preferencePaneName];

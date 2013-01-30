@@ -1,10 +1,10 @@
-#import "ZeroKitHotKeyValidator.h"
-#import "ZeroKitHotKeyValidatorProtocol.h"
-#import "ZeroKitHotKeyTranslator.h"
-#import "ZeroKitHotKey.h"
-#import "ZeroKitUtilities.h"
+#import "ZKHotKeyValidator.h"
+#import "ZKHotKeyValidatorProtocol.h"
+#import "ZKHotKeyTranslator.h"
+#import "ZKHotKey.h"
+#import "ZKUtilities.h"
 
-@interface ZeroKitHotKeyValidator (ZeroKitHotKeyValidatorPrivate)
+@interface ZKHotKeyValidator (ZKHotKeyValidatorPrivate)
 
 + (NSInteger)keyCodeFromDictionary: (CFDictionaryRef)dictionary;
 
@@ -12,27 +12,27 @@
 
 #pragma mark -
 
-+ (BOOL)hotKey: (ZeroKitHotKey *)hotKey containsModifiers: (NSInteger)modifiers;
++ (BOOL)hotKey: (ZKHotKey *)hotKey containsModifiers: (NSInteger)modifiers;
 
 #pragma mark -
 
-+ (NSError *)errorWithHotKey: (ZeroKitHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion;
++ (NSError *)errorWithHotKey: (ZKHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion;
 
 #pragma mark -
 
-+ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error;
++ (BOOL)isHotKey: (ZKHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error;
 
 @end
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyValidator
+@implementation ZKHotKeyValidator
 
-+ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey error: (NSError **)error {
-    return [ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: @[] error: error];
++ (BOOL)isHotKeyValid: (ZKHotKey *)hotKey error: (NSError **)error {
+    return [ZKHotKeyValidator isHotKeyValid: hotKey withValidators: @[] error: error];
 }
 
-+ (BOOL)isHotKeyValid: (ZeroKitHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error {
++ (BOOL)isHotKeyValid: (ZKHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error {
     CFArrayRef hotKeys = NULL;
     OSStatus err = CopySymbolicHotKeys(&hotKeys);
     
@@ -51,12 +51,12 @@
             continue;
         }
         
-        NSInteger keyCode = [ZeroKitHotKeyValidator keyCodeFromDictionary: hotKeyDictionary];
-        NSInteger modifiers = [ZeroKitHotKeyValidator modifiersFromDictionary: hotKeyDictionary];
+        NSInteger keyCode = [ZKHotKeyValidator keyCodeFromDictionary: hotKeyDictionary];
+        NSInteger modifiers = [ZKHotKeyValidator modifiersFromDictionary: hotKeyDictionary];
         
-        if (([hotKey hotKeyCode] == keyCode) && [ZeroKitHotKeyValidator hotKey: hotKey containsModifiers: modifiers]) {
+        if (([hotKey hotKeyCode] == keyCode) && [ZKHotKeyValidator hotKey: hotKey containsModifiers: modifiers]) {
             if (error) {
-                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                *error = [ZKHotKeyValidator errorWithHotKey: hotKey
                                                      description: @"Hot key %@ already in use."
                                               recoverySuggestion: @"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."];
             }
@@ -65,10 +65,10 @@
         }
     }
     
-    for (id<ZeroKitHotKeyValidatorProtocol> validator in validators) {
-        if ([validator conformsToProtocol: @protocol(ZeroKitHotKeyValidatorProtocol)] && ![validator isHotKeyValid: hotKey]) {
+    for (id<ZKHotKeyValidatorProtocol> validator in validators) {
+        if ([validator conformsToProtocol: @protocol(ZKHotKeyValidatorProtocol)] && ![validator isHotKeyValid: hotKey]) {
             if (error) {
-                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                *error = [ZKHotKeyValidator errorWithHotKey: hotKey
                                                      description: @"Hot key %@ already in use."
                                               recoverySuggestion: @"The hot key \"%@\" is already in use. Please select a new hot key."];
             }
@@ -84,7 +84,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyValidator (ZeroKitHotKeyValidatorPrivate)
+@implementation ZKHotKeyValidator (ZKHotKeyValidatorPrivate)
 
 + (NSInteger)keyCodeFromDictionary: (CFDictionaryRef)dictionary {
     CFNumberRef keyCodeFromDictionary = (CFNumberRef)CFDictionaryGetValue(dictionary, kHISymbolicHotKeyCode);
@@ -106,28 +106,28 @@
 
 #pragma mark -
 
-+ (BOOL)hotKey: (ZeroKitHotKey *)hotKey containsModifiers: (NSInteger)modifiers {
-    return [hotKey hotKeyModifiers] == [ZeroKitHotKeyTranslator convertModifiersToCarbonIfNecessary: modifiers];
++ (BOOL)hotKey: (ZKHotKey *)hotKey containsModifiers: (NSInteger)modifiers {
+    return [hotKey hotKeyModifiers] == [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: modifiers];
 }
 
 #pragma mark -
 
-+ (NSError *)errorWithHotKey: (ZeroKitHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion {
-    NSString *hotKeyString = [[ZeroKitHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
++ (NSError *)errorWithHotKey: (ZKHotKey *)hotKey description: (NSString *)description recoverySuggestion: (NSString *)recoverySuggestion {
+    NSString *hotKeyString = [[ZKHotKeyTranslator sharedTranslator] translateHotKey: hotKey];
     NSMutableDictionary *userInfo = [NSMutableDictionary new];
     
-    userInfo[NSLocalizedDescriptionKey] = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(description), hotKeyString];
+    userInfo[NSLocalizedDescriptionKey] = [NSString stringWithFormat: ZKLocalizedStringFromCurrentBundle(description), hotKeyString];
     
-    userInfo[NSLocalizedRecoverySuggestionErrorKey] = [NSString stringWithFormat: ZeroKitLocalizedStringFromCurrentBundle(recoverySuggestion), hotKeyString];
+    userInfo[NSLocalizedRecoverySuggestionErrorKey] = [NSString stringWithFormat: ZKLocalizedStringFromCurrentBundle(recoverySuggestion), hotKeyString];
     
-    userInfo[NSLocalizedRecoveryOptionsErrorKey] = @[ZeroKitLocalizedStringFromCurrentBundle(@"OK")];
+    userInfo[NSLocalizedRecoveryOptionsErrorKey] = @[ZKLocalizedStringFromCurrentBundle(@"OK")];
     
     return [NSError errorWithDomain: NSCocoaErrorDomain code: 0 userInfo: userInfo];
 }
 
 #pragma mark -
 
-+ (BOOL)isHotKey: (ZeroKitHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error {
++ (BOOL)isHotKey: (ZKHotKey *)hotKey availableInMenu: (NSMenu *)menu error: (NSError **)error {
     for (NSMenuItem *menuItem in [menu itemArray]) {
         if ([menuItem hasSubmenu] && ![self isHotKey: hotKey availableInMenu: [menuItem submenu] error: error]) {
             return NO;
@@ -139,12 +139,12 @@
             continue;
         }
         
-        NSString *keyCode = [[ZeroKitHotKeyTranslator sharedTranslator] translateKeyCode: [hotKey hotKeyCode]];
+        NSString *keyCode = [[ZKHotKeyTranslator sharedTranslator] translateKeyCode: [hotKey hotKeyCode]];
         
         if ([[keyEquivalent uppercaseString] isEqualToString: keyCode]
-                && [ZeroKitHotKeyValidator hotKey: hotKey containsModifiers: [menuItem keyEquivalentModifierMask]]) {
+                && [ZKHotKeyValidator hotKey: hotKey containsModifiers: [menuItem keyEquivalentModifierMask]]) {
             if (error) {
-                *error = [ZeroKitHotKeyValidator errorWithHotKey: hotKey
+                *error = [ZKHotKeyValidator errorWithHotKey: hotKey
                                                      description: @"Hot key %@ already in use."
                                               recoverySuggestion: @"The hot key \"%@\" is already used in the menu."];
             }

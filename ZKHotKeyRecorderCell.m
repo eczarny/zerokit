@@ -1,16 +1,16 @@
-#import "ZeroKitHotKeyRecorderCell.h"
-#import "ZeroKitHotKey.h"
-#import "ZeroKitHotKeyTranslator.h"
-#import "ZeroKitHotKeyValidator.h"
-#import "ZeroKitHotKeyRecorder.h"
-#import "ZeroKitHotKeyRecorderDelegate.h"
-#import "ZeroKitUtilities.h"
+#import "ZKHotKeyRecorderCell.h"
+#import "ZKHotKey.h"
+#import "ZKHotKeyTranslator.h"
+#import "ZKHotKeyValidator.h"
+#import "ZKHotKeyRecorder.h"
+#import "ZKHotKeyRecorderDelegate.h"
+#import "ZKUtilities.h"
 
 #define MakeRelativePoint(a, b, c) NSMakePoint((a * horizontalScale) + c.origin.x, (b * verticalScale) + c.origin.y)
 
 #pragma mark -
 
-@interface ZeroKitHotKeyRecorderCell (ZeroKitHotKeyRecorderCellPrivate)
+@interface ZKHotKeyRecorderCell (ZKHotKeyRecorderCellPrivate)
 
 - (void)drawBorderInRect: (NSRect)rect withRadius: (CGFloat)radius;
 
@@ -38,7 +38,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyRecorderCell
+@implementation ZKHotKeyRecorderCell
 
 - (id)init {
     if (self = [super init]) {
@@ -59,7 +59,7 @@
 
 #pragma mark -
 
-- (void)setHotKeyRecorder: (ZeroKitHotKeyRecorder *)hotKeyRecorder {
+- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)hotKeyRecorder {
     if (myHotKeyRecorder != hotKeyRecorder) {
         
         myHotKeyRecorder = hotKeyRecorder;
@@ -81,11 +81,11 @@
 
 #pragma mark -
 
-- (ZeroKitHotKey *)hotKey {
+- (ZKHotKey *)hotKey {
     return myHotKey;
 }
 
-- (void)setHotKey: (ZeroKitHotKey *)hotKey {
+- (void)setHotKey: (ZKHotKey *)hotKey {
     if (myHotKey != hotKey) {
         
         myHotKey = hotKey;
@@ -94,11 +94,11 @@
 
 #pragma mark -
 
-- (id<ZeroKitHotKeyRecorderDelegate>)delegate {
+- (id<ZKHotKeyRecorderDelegate>)delegate {
     return myDelegate;
 }
 
-- (void)setDelegate: (id<ZeroKitHotKeyRecorderDelegate>)delegate {
+- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)delegate {
     myDelegate = delegate;
 }
 
@@ -131,14 +131,14 @@
     NSInteger keyCode = [event keyCode];
     NSInteger modifierFlags = myModifierFlags | [event modifierFlags];
     
-    if (isRecording && [ZeroKitHotKey validCocoaModifiers: modifierFlags]) {
+    if (isRecording && [ZKHotKey validCocoaModifiers: modifierFlags]) {
         NSString *characters = [[event charactersIgnoringModifiers] uppercaseString];
         
         if ([characters length]) {
-            ZeroKitHotKey *hotKey = [[ZeroKitHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags];
+            ZKHotKey *hotKey = [[ZKHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags];
             NSError *error = nil;
             
-            if (![ZeroKitHotKeyValidator isHotKeyValid: hotKey withValidators: myAdditionalHotKeyValidators error: &error]) {
+            if (![ZKHotKeyValidator isHotKeyValid: hotKey withValidators: myAdditionalHotKeyValidators error: &error]) {
                 [[NSAlert alertWithError: error] runModal];
             } else {
                 [hotKey setHotKeyName: myHotKeyName];
@@ -277,7 +277,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitHotKeyRecorderCell (ZeroKitHotKeyRecorderCellPrivate)
+@implementation ZKHotKeyRecorderCell (ZKHotKeyRecorderCellPrivate)
 
 - (void)drawBorderInRect: (NSRect)rect withRadius: (CGFloat)radius {
     NSBezierPath *roundedPath = [NSBezierPath bezierPathWithRoundedRect: rect xRadius: radius yRadius: radius];
@@ -426,20 +426,20 @@
     NSColor *foregroundColor = [NSColor blackColor];
     
     if (isRecording && !isMouseAboveBadge) {
-        label = ZeroKitLocalizedStringFromCurrentBundle(@"Enter hot key");
+        label = ZKLocalizedStringFromCurrentBundle(@"Enter hot key");
     } else if (isRecording && isMouseAboveBadge && !myHotKey) {
-        label = ZeroKitLocalizedStringFromCurrentBundle(@"Stop recording");
+        label = ZKLocalizedStringFromCurrentBundle(@"Stop recording");
     } else if (isRecording && isMouseAboveBadge) {
-        label = ZeroKitLocalizedStringFromCurrentBundle(@"Use existing");
+        label = ZKLocalizedStringFromCurrentBundle(@"Use existing");
     } else if (myHotKey) {
         label = [myHotKey displayString];
     } else {
-        label = ZeroKitLocalizedStringFromCurrentBundle(@"Click to record");
+        label = ZKLocalizedStringFromCurrentBundle(@"Click to record");
     }
     
     // Recording is in progress and modifier flags have already been set, display them.
     if (isRecording && (myModifierFlags > 0)) {
-        label = [ZeroKitHotKeyTranslator translateCocoaModifiers: myModifierFlags];
+        label = [ZKHotKeyTranslator translateCocoaModifiers: myModifierFlags];
     }
     
     if (![self isEnabled]) {
@@ -456,7 +456,7 @@
 #pragma mark -
 
 - (void)drawString: (NSString *)string withForegroundColor: (NSColor *)foregroundColor inRect: (NSRect)rect {
-    NSMutableDictionary *attributes = [ZeroKitUtilities createStringAttributesWithShadow];
+    NSMutableDictionary *attributes = [ZKUtilities createStringAttributesWithShadow];
     NSRect labelRect = rect;
     
     attributes[NSFontAttributeName] = [NSFont systemFontOfSize: [NSFont smallSystemFontSize]];

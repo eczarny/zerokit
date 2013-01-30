@@ -1,9 +1,9 @@
-#import "ZeroKitURLConnectionManager.h"
-#import "ZeroKitURLConnection.h"
+#import "ZKURLConnectionManager.h"
+#import "ZKURLConnection.h"
 
-@implementation ZeroKitURLConnectionManager
+@implementation ZKURLConnectionManager
 
-static ZeroKitURLConnectionManager *sharedInstance = nil;
+static ZKURLConnectionManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
@@ -15,7 +15,7 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 #pragma mark -
 
-+ (ZeroKitURLConnectionManager *)sharedManager {
++ (ZKURLConnectionManager *)sharedManager {
     @synchronized(self) {
         if (!sharedInstance) {
             sharedInstance = [self new];
@@ -27,8 +27,8 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 #pragma mark -
 
-- (NSString *)spawnConnectionWithURLRequest: (NSURLRequest *)request delegate: (id<ZeroKitURLConnectionDelegate>)delegate {
-    ZeroKitURLConnection *newConnection = [[ZeroKitURLConnection alloc] initWithURLRequest: request delegate: delegate manager: self];
+- (NSString *)spawnConnectionWithURLRequest: (NSURLRequest *)request delegate: (id<ZKURLConnectionDelegate>)delegate {
+    ZKURLConnection *newConnection = [[ZKURLConnection alloc] initWithURLRequest: request delegate: delegate manager: self];
     NSString *identifier = [newConnection identifier];
     
     myConnections[identifier] = newConnection;
@@ -48,14 +48,14 @@ static ZeroKitURLConnectionManager *sharedInstance = nil;
 
 #pragma mark -
 
-- (ZeroKitURLConnection *)connectionForIdentifier: (NSString *)identifier {
+- (ZKURLConnection *)connectionForIdentifier: (NSString *)identifier {
     return myConnections[identifier];
 }
 
 #pragma mark -
 
 - (void)closeConnectionForIdentifier: (NSString *)identifier {
-    ZeroKitURLConnection *selectedConnection = [self connectionForIdentifier: identifier];
+    ZKURLConnection *selectedConnection = [self connectionForIdentifier: identifier];
     
     if (selectedConnection) {
         [selectedConnection cancel];

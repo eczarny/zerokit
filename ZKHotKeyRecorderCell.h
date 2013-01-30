@@ -1,13 +1,13 @@
 #import <Cocoa/Cocoa.h>
-#import "ZeroKitHotKeyRecorderDelegate.h"
+#import "ZKHotKeyRecorderDelegate.h"
 
-@class ZeroKitHotKeyRecorder, ZeroKitHotKey;
+@class ZKHotKeyRecorder, ZKHotKey;
 
-@interface ZeroKitHotKeyRecorderCell : NSCell {
-    ZeroKitHotKeyRecorder *myHotKeyRecorder;
+@interface ZKHotKeyRecorderCell : NSCell {
+    ZKHotKeyRecorder *myHotKeyRecorder;
     NSString *myHotKeyName;
-    ZeroKitHotKey *myHotKey;
-    id<ZeroKitHotKeyRecorderDelegate> myDelegate;
+    ZKHotKey *myHotKey;
+    id<ZKHotKeyRecorderDelegate> myDelegate;
     NSArray *myAdditionalHotKeyValidators;
     NSInteger myModifierFlags;
     BOOL isRecording;
@@ -17,7 +17,7 @@
     void *myHotKeyMode;
 }
 
-- (void)setHotKeyRecorder: (ZeroKitHotKeyRecorder *)hotKeyRecorder;
+- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)hotKeyRecorder;
 
 #pragma mark -
 
@@ -27,15 +27,15 @@
 
 #pragma mark -
 
-- (ZeroKitHotKey *)hotKey;
+- (ZKHotKey *)hotKey;
 
-- (void)setHotKey: (ZeroKitHotKey *)hotKey;
+- (void)setHotKey: (ZKHotKey *)hotKey;
 
 #pragma mark -
 
-- (id<ZeroKitHotKeyRecorderDelegate>)delegate;
+- (id<ZKHotKeyRecorderDelegate>)delegate;
 
-- (void)setDelegate: (id<ZeroKitHotKeyRecorderDelegate>)delegate;
+- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)delegate;
 
 #pragma mark -
 

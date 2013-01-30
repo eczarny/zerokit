@@ -1,14 +1,14 @@
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
-@class ZeroKitHotKey;
+@class ZKHotKey;
 
-typedef void(^ZeroKitHotKeyAction)(ZeroKitHotKey *);
+typedef void(^ZKHotKeyAction)(ZKHotKey *);
 
-@interface ZeroKitHotKey : NSObject<NSCoding> {
+@interface ZKHotKey : NSObject<NSCoding> {
     NSInteger myHandle;
     NSString *myHotKeyName;
-    ZeroKitHotKeyAction myHotKeyAction;
+    ZKHotKeyAction myHotKeyAction;
     NSInteger myHotKeyCode;
     NSInteger myHotKeyModifiers;
     EventHotKeyRef myHotKeyRef;
@@ -18,9 +18,9 @@ typedef void(^ZeroKitHotKeyAction)(ZeroKitHotKey *);
 
 #pragma mark -
 
-+ (ZeroKitHotKey *)clearedHotKey;
++ (ZKHotKey *)clearedHotKey;
 
-+ (ZeroKitHotKey *)clearedHotKeyWithName: (NSString *)name;
++ (ZKHotKey *)clearedHotKeyWithName: (NSString *)name;
 
 #pragma mark -
 
@@ -36,9 +36,9 @@ typedef void(^ZeroKitHotKeyAction)(ZeroKitHotKey *);
 
 #pragma mark -
 
-- (ZeroKitHotKeyAction)hotKeyAction;
+- (ZKHotKeyAction)hotKeyAction;
 
-- (void)setHotKeyAction: (ZeroKitHotKeyAction)hotKeyAction;
+- (void)setHotKeyAction: (ZKHotKeyAction)hotKeyAction;
 
 #pragma mark -
 
@@ -78,6 +78,6 @@ typedef void(^ZeroKitHotKeyAction)(ZeroKitHotKey *);
 
 - (BOOL)isEqual: (id)object;
 
-- (BOOL)isEqualToHotKey: (ZeroKitHotKey *)hotKey;
+- (BOOL)isEqualToHotKey: (ZKHotKey *)hotKey;
 
 @end

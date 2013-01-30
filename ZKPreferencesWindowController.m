@@ -1,16 +1,16 @@
-#import "ZeroKitPreferencesWindowController.h"
-#import "ZeroKitPreferencePaneManager.h"
-#import "ZeroKitPreferencePaneProtocol.h"
-#import "ZeroKitConstants.h"
-#import "ZeroKitUtilities.h"
+#import "ZKPreferencesWindowController.h"
+#import "ZKPreferencePaneManager.h"
+#import "ZKPreferencePaneProtocol.h"
+#import "ZKConstants.h"
+#import "ZKUtilities.h"
 
-@interface ZeroKitPreferencesWindowController (ZeroKitPreferencesWindowControllerPrivate)
+@interface ZKPreferencesWindowController (ZKPreferencesWindowControllerPrivate)
 
 - (void)windowDidLoad;
 
 #pragma mark -
 
-- (id<ZeroKitPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name;
+- (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name;
 
 - (void)displayPreferencePaneWithName: (NSString *)name initialPreferencePane: (BOOL)initialPreferencePane;
 
@@ -30,14 +30,14 @@
 
 #pragma mark -
 
-@implementation ZeroKitPreferencesWindowController
+@implementation ZKPreferencesWindowController
 
-static ZeroKitPreferencesWindowController *sharedInstance = nil;
+static ZKPreferencesWindowController *sharedInstance = nil;
 
 - (id)init {
-    if ((self = [super initWithWindowNibName: ZeroKitPreferencesWindowNibName])) {
+    if ((self = [super initWithWindowNibName: ZKPreferencesWindowNibName])) {
         myToolbarItems = [NSMutableDictionary new];
-        myPreferencePaneManager = [ZeroKitPreferencePaneManager sharedManager];
+        myPreferencePaneManager = [ZKPreferencePaneManager sharedManager];
         
         [self loadPreferencePanes];
     }
@@ -47,7 +47,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-+ (ZeroKitPreferencesWindowController *)sharedController {
++ (ZKPreferencesWindowController *)sharedController {
     @synchronized(self) {
         if (!sharedInstance) {
             sharedInstance = [self new];
@@ -122,7 +122,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-@implementation ZeroKitPreferencesWindowController (ZeroKitPreferencesWindowControllerPrivate)
+@implementation ZKPreferencesWindowController (ZKPreferencesWindowControllerPrivate)
 
 - (void)windowDidLoad {
     if (!myToolbar) {
@@ -134,12 +134,12 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-- (id<ZeroKitPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
+- (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
     return [myPreferencePaneManager preferencePaneWithName: name];
 }
 
 - (void)displayPreferencePaneWithName: (NSString *)name initialPreferencePane: (BOOL)initialPreferencePane {
-    id<ZeroKitPreferencePaneProtocol> preferencePane = [self preferencePaneWithName: name];
+    id<ZKPreferencePaneProtocol> preferencePane = [self preferencePaneWithName: name];
     
     NSLog(@"Displaying the %@ preference pane.", name);
     
@@ -186,7 +186,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
     NSString *preferencePaneName = preferencePaneOrder[0];
     
     if (![myPreferencePaneManager preferencePanesAreReady]) {
-        NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZeroKitApplicationBundleName];
+        NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZKApplicationBundleName];
         
         NSLog(@"No preference panes are available for %@.", applicationName);
     }
@@ -205,7 +205,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     NSArray *preferencePanes = [myPreferencePaneManager preferencePanes];
     NSEnumerator *preferencePaneEnumerator = [preferencePanes objectEnumerator];
-    id<ZeroKitPreferencePaneProtocol> preferencePane;
+    id<ZKPreferencePaneProtocol> preferencePane;
     
     while ((preferencePane = [preferencePaneEnumerator nextObject])) {
         NSString *preferencePaneName = [preferencePane name];
@@ -215,7 +215,7 @@ static ZeroKitPreferencesWindowController *sharedInstance = nil;
         [toolbarItem setLabel: preferencePaneName];
         [toolbarItem setImage: [preferencePane icon]];
         
-        if (![ZeroKitUtilities isStringEmpty: preferencePaneToolTip]) {
+        if (![ZKUtilities isStringEmpty: preferencePaneToolTip]) {
             [toolbarItem setToolTip: preferencePaneToolTip];
         } else {
             [toolbarItem setToolTip: nil];

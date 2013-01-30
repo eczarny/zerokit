@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
-#import "ZeroKitPreferencePaneProtocol.h"
+#import "ZKPreferencePaneProtocol.h"
 
-@interface ZeroKitPreferencePaneManager : NSObject {
+@interface ZKPreferencePaneManager : NSObject {
     NSMutableDictionary *myPreferencePanes;
     NSMutableArray *myPreferencePaneOrder;
 }
 
-+ (ZeroKitPreferencePaneManager *)sharedManager;
++ (ZKPreferencePaneManager *)sharedManager;
 
 #pragma mark -
 
@@ -18,7 +18,7 @@
 
 #pragma mark -
 
-- (id<ZeroKitPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name;
+- (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name;
 
 #pragma mark -
 

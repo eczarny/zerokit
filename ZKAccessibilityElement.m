@@ -1,6 +1,6 @@
-#import "ZeroKitAccessibilityElement.h"
+#import "ZKAccessibilityElement.h"
 
-@interface ZeroKitAccessibilityElement (ZeroKitAccessibilityElementPrivate)
+@interface ZKAccessibilityElement (ZKAccessibilityElementPrivate)
 
 - (void)setElement: (AXUIElementRef)element;
 
@@ -8,7 +8,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitAccessibilityElement
+@implementation ZKAccessibilityElement
 
 - (id)init {
     if (self = [super init]) {
@@ -20,8 +20,8 @@
 
 #pragma mark -
 
-+ (ZeroKitAccessibilityElement *)systemWideElement {
-    ZeroKitAccessibilityElement *element = [ZeroKitAccessibilityElement new];
++ (ZKAccessibilityElement *)systemWideElement {
+    ZKAccessibilityElement *element = [ZKAccessibilityElement new];
     AXUIElementRef systemWideElement = AXUIElementCreateSystemWide();
     
     [element setElement: systemWideElement];
@@ -33,15 +33,15 @@
 
 #pragma mark -
 
-- (ZeroKitAccessibilityElement *)elementWithAttribute: (CFStringRef)attribute {
-    ZeroKitAccessibilityElement *element = nil;
+- (ZKAccessibilityElement *)elementWithAttribute: (CFStringRef)attribute {
+    ZKAccessibilityElement *element = nil;
     AXUIElementRef childElement;
     AXError result;
     
     result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&childElement);
     
     if (result == kAXErrorSuccess) {
-        element = [ZeroKitAccessibilityElement new];
+        element = [ZKAccessibilityElement new];
         
         [element setElement: childElement];
         
@@ -111,7 +111,7 @@
 
 #pragma mark -
 
-@implementation ZeroKitAccessibilityElement (ZeroKitAccessibilityElementPrivate)
+@implementation ZKAccessibilityElement (ZKAccessibilityElementPrivate)
 
 - (void)setElement: (AXUIElementRef)element {
     if (myElement != NULL) {
