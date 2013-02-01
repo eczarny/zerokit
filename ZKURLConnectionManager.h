@@ -4,7 +4,7 @@
 @class ZKURLConnection;
 
 @interface ZKURLConnectionManager : NSObject {
-    NSMutableDictionary *myConnections;
+    NSMutableDictionary *connections;
 }
 
 + (ZKURLConnectionManager *)sharedManager;

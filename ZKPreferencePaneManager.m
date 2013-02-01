@@ -9,8 +9,8 @@ static ZKPreferencePaneManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
-        myPreferencePanes = [NSMutableDictionary new];
-        myPreferencePaneOrder = [NSMutableArray new];
+        preferencePanes = [NSMutableDictionary new];
+        preferencePaneOrder = [NSMutableArray new];
     }
     
     return self;
@@ -31,7 +31,7 @@ static ZKPreferencePaneManager *sharedInstance = nil;
 #pragma mark -
 
 - (BOOL)preferencePanesAreReady {
-    return myPreferencePanes && ([myPreferencePanes count] > 0);
+    return preferencePanes && ([preferencePanes count] > 0);
 }
 
 #pragma mark -
@@ -40,15 +40,13 @@ static ZKPreferencePaneManager *sharedInstance = nil;
     NSBundle *applicationBundle = [ZKUtilities applicationBundle];
     NSString *path = [applicationBundle pathForResource: ZKPreferencePanesFile ofType: ZKPropertyListFileExtension];
     NSDictionary *preferencePaneDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
-    NSDictionary *preferencePanes = preferencePaneDictionary[ZKPreferencePanesKey];
-    NSArray *preferencePaneOrder = preferencePaneDictionary[ZKPreferencePaneOrderKey];
-    NSEnumerator *preferencePaneNameEnumerator = [preferencePanes keyEnumerator];
-    NSEnumerator *preferencePaneNameOrderEnumerator = [preferencePaneOrder objectEnumerator];
+    NSEnumerator *preferencePaneNameEnumerator = [preferencePaneDictionary[ZKPreferencePanesKey] keyEnumerator];
+    NSEnumerator *preferencePaneNameOrderEnumerator = [preferencePaneDictionary[ZKPreferencePaneOrderKey] objectEnumerator];
     NSString *preferencePaneName;
     
     NSLog(@"The preference pane manager is loading preference panes from: %@", path);
     
-    [myPreferencePanes removeAllObjects];
+    [preferencePanes removeAllObjects];
     
     while ((preferencePaneName = [preferencePaneNameEnumerator nextObject])) {
         NSString *preferencePaneClassName = preferencePanes[preferencePaneName];
@@ -64,7 +62,7 @@ static ZKPreferencePaneManager *sharedInstance = nil;
                     
                     [preferencePane preferencePaneDidLoad];
                     
-                    myPreferencePanes[preferencePaneName] = preferencePane;
+                    preferencePanes[preferencePaneName] = preferencePane;
                 } else {
                     NSLog(@"Failed initializing preference pane named: %@", preferencePaneName);
                 }
@@ -76,13 +74,13 @@ static ZKPreferencePaneManager *sharedInstance = nil;
         }
     }
     
-    [myPreferencePaneOrder removeAllObjects];
+    [preferencePaneOrder removeAllObjects];
     
     while ((preferencePaneName = [preferencePaneNameOrderEnumerator nextObject])) {
-        if (myPreferencePanes[preferencePaneName]) {
+        if (preferencePanes[preferencePaneName]) {
             NSLog(@"Adding %@ to the preference pane order.", preferencePaneName);
             
-            [myPreferencePaneOrder addObject: preferencePaneName];
+            [preferencePaneOrder addObject: preferencePaneName];
         } else {
             NSLog(@"Unable to set the preference pane order for preference pane named: %@", preferencePaneName);
         }
@@ -92,23 +90,23 @@ static ZKPreferencePaneManager *sharedInstance = nil;
 #pragma mark -
 
 - (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
-    return myPreferencePanes[name];
+    return preferencePanes[name];
 }
 
 #pragma mark -
 
 - (NSArray *)preferencePanes {
-    return [myPreferencePanes allValues];
+    return [preferencePanes allValues];
 }
 
 - (NSArray *)preferencePaneNames {
-    return [myPreferencePanes allKeys];
+    return [preferencePanes allKeys];
 }
 
 #pragma mark -
 
 - (NSArray *)preferencePaneOrder {
-    return myPreferencePaneOrder;
+    return preferencePaneOrder;
 }
 
 @end

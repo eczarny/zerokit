@@ -7,7 +7,7 @@ static ZKURLConnectionManager *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
-        myConnections = [NSMutableDictionary new];
+        connections = [NSMutableDictionary new];
     }
     
     return self;
@@ -31,7 +31,7 @@ static ZKURLConnectionManager *sharedInstance = nil;
     ZKURLConnection *newConnection = [[ZKURLConnection alloc] initWithURLRequest: request delegate: delegate manager: self];
     NSString *identifier = [newConnection identifier];
     
-    myConnections[identifier] = newConnection;
+    connections[identifier] = newConnection;
     
     return identifier;
 }
@@ -39,17 +39,17 @@ static ZKURLConnectionManager *sharedInstance = nil;
 #pragma mark -
 
 - (NSArray *)activeConnectionIdentifiers {
-    return [myConnections allKeys];
+    return [connections allKeys];
 }
 
 - (NSInteger)numberOfActiveConnections {
-    return [myConnections count];
+    return [connections count];
 }
 
 #pragma mark -
 
 - (ZKURLConnection *)connectionForIdentifier: (NSString *)identifier {
-    return myConnections[identifier];
+    return connections[identifier];
 }
 
 #pragma mark -
@@ -60,14 +60,14 @@ static ZKURLConnectionManager *sharedInstance = nil;
     if (selectedConnection) {
         [selectedConnection cancel];
         
-        [myConnections removeObjectForKey: identifier];
+        [connections removeObjectForKey: identifier];
     }
 }
 
 - (void)closeConnections {
-    [[myConnections allValues] makeObjectsPerformSelector: @selector(cancel)];
+    [[connections allValues] makeObjectsPerformSelector: @selector(cancel)];
     
-    [myConnections removeAllObjects];
+    [connections removeAllObjects];
 }
 
 #pragma mark -

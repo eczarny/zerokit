@@ -4,19 +4,19 @@
 @class ZKURLConnectionManager;
 
 @interface ZKURLConnection : NSObject {
-    ZKURLConnectionManager *myManager;
-    NSURLRequest *myRequest;
-    NSString *myIdentifier;
-    NSMutableData *myData;
-    NSURLConnection *myConnection;
-    id<ZKURLConnectionDelegate> myDelegate;
+    ZKURLConnectionManager *urlConnectionManager;
+    NSURLRequest *request;
+    NSString *identifier;
+    NSMutableData *data;
+    NSURLConnection *connection;
+    id<ZKURLConnectionDelegate> delegate;
 }
 
-- (id)initWithURLRequest: (NSURLRequest *)request delegate: (id<ZKURLConnectionDelegate>)delegate manager: (ZKURLConnectionManager *)manager;
+- (id)initWithURLRequest: (NSURLRequest *)aRequest delegate: (id<ZKURLConnectionDelegate>)aDelegate manager: (ZKURLConnectionManager *)aManager;
 
 #pragma mark -
 
-+ (NSData *)sendSynchronousURLRequest: (NSURLRequest *)request error: (NSError **)error;
++ (NSData *)sendSynchronousURLRequest: (NSURLRequest *)aRequest error: (NSError **)error;
 
 #pragma mark -
 

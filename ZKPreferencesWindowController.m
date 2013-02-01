@@ -36,8 +36,8 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super initWithWindowNibName: ZKPreferencesWindowNibName])) {
-        myToolbarItems = [NSMutableDictionary new];
-        myPreferencePaneManager = [ZKPreferencePaneManager sharedManager];
+        toolbarItems = [NSMutableDictionary new];
+        preferencePaneManager = [ZKPreferencePaneManager sharedManager];
         
         [self loadPreferencePanes];
     }
@@ -80,17 +80,17 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 #pragma mark -
 
 - (void)loadPreferencePanes {
-    [myPreferencePaneManager loadPreferencePanes];
+    [preferencePaneManager loadPreferencePanes];
 }
 
 #pragma mark -
 
 - (NSArray *)loadedPreferencePanes {
-    if (![myPreferencePaneManager preferencePanesAreReady]) {
-        [myPreferencePaneManager loadPreferencePanes];
+    if (![preferencePaneManager preferencePanesAreReady]) {
+        [preferencePaneManager loadPreferencePanes];
     }
     
-    return [myPreferencePaneManager preferencePanes];
+    return [preferencePaneManager preferencePanes];
 }
 
 #pragma mark -
@@ -103,19 +103,19 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 #pragma mark -
 
 - (NSArray *)toolbarAllowedItemIdentifiers: (NSToolbar *)toolbar {
-    return [myPreferencePaneManager preferencePaneOrder];
+    return [preferencePaneManager preferencePaneOrder];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers: (NSToolbar *)toolbar {
-    return [myPreferencePaneManager preferencePaneOrder];
+    return [preferencePaneManager preferencePaneOrder];
 }
 
 - (NSArray *)toolbarSelectableItemIdentifiers: (NSToolbar *)toolbar {
-    return [myPreferencePaneManager preferencePaneOrder];
+    return [preferencePaneManager preferencePaneOrder];
 }
 
 - (NSToolbarItem *)toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag {
-    return myToolbarItems[itemIdentifier];
+    return toolbarItems[itemIdentifier];
 }
 
 @end
@@ -125,7 +125,7 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 @implementation ZKPreferencesWindowController (ZKPreferencesWindowControllerPrivate)
 
 - (void)windowDidLoad {
-    if (!myToolbar) {
+    if (!toolbar) {
         [self createToolbar];
     }
     
@@ -135,7 +135,7 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 #pragma mark -
 
 - (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
-    return [myPreferencePaneManager preferencePaneWithName: name];
+    return [preferencePaneManager preferencePaneWithName: name];
 }
 
 - (void)displayPreferencePaneWithName: (NSString *)name initialPreferencePane: (BOOL)initialPreferencePane {
@@ -182,16 +182,16 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 
 - (void)preparePreferencesWindow {
     NSWindow *preferencesWindow = [self window];
-    NSArray *preferencePaneOrder = [myPreferencePaneManager preferencePaneOrder];
+    NSArray *preferencePaneOrder = [preferencePaneManager preferencePaneOrder];
     NSString *preferencePaneName = preferencePaneOrder[0];
     
-    if (![myPreferencePaneManager preferencePanesAreReady]) {
+    if (![preferencePaneManager preferencePanesAreReady]) {
         NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZKApplicationBundleName];
         
         NSLog(@"No preference panes are available for %@.", applicationName);
     }
     
-    [myToolbar setSelectedItemIdentifier: preferencePaneName];
+    [toolbar setSelectedItemIdentifier: preferencePaneName];
     
     [self displayPreferencePaneWithName: preferencePaneName initialPreferencePane: YES];
     
@@ -203,7 +203,7 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 - (void)createToolbar {
     NSWindow *preferencesWindow = [self window];
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    NSArray *preferencePanes = [myPreferencePaneManager preferencePanes];
+    NSArray *preferencePanes = [preferencePaneManager preferencePanes];
     NSEnumerator *preferencePaneEnumerator = [preferencePanes objectEnumerator];
     id<ZKPreferencePaneProtocol> preferencePane;
     
@@ -224,18 +224,18 @@ static ZKPreferencesWindowController *sharedInstance = nil;
         [toolbarItem setTarget: self];
         [toolbarItem setAction: @selector(toolbarItemWasSelected:)];
         
-        myToolbarItems[preferencePaneName] = toolbarItem;
+        toolbarItems[preferencePaneName] = toolbarItem;
         
     }
     
-    myToolbar = [[NSToolbar alloc] initWithIdentifier: bundleIdentifier];
+    toolbar = [[NSToolbar alloc] initWithIdentifier: bundleIdentifier];
     
-    [myToolbar setDelegate: self];
-    [myToolbar setAllowsUserCustomization: NO];
-    [myToolbar setAutosavesConfiguration: NO];
+    [toolbar setDelegate: self];
+    [toolbar setAllowsUserCustomization: NO];
+    [toolbar setAutosavesConfiguration: NO];
     
-    if (myToolbarItems && ([myToolbarItems count] > 0)) {
-        [preferencesWindow setToolbar: myToolbar];
+    if (toolbarItems && ([toolbarItems count] > 0)) {
+        [preferencesWindow setToolbar: toolbar];
     } else {
         NSLog(@"No toolbar items were found, the preferences window will not display a toolbar.");
     }

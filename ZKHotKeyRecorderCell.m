@@ -42,14 +42,14 @@
 
 - (id)init {
     if (self = [super init]) {
-        myHotKeyRecorder = nil;
-        myHotKeyName = nil;
-        myHotKey = nil;
-        myDelegate = nil;
-        myAdditionalHotKeyValidators = [NSArray new];
-        myModifierFlags = 0;
+        hotKeyRecorder = nil;
+        hotKeyName = nil;
+        hotKey = nil;
+        delegate = nil;
+        additionalHotKeyValidators = [NSArray new];
+        modifierFlags = 0;
         isRecording = NO;
-        myTrackingArea = nil;
+        trackingArea = nil;
         isMouseAboveBadge = NO;
         isMouseDown = NO;
     }
@@ -59,63 +59,51 @@
 
 #pragma mark -
 
-- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)hotKeyRecorder {
-    if (myHotKeyRecorder != hotKeyRecorder) {
-        
-        myHotKeyRecorder = hotKeyRecorder;
-    }
+- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)aHotKeyRecorder {
+    hotKeyRecorder = aHotKeyRecorder;
 }
 
 #pragma mark -
 
 - (NSString *)hotKeyName {
-    return myHotKeyName;
+    return hotKeyName;
 }
 
-- (void)setHotKeyName: (NSString *)hotKeyName {
-    if (myHotKeyName != hotKeyName) {
-        
-        myHotKeyName = hotKeyName;
-    }
+- (void)setHotKeyName: (NSString *)aHotKeyName {
+    hotKeyName = aHotKeyName;
 }
 
 #pragma mark -
 
 - (ZKHotKey *)hotKey {
-    return myHotKey;
+    return hotKey;
 }
 
-- (void)setHotKey: (ZKHotKey *)hotKey {
-    if (myHotKey != hotKey) {
-        
-        myHotKey = hotKey;
-    }
+- (void)setHotKey: (ZKHotKey *)aHotKey {
+    hotKey = aHotKey;
 }
 
 #pragma mark -
 
 - (id<ZKHotKeyRecorderDelegate>)delegate {
-    return myDelegate;
+    return delegate;
 }
 
-- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)delegate {
-    myDelegate = delegate;
+- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)aDelegate {
+    delegate = aDelegate;
 }
 
 #pragma mark -
 
-- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators {
-    if (myAdditionalHotKeyValidators != additionalHotKeyValidators) {
-        
-        myAdditionalHotKeyValidators = additionalHotKeyValidators;
-    }
+- (void)setAdditionalHotKeyValidators: (NSArray *)theAdditionalHotKeyValidators {
+    additionalHotKeyValidators = theAdditionalHotKeyValidators;
 }
 
 #pragma mark -
 
 - (BOOL)resignFirstResponder {
     if (isRecording) {
-        PopSymbolicHotKeyMode(myHotKeyMode);
+        PopSymbolicHotKeyMode(hotKeyMode);
         
         isRecording = NO;
         
@@ -129,31 +117,31 @@
 
 - (BOOL)performKeyEquivalent: (NSEvent *)event {
     NSInteger keyCode = [event keyCode];
-    NSInteger modifierFlags = myModifierFlags | [event modifierFlags];
+    NSInteger newModifierFlags = modifierFlags | [event modifierFlags];
     
-    if (isRecording && [ZKHotKey validCocoaModifiers: modifierFlags]) {
+    if (isRecording && [ZKHotKey validCocoaModifiers: newModifierFlags]) {
         NSString *characters = [[event charactersIgnoringModifiers] uppercaseString];
         
         if ([characters length]) {
-            ZKHotKey *hotKey = [[ZKHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: modifierFlags];
+            ZKHotKey *newHotKey = [[ZKHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: newModifierFlags];
             NSError *error = nil;
             
-            if (![ZKHotKeyValidator isHotKeyValid: hotKey withValidators: myAdditionalHotKeyValidators error: &error]) {
+            if (![ZKHotKeyValidator isHotKeyValid: hotKey withValidators: additionalHotKeyValidators error: &error]) {
                 [[NSAlert alertWithError: error] runModal];
             } else {
-                [hotKey setHotKeyName: myHotKeyName];
+                [newHotKey setHotKeyName: hotKeyName];
                 
-                [self setHotKey: hotKey];
+                [self setHotKey: newHotKey];
                 
-                [myDelegate hotKeyRecorder: myHotKeyRecorder didReceiveNewHotKey: hotKey];
+                [delegate hotKeyRecorder: hotKeyRecorder didReceiveNewHotKey: newHotKey];
             }
         } else {
             NSBeep();
         }
         
-        myModifierFlags = 0;
+        modifierFlags = 0;
         
-        PopSymbolicHotKeyMode(myHotKeyMode);
+        PopSymbolicHotKeyMode(hotKeyMode);
         
         isRecording = NO;
         
@@ -167,10 +155,10 @@
 
 - (void)flagsChanged: (NSEvent *)event {
     if (isRecording) {
-        myModifierFlags = [event modifierFlags];
+        modifierFlags = [event modifierFlags];
         
-        if (myModifierFlags == 256) {
-            myModifierFlags = 0;
+        if (modifierFlags == 256) {
+            modifierFlags = 0;
         }
         
         [[self controlView] setNeedsDisplay: YES];
@@ -199,7 +187,7 @@
                     isMouseDown = NO;
                 }
                 
-                if (isMouseAboveBadge && [view mouse: mouseLocation inRect: [myTrackingArea rect]]) {
+                if (isMouseAboveBadge && [view mouse: mouseLocation inRect: [trackingArea rect]]) {
                     isMouseDown = YES;
                     isMouseAboveBadge = YES;
                 } else {
@@ -216,15 +204,15 @@
                 if ([view mouse: mouseLocation inRect: rect] && !isRecording && !isMouseAboveBadge) {
                     isRecording = YES;
                     
-                    myHotKeyMode = PushSymbolicHotKeyMode(kHIHotKeyModeAllDisabled);
+                    hotKeyMode = PushSymbolicHotKeyMode(kHIHotKeyModeAllDisabled);
                     
                     [[view window] makeFirstResponder: view];
                 } else if (isRecording && isMouseAboveBadge) {
-                    PopSymbolicHotKeyMode(myHotKeyMode);
+                    PopSymbolicHotKeyMode(hotKeyMode);
                     
                     isRecording = NO;
-                } else if (!isRecording && myHotKey && isMouseAboveBadge) {
-                    [myDelegate hotKeyRecorder: myHotKeyRecorder didClearExistingHotKey: myHotKey];
+                } else if (!isRecording && hotKey && isMouseAboveBadge) {
+                    [delegate hotKeyRecorder: hotKeyRecorder didClearExistingHotKey: hotKey];
                     
                     [self setHotKey: nil];
                 }
@@ -335,25 +323,25 @@
     badgeRect.origin = NSMakePoint(NSMaxX(rect) - badgeSize.width - 4.0f, floor((NSMaxY(rect) - badgeSize.height) / 2.0f));
     badgeRect.size = badgeSize;
     
-    if (isRecording && !myHotKey) {
+    if (isRecording && !hotKey) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.25f];
     } else if (isRecording) {
         [self drawRevertHotKeyBadgeInRect: badgeRect];
-    } else if (myHotKey) {
+    } else if (hotKey) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.25f];
     }
     
-    if (((myHotKey && !isRecording) || (!myHotKey && isRecording)) && isMouseAboveBadge && isMouseDown) {
+    if (((hotKey && !isRecording) || (!hotKey && isRecording)) && isMouseAboveBadge && isMouseDown) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.50f];
     }
     
-    if (!myTrackingArea) {
-        myTrackingArea = [[NSTrackingArea alloc] initWithRect: badgeRect
+    if (!trackingArea) {
+        trackingArea = [[NSTrackingArea alloc] initWithRect: badgeRect
                                                       options: (NSTrackingActiveInKeyWindow | NSTrackingMouseEnteredAndExited)
                                                         owner: self
                                                      userInfo: nil];
         
-        [[self controlView] addTrackingArea: myTrackingArea];
+        [[self controlView] addTrackingArea: trackingArea];
     }
 }
 
@@ -427,19 +415,19 @@
     
     if (isRecording && !isMouseAboveBadge) {
         label = ZKLocalizedStringFromCurrentBundle(@"Enter hot key");
-    } else if (isRecording && isMouseAboveBadge && !myHotKey) {
+    } else if (isRecording && isMouseAboveBadge && !hotKey) {
         label = ZKLocalizedStringFromCurrentBundle(@"Stop recording");
     } else if (isRecording && isMouseAboveBadge) {
         label = ZKLocalizedStringFromCurrentBundle(@"Use existing");
-    } else if (myHotKey) {
-        label = [myHotKey displayString];
+    } else if (hotKey) {
+        label = [hotKey displayString];
     } else {
         label = ZKLocalizedStringFromCurrentBundle(@"Click to record");
     }
     
     // Recording is in progress and modifier flags have already been set, display them.
-    if (isRecording && (myModifierFlags > 0)) {
-        label = [ZKHotKeyTranslator translateCocoaModifiers: myModifierFlags];
+    if (isRecording && (modifierFlags > 0)) {
+        label = [ZKHotKeyTranslator translateCocoaModifiers: modifierFlags];
     }
     
     if (![self isEnabled]) {

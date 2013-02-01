@@ -4,42 +4,42 @@
 @class ZKHotKeyRecorder, ZKHotKey;
 
 @interface ZKHotKeyRecorderCell : NSCell {
-    ZKHotKeyRecorder *myHotKeyRecorder;
-    NSString *myHotKeyName;
-    ZKHotKey *myHotKey;
-    id<ZKHotKeyRecorderDelegate> myDelegate;
-    NSArray *myAdditionalHotKeyValidators;
-    NSInteger myModifierFlags;
+    ZKHotKeyRecorder *hotKeyRecorder;
+    NSString *hotKeyName;
+    ZKHotKey *hotKey;
+    id<ZKHotKeyRecorderDelegate> delegate;
+    NSArray *additionalHotKeyValidators;
+    NSInteger modifierFlags;
     BOOL isRecording;
-    NSTrackingArea *myTrackingArea;
+    NSTrackingArea *trackingArea;
     BOOL isMouseAboveBadge;
     BOOL isMouseDown;
-    void *myHotKeyMode;
+    void *hotKeyMode;
 }
 
-- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)hotKeyRecorder;
+- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)aHotKeyRecorder;
 
 #pragma mark -
 
 - (NSString *)hotKeyName;
 
-- (void)setHotKeyName: (NSString *)hotKeyName;
+- (void)setHotKeyName: (NSString *)aHotKeyName;
 
 #pragma mark -
 
 - (ZKHotKey *)hotKey;
 
-- (void)setHotKey: (ZKHotKey *)hotKey;
+- (void)setHotKey: (ZKHotKey *)aHotKey;
 
 #pragma mark -
 
 - (id<ZKHotKeyRecorderDelegate>)delegate;
 
-- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)delegate;
+- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)aDelegate;
 
 #pragma mark -
 
-- (void)setAdditionalHotKeyValidators: (NSArray *)additionalHotKeyValidators;
+- (void)setAdditionalHotKeyValidators: (NSArray *)theAdditionalHotKeyValidators;
 
 #pragma mark -
 

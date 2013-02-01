@@ -3,14 +3,14 @@
 
 @implementation ZKHotKey
 
-- (id)initWithHotKeyCode: (NSInteger)hotKeyCode hotKeyModifiers: (NSInteger)hotKeyModifiers {
+- (id)initWithHotKeyCode: (NSInteger)aHotKeyCode hotKeyModifiers: (NSInteger)theHotKeyModifiers {
     if (self = [super init]) {
-        myHandle = -1;
-        myHotKeyName = nil;
-        myHotKeyAction = nil;
-        myHotKeyCode = hotKeyCode;
-        myHotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
-        myHotKeyRef = NULL;
+        handle = -1;
+        hotKeyName = nil;
+        hotKeyAction = nil;
+        hotKeyCode = aHotKeyCode;
+        hotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: theHotKeyModifiers];
+        hotKeyRef = NULL;
     }
     
     return self;
@@ -21,14 +21,14 @@
 - (id)initWithCoder: (NSCoder *)coder {
     if (self = [super init]) {
         if ([coder allowsKeyedCoding]) {
-            myHotKeyName = [coder decodeObjectForKey: @"name"];
-            myHotKeyCode = [coder decodeIntegerForKey: @"keyCode"];
-            myHotKeyModifiers = [coder decodeIntegerForKey: @"modifiers"];
+            hotKeyName = [coder decodeObjectForKey: @"name"];
+            hotKeyCode = [coder decodeIntegerForKey: @"keyCode"];
+            hotKeyModifiers = [coder decodeIntegerForKey: @"modifiers"];
         } else {
-            myHotKeyName = [coder decodeObject];
+            hotKeyName = [coder decodeObject];
             
-            [coder decodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyCode];
-            [coder decodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyModifiers];
+            [coder decodeValueOfObjCType: @encode(NSInteger) at: &hotKeyCode];
+            [coder decodeValueOfObjCType: @encode(NSInteger) at: &hotKeyModifiers];
         }
     }
     
@@ -39,13 +39,13 @@
 
 - (void)encodeWithCoder: (NSCoder *)coder {
     if ([coder allowsKeyedCoding]) {
-        [coder encodeObject: myHotKeyName forKey: @"name"];
-        [coder encodeInteger: myHotKeyCode forKey: @"keyCode"];
-        [coder encodeInteger: myHotKeyModifiers forKey: @"modifiers"];
+        [coder encodeObject: hotKeyName forKey: @"name"];
+        [coder encodeInteger: hotKeyCode forKey: @"keyCode"];
+        [coder encodeInteger: hotKeyModifiers forKey: @"modifiers"];
     } else {
-        [coder encodeObject: myHotKeyName];
-        [coder encodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyCode];
-        [coder encodeValueOfObjCType: @encode(NSInteger) at: &myHotKeyModifiers];
+        [coder encodeObject: hotKeyName];
+        [coder encodeValueOfObjCType: @encode(NSInteger) at: &hotKeyCode];
+        [coder encodeValueOfObjCType: @encode(NSInteger) at: &hotKeyModifiers];
     }
 }
 
@@ -76,77 +76,75 @@
 #pragma mark -
 
 - (NSInteger)handle {
-    return myHandle;
+    return handle;
 }
 
-- (void)setHandle: (NSInteger)handle {
-    myHandle = handle;
+- (void)setHandle: (NSInteger)aHandle {
+    handle = aHandle;
 }
 
 #pragma mark -
 
 - (NSString *)hotKeyName {
-    return myHotKeyName;
+    return hotKeyName;
 }
 
-- (void)setHotKeyName: (NSString *)hotKeyName {
-    if (myHotKeyName != hotKeyName) {
-        myHotKeyName = hotKeyName;
-    }
+- (void)setHotKeyName: (NSString *)aHotKeyName {
+    hotKeyName = aHotKeyName;
 }
 
 #pragma mark -
 
 - (ZKHotKeyAction)hotKeyAction {
-    return myHotKeyAction;
+    return hotKeyAction;
 }
 
-- (void)setHotKeyAction: (ZKHotKeyAction)hotKeyAction {
-    myHotKeyAction = hotKeyAction;
+- (void)setHotKeyAction: (ZKHotKeyAction)aHotKeyAction {
+    hotKeyAction = aHotKeyAction;
 }
 
 #pragma mark -
 
 - (void)triggerHotKeyAction {
-    if (myHotKeyAction) {
-        myHotKeyAction(self);
+    if (hotKeyAction) {
+        hotKeyAction(self);
     }
 }
 
 #pragma mark -
 
 - (NSInteger)hotKeyCode {
-    return myHotKeyCode;
+    return hotKeyCode;
 }
 
-- (void)setHotKeyCode: (NSInteger)hotKeyCode {
-    myHotKeyCode = hotKeyCode;
+- (void)setHotKeyCode: (NSInteger)aHotKeyCode {
+    hotKeyCode = aHotKeyCode;
 }
 
 #pragma mark -
 
 - (NSInteger)hotKeyModifiers {
-    return myHotKeyModifiers;
+    return hotKeyModifiers;
 }
 
-- (void)setHotKeyModifiers: (NSInteger)hotKeyModifiers {
-    myHotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: hotKeyModifiers];
+- (void)setHotKeyModifiers: (NSInteger)theHotKeyModifiers {
+    hotKeyModifiers = [ZKHotKeyTranslator convertModifiersToCarbonIfNecessary: theHotKeyModifiers];
 }
 
 #pragma mark -
 
 - (EventHotKeyRef)hotKeyRef {
-    return myHotKeyRef;
+    return hotKeyRef;
 }
 
-- (void)setHotKeyRef: (EventHotKeyRef)hotKeyRef {
-    myHotKeyRef = hotKeyRef;
+- (void)setHotKeyRef: (EventHotKeyRef)aHotKeyRef {
+    hotKeyRef = aHotKeyRef;
 }
 
 #pragma mark -
 
 - (BOOL)isClearedHotKey {
-    return (myHotKeyCode == 0) && (myHotKeyModifiers == 0);
+    return (hotKeyCode == 0) && (hotKeyModifiers == 0);
 }
 
 #pragma mark -
@@ -180,11 +178,11 @@
         return YES;
     }
     
-    if ([hotKey hotKeyCode] != myHotKeyCode) {
+    if ([hotKey hotKeyCode] != hotKeyCode) {
         return NO;
     }
     
-    if ([hotKey hotKeyModifiers] != myHotKeyModifiers) {
+    if ([hotKey hotKeyModifiers] != hotKeyModifiers) {
         return NO;
     }
     

@@ -2,8 +2,8 @@
 #import "ZKPreferencePaneProtocol.h"
 
 @interface ZKPreferencePaneManager : NSObject {
-    NSMutableDictionary *myPreferencePanes;
-    NSMutableArray *myPreferencePaneOrder;
+    NSMutableDictionary *preferencePanes;
+    NSMutableArray *preferencePaneOrder;
 }
 
 + (ZKPreferencePaneManager *)sharedManager;

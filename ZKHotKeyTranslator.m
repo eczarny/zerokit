@@ -48,7 +48,7 @@ static ZKHotKeyTranslator *sharedInstance = nil;
 
 - (id)init {
     if ((self = [super init])) {
-        mySpecialHotKeyTranslations = nil;
+        specialHotKeyTranslations = nil;
     }
     
     return self;
@@ -106,12 +106,12 @@ static ZKHotKeyTranslator *sharedInstance = nil;
     
     [self buildKeyCodeConvertorDictionary];
     
-    keyCodeTranslations = mySpecialHotKeyTranslations[ZKHotKeyTranslationsKey];
+    keyCodeTranslations = specialHotKeyTranslations[ZKHotKeyTranslationsKey];
     
     result = keyCodeTranslations[[NSString stringWithFormat: @"%d", (UInt32)keyCode]];
     
     if (result) {
-        NSDictionary *glyphTranslations = mySpecialHotKeyTranslations[ZKHotKeyGlyphTranslationsKey];
+        NSDictionary *glyphTranslations = specialHotKeyTranslations[ZKHotKeyGlyphTranslationsKey];
         id translatedGlyph = glyphTranslations[result];
         
         if (translatedGlyph) {
@@ -221,11 +221,11 @@ static ZKHotKeyTranslator *sharedInstance = nil;
 #pragma mark -
 
 - (void)buildKeyCodeConvertorDictionary {
-    if (!mySpecialHotKeyTranslations) {
+    if (!specialHotKeyTranslations) {
         NSBundle *bundle = [NSBundle bundleForClass: [self class]];
         NSString *path = [bundle pathForResource: ZKHotKeyTranslationsPropertyListFile ofType: ZKPropertyListFileExtension];
         
-        mySpecialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
+        specialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
     }
 }
 

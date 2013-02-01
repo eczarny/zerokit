@@ -4,9 +4,9 @@
 @class ZKPreferencePaneManager;
 
 @interface ZKPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZKPreferencePaneManager *myPreferencePaneManager;
-    NSToolbar *myToolbar;
-    NSMutableDictionary *myToolbarItems;
+    ZKPreferencePaneManager *preferencePaneManager;
+    NSToolbar *toolbar;
+    NSMutableDictionary *toolbarItems;
 }
 
 + (ZKPreferencesWindowController *)sharedController;

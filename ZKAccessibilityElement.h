@@ -2,7 +2,7 @@
 #import <Carbon/Carbon.h>
 
 @interface ZKAccessibilityElement : NSObject {
-    AXUIElementRef myElement;
+    AXUIElementRef element;
 }
 
 + (ZKAccessibilityElement *)systemWideElement;

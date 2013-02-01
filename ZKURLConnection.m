@@ -6,7 +6,7 @@
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 
-- (void)connection: (NSURLConnection *)connection didReceiveData: (NSData *)data;
+- (void)connection: (NSURLConnection *)connection didReceiveData: (NSData *)theData;
 
 - (void)connection: (NSURLConnection *)connection didFailWithError: (NSError *)error;
 
@@ -26,21 +26,21 @@
 
 @implementation ZKURLConnection
 
-- (id)initWithURLRequest: (NSURLRequest *)request delegate: (id<ZKURLConnectionDelegate>)delegate manager: (ZKURLConnectionManager *)manager {
+- (id)initWithURLRequest: (NSURLRequest *)aRequest delegate: (id<ZKURLConnectionDelegate>)aDelegate manager: (ZKURLConnectionManager *)aManager {
     if ((self = [super init])) {
-        myManager = manager;
-        myRequest = request;
-        myIdentifier = [NSString stringByGeneratingUUID];
-        myData = [NSMutableData new];
+        urlConnectionManager = aManager;
+        request = aRequest;
+        identifier = [NSString stringByGeneratingUUID];
+        data = [NSMutableData new];
         
-        myConnection = [[NSURLConnection alloc] initWithRequest: request delegate: self];
+        connection = [[NSURLConnection alloc] initWithRequest: request delegate: self];
         
-        myDelegate = delegate;
+        delegate = aDelegate;
         
-        if (myConnection) {
-            NSLog(@"The connection, %@, has been established!", myIdentifier);
+        if (connection) {
+            NSLog(@"The connection, %@, has been established!", identifier);
         } else {
-            NSLog(@"The connection, %@, could not be established!", myIdentifier);
+            NSLog(@"The connection, %@, could not be established!", identifier);
             
             return nil;
         }
@@ -51,8 +51,8 @@
 
 #pragma mark -
 
-+ (NSData *)sendSynchronousURLRequest: (NSURLRequest *)request error: (NSError **)error {
-    NSData *data = [NSURLConnection sendSynchronousRequest: request returningResponse: nil error: error];
++ (NSData *)sendSynchronousURLRequest: (NSURLRequest *)aRequest error: (NSError **)error {
+    NSData *data = [NSURLConnection sendSynchronousRequest: aRequest returningResponse: nil error: error];
     
     if (!data) {
         return nil;
@@ -64,19 +64,19 @@
 #pragma mark -
 
 - (NSString *)identifier {
-    return myIdentifier;
+    return identifier;
 }
 
 #pragma mark -
 
 - (id<ZKURLConnectionDelegate>)delegate {
-    return myDelegate;
+    return delegate;
 }
 
 #pragma mark -
 
 - (void)cancel {
-    [myConnection cancel];
+    [connection cancel];
 }
 
 @end
@@ -92,47 +92,47 @@
         if(statusCode >= 400) {
             NSError *error = [NSError errorWithDomain: @"HTTP" code: statusCode userInfo: nil];
             
-            [myDelegate request: myRequest didFailWithError: error];
+            [delegate request: request didFailWithError: error];
         } else if (statusCode == 304) {
-            [myManager closeConnectionForIdentifier: myIdentifier];
+            [urlConnectionManager closeConnectionForIdentifier: identifier];
         }
     }
     
-    [myData setLength: 0];
+    [data setLength: 0];
 }
 
-- (void)connection: (NSURLConnection *)connection didReceiveData: (NSData *)data {
-    [myData appendData: data];
+- (void)connection: (NSURLConnection *)connection didReceiveData: (NSData *)theData {
+    [data appendData: theData];
 }
 
 - (void)connection: (NSURLConnection *)connection didFailWithError: (NSError *)error {
-    NSLog(@"The connection, %@, failed with the following error: %@", myIdentifier, [error localizedDescription]);
+    NSLog(@"The connection, %@, failed with the following error: %@", identifier, [error localizedDescription]);
     
-    [myDelegate request: myRequest didFailWithError: error];
+    [delegate request: request didFailWithError: error];
     
-    [myManager closeConnectionForIdentifier: myIdentifier];
+    [urlConnectionManager closeConnectionForIdentifier: identifier];
 }
 
 #pragma mark -
 
 - (BOOL)connection: (NSURLConnection *)connection canAuthenticateAgainstProtectionSpace: (NSURLProtectionSpace *)protectionSpace {
-    return [myDelegate request: myRequest canAuthenticateAgainstProtectionSpace: protectionSpace];
+    return [delegate request: request canAuthenticateAgainstProtectionSpace: protectionSpace];
 }
 
 - (void)connection: (NSURLConnection *)connection didReceiveAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge {
-    [myDelegate request: myRequest didReceiveAuthenticationChallenge: challenge];
+    [delegate request: request didReceiveAuthenticationChallenge: challenge];
 }
 
 - (void)connection: (NSURLConnection *)connection didCancelAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge {
-    [myDelegate request: myRequest didCancelAuthenticationChallenge: challenge];
+    [delegate request: request didCancelAuthenticationChallenge: challenge];
 }
 
 - (void)connectionDidFinishLoading: (NSURLConnection *)connection {
-    if (myData && ([myData length] > 0)) {
-        [myDelegate request: myRequest didReceiveData: myData];
+    if (data && ([data length] > 0)) {
+        [delegate request: request didReceiveData: data];
     }
     
-    [myManager closeConnectionForIdentifier: myIdentifier];
+    [urlConnectionManager closeConnectionForIdentifier: identifier];
 }
 
 @end

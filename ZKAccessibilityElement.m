@@ -2,7 +2,7 @@
 
 @interface ZKAccessibilityElement (ZKAccessibilityElementPrivate)
 
-- (void)setElement: (AXUIElementRef)element;
+- (void)setElement: (AXUIElementRef)anElement;
 
 @end
 
@@ -12,7 +12,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        myElement = NULL;
+        element = NULL;
     }
     
     return self;
@@ -21,46 +21,46 @@
 #pragma mark -
 
 + (ZKAccessibilityElement *)systemWideElement {
-    ZKAccessibilityElement *element = [ZKAccessibilityElement new];
+    ZKAccessibilityElement *newElement = [ZKAccessibilityElement new];
     AXUIElementRef systemWideElement = AXUIElementCreateSystemWide();
     
-    [element setElement: systemWideElement];
+    [newElement setElement: systemWideElement];
     
     CFRelease(systemWideElement);
     
-    return element;
+    return newElement;
 }
 
 #pragma mark -
 
 - (ZKAccessibilityElement *)elementWithAttribute: (CFStringRef)attribute {
-    ZKAccessibilityElement *element = nil;
+    ZKAccessibilityElement *newElement = nil;
     AXUIElementRef childElement;
     AXError result;
     
-    result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&childElement);
+    result = AXUIElementCopyAttributeValue(element, attribute, (CFTypeRef *)&childElement);
     
     if (result == kAXErrorSuccess) {
-        element = [ZKAccessibilityElement new];
+        newElement = [ZKAccessibilityElement new];
         
-        [element setElement: childElement];
+        [newElement setElement: childElement];
         
         CFRelease(childElement);
     } else {
         NSLog(@"Unable to obtain the accessibility element with the specified attribute: %@", attribute);
     }
     
-    return element;
+    return newElement;
 }
 
 #pragma mark -
 
 - (NSString *)stringValueOfAttribute: (CFStringRef)attribute {
-    if (CFGetTypeID(myElement) == AXUIElementGetTypeID()) {
+    if (CFGetTypeID(element) == AXUIElementGetTypeID()) {
         CFTypeRef value;
         AXError result;
         
-        result = AXUIElementCopyAttributeValue(myElement, attribute, &value);
+        result = AXUIElementCopyAttributeValue(element, attribute, &value);
         
         if (result == kAXErrorSuccess) {
             return CFBridgingRelease(value);
@@ -73,11 +73,11 @@
 }
 
 - (AXValueRef)valueOfAttribute: (CFStringRef)attribute type: (AXValueType)type {
-    if (CFGetTypeID(myElement) == AXUIElementGetTypeID()) {
+    if (CFGetTypeID(element) == AXUIElementGetTypeID()) {
         CFTypeRef value;
         AXError result;
         
-        result = AXUIElementCopyAttributeValue(myElement, attribute, (CFTypeRef *)&value);
+        result = AXUIElementCopyAttributeValue(element, attribute, (CFTypeRef *)&value);
         
         if ((result == kAXErrorSuccess) && (AXValueGetType(value) == type)) {
             return value;
@@ -92,7 +92,7 @@
 #pragma mark -
 
 - (void)setValue: (AXValueRef)value forAttribute: (CFStringRef)attribute {
-    AXError result = AXUIElementSetAttributeValue(myElement, attribute, (CFTypeRef *)value);
+    AXError result = AXUIElementSetAttributeValue(element, attribute, (CFTypeRef *)value);
     
     if (result != kAXErrorSuccess) {
         NSLog(@"There was a problem setting the value of the specified attribute: %@", attribute);
@@ -102,8 +102,8 @@
 #pragma mark -
 
 - (void)dealloc {
-    if (myElement != NULL) {
-        CFRelease(myElement);
+    if (element != NULL) {
+        CFRelease(element);
     }
 }
 
@@ -113,12 +113,12 @@
 
 @implementation ZKAccessibilityElement (ZKAccessibilityElementPrivate)
 
-- (void)setElement: (AXUIElementRef)element {
-    if (myElement != NULL) {
-        CFRelease(myElement);
+- (void)setElement: (AXUIElementRef)anElement {
+    if (element != NULL) {
+        CFRelease(element);
     }
     
-    myElement = CFRetain(element);
+    element = CFRetain(anElement);
 }
 
 @end
