@@ -125,7 +125,6 @@ static ZKHotKeyTranslator *sharedInstance = nil;
         UniCharCount length = 4;
         UniCharCount actualLength = 0;
         UniChar chars[4];
-        OSStatus err;
         
         if (layoutData == NULL) {
             NSLog(@"Unable to determine keyboard layout.");
@@ -135,18 +134,7 @@ static ZKHotKeyTranslator *sharedInstance = nil;
         
         keyboardLayout = (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
         
-        err = UCKeyTranslate(keyboardLayout,
-                             keyCode,
-                             kUCKeyActionDisplay,
-                             0,
-                             LMGetKbdType(),
-                             kUCKeyTranslateNoDeadKeysBit,
-                             &keysDown,
-                             length,
-                             &actualLength,
-                             chars);
-        
-        if (err != noErr) {
+        if (UCKeyTranslate(keyboardLayout, keyCode, kUCKeyActionDisplay, 0, LMGetKbdType(), kUCKeyTranslateNoDeadKeysBit, &keysDown, length, &actualLength, chars)) {
             NSLog(@"There was a problem translating the key code.");
             
             return @"?";

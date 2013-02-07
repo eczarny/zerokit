@@ -34,9 +34,8 @@
 
 + (BOOL)isHotKeyValid: (ZKHotKey *)hotKey withValidators: (NSArray *)validators error: (NSError **)error {
     CFArrayRef hotKeys = NULL;
-    OSStatus err = CopySymbolicHotKeys(&hotKeys);
     
-    if (err) {
+    if (CopySymbolicHotKeys(&hotKeys)) {
         return YES;
     }
     
@@ -57,8 +56,8 @@
         if (([hotKey hotKeyCode] == keyCode) && [ZKHotKeyValidator hotKey: hotKey containsModifiers: modifiers]) {
             if (error) {
                 *error = [ZKHotKeyValidator errorWithHotKey: hotKey
-                                                     description: @"Hot key %@ already in use."
-                                              recoverySuggestion: @"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."];
+                                                description: @"Hot key %@ already in use."
+                                         recoverySuggestion: @"The hot key \"%@\" is already used by a system-wide keyboard shortcut.\n\nTo use this hot key change the existing shortcut in the Keyboard preference pane under System Preferences."];
             }
             
             return NO;
@@ -69,8 +68,8 @@
         if ([validator conformsToProtocol: @protocol(ZKHotKeyValidatorProtocol)] && ![validator isHotKeyValid: hotKey]) {
             if (error) {
                 *error = [ZKHotKeyValidator errorWithHotKey: hotKey
-                                                     description: @"Hot key %@ already in use."
-                                              recoverySuggestion: @"The hot key \"%@\" is already in use. Please select a new hot key."];
+                                                description: @"Hot key %@ already in use."
+                                         recoverySuggestion: @"The hot key \"%@\" is already in use. Please select a new hot key."];
             }
             
             return NO;
@@ -145,8 +144,8 @@
                 && [ZKHotKeyValidator hotKey: hotKey containsModifiers: [menuItem keyEquivalentModifierMask]]) {
             if (error) {
                 *error = [ZKHotKeyValidator errorWithHotKey: hotKey
-                                                     description: @"Hot key %@ already in use."
-                                              recoverySuggestion: @"The hot key \"%@\" is already used in the menu."];
+                                                description: @"Hot key %@ already in use."
+                                         recoverySuggestion: @"The hot key \"%@\" is already used in the menu."];
             }
             
             return NO;

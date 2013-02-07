@@ -126,7 +126,7 @@
             ZKHotKey *newHotKey = [[ZKHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: newModifierFlags];
             NSError *error = nil;
             
-            if (![ZKHotKeyValidator isHotKeyValid: hotKey withValidators: additionalHotKeyValidators error: &error]) {
+            if (![ZKHotKeyValidator isHotKeyValid: newHotKey withValidators: additionalHotKeyValidators error: &error]) {
                 [[NSAlert alertWithError: error] runModal];
             } else {
                 [newHotKey setHotKeyName: hotKeyName];
