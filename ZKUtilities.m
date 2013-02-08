@@ -89,7 +89,6 @@
 + (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
     NSString *applicationPath = [bundle bundlePath];
-    CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     BOOL result = NO;
     
     if (sharedFileList) {
@@ -100,6 +99,7 @@
         
         for (id sharedFile in sharedFileListArray) {
             LSSharedFileListItemRef sharedFileListItem = (__bridge LSSharedFileListItemRef)sharedFile;
+            CFURLRef applicationPathURL = NULL;
             
             LSSharedFileListItemResolve(sharedFileListItem, 0, (CFURLRef *)&applicationPathURL, NULL);
             
