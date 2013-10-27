@@ -3,8 +3,6 @@
 
 @implementation ZKURLConnectionManager
 
-static ZKURLConnectionManager *sharedInstance = nil;
-
 - (id)init {
     if ((self = [super init])) {
         connections = [NSMutableDictionary new];
@@ -16,11 +14,12 @@ static ZKURLConnectionManager *sharedInstance = nil;
 #pragma mark -
 
 + (ZKURLConnectionManager *)sharedManager {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [self new];
-        }
-    }
+    static ZKURLConnectionManager *sharedInstance = nil;
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        sharedInstance = [self new];
+    });
     
     return sharedInstance;
 }

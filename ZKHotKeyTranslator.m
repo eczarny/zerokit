@@ -44,8 +44,6 @@ enum {
 
 @implementation ZKHotKeyTranslator
 
-static ZKHotKeyTranslator *sharedInstance = nil;
-
 - (id)init {
     if ((self = [super init])) {
         specialHotKeyTranslations = nil;
@@ -57,11 +55,12 @@ static ZKHotKeyTranslator *sharedInstance = nil;
 #pragma mark -
 
 + (ZKHotKeyTranslator *)sharedTranslator {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [self new];
-        }
-    }
+    static ZKHotKeyTranslator *sharedInstance = nil;
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        sharedInstance = [self new];
+    });
     
     return sharedInstance;
 }

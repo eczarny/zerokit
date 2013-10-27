@@ -5,8 +5,6 @@
 
 @implementation ZKPreferencePaneManager
 
-static ZKPreferencePaneManager *sharedInstance = nil;
-
 - (id)init {
     if ((self = [super init])) {
         preferencePanes = [NSMutableDictionary new];
@@ -19,11 +17,12 @@ static ZKPreferencePaneManager *sharedInstance = nil;
 #pragma mark -
 
 + (ZKPreferencePaneManager *)sharedManager {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [self new];
-        }
-    }
+    static ZKPreferencePaneManager *sharedInstance = nil;
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        sharedInstance = [self new];
+    });
     
     return sharedInstance;
 }

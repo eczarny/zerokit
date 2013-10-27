@@ -32,8 +32,6 @@
 
 @implementation ZKPreferencesWindowController
 
-static ZKPreferencesWindowController *sharedInstance = nil;
-
 - (id)init {
     if ((self = [super initWithWindowNibName: ZKPreferencesWindowNibName])) {
         toolbarItems = [NSMutableDictionary new];
@@ -48,11 +46,12 @@ static ZKPreferencesWindowController *sharedInstance = nil;
 #pragma mark -
 
 + (ZKPreferencesWindowController *)sharedController {
-    @synchronized(self) {
-        if (!sharedInstance) {
-            sharedInstance = [self new];
-        }
-    }
+    static ZKPreferencesWindowController *sharedInstance = nil;
+    static dispatch_once_t predicate;
+    
+    dispatch_once(&predicate, ^{
+        sharedInstance = [self new];
+    });
     
     return sharedInstance;
 }
