@@ -3,11 +3,7 @@
 
 @class ZKPreferencePaneManager;
 
-@interface ZKPreferencesWindowController : NSWindowController<NSToolbarDelegate> {
-    ZKPreferencePaneManager *preferencePaneManager;
-    NSToolbar *toolbar;
-    NSMutableDictionary *toolbarItems;
-}
+@interface ZKPreferencesWindowController : NSWindowController<NSToolbarDelegate>
 
 + (ZKPreferencesWindowController *)sharedController;
 

@@ -3,9 +3,7 @@
 
 @class ZKHotKey;
 
-@interface ZKHotKeyRecorder : NSControl {
-    
-}
+@interface ZKHotKeyRecorder : NSControl
 
 - (NSString *)hotKeyName;
 

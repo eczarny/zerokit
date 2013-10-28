@@ -18,7 +18,7 @@
 #pragma mark -
 
 + (Class)cellClass {
-    return [ZKHotKeyRecorderCell class];
+    return ZKHotKeyRecorderCell.class;
 }
 
 #pragma mark -
@@ -72,7 +72,7 @@
 #pragma mark -
 
 - (BOOL)performKeyEquivalent: (NSEvent *)event {
-    if ([[[self window] firstResponder] isEqualTo: self]) {
+    if ([self.window.firstResponder isEqualTo: self]) {
         return [MyCell performKeyEquivalent: event];
     }
     

@@ -4,9 +4,7 @@
 
 @class ZKHotKey;
 
-@interface ZKHotKeyTranslator : NSObject {
-    NSDictionary *specialHotKeyTranslations;
-}
+@interface ZKHotKeyTranslator : NSObject
 
 + (ZKHotKeyTranslator *)sharedTranslator;
 

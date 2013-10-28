@@ -4,27 +4,11 @@
 #import "ZKConstants.h"
 #import "ZKUtilities.h"
 
-@interface ZKPreferencesWindowController (ZKPreferencesWindowControllerPrivate)
+@interface ZKPreferencesWindowController ()
 
-- (void)windowDidLoad;
-
-#pragma mark -
-
-- (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name;
-
-- (void)displayPreferencePaneWithName: (NSString *)name initialPreferencePane: (BOOL)initialPreferencePane;
-
-#pragma mark -
-
-- (void)preparePreferencesWindow;
-
-#pragma mark -
-
-- (void)createToolbar;
-
-#pragma mark -
-
-- (void)toolbarItemWasSelected: (NSToolbarItem *)toolbarItem;
+@property (nonatomic) ZKPreferencePaneManager *preferencePaneManager;
+@property (nonatomic) NSToolbar *toolbar;
+@property (nonatomic) NSMutableDictionary *toolbarItems;
 
 @end
 
@@ -34,8 +18,8 @@
 
 - (id)init {
     if ((self = [super initWithWindowNibName: ZKPreferencesWindowNibName])) {
-        toolbarItems = [NSMutableDictionary new];
-        preferencePaneManager = [ZKPreferencePaneManager sharedManager];
+        _toolbarItems = [NSMutableDictionary new];
+        _preferencePaneManager = [ZKPreferencePaneManager sharedManager];
         
         [self loadPreferencePanes];
     }
@@ -69,7 +53,7 @@
 #pragma mark -
 
 - (void)togglePreferencesWindow: (id)sender {
-    if ([[self window] isKeyWindow]) {
+    if ([self window].isKeyWindow) {
         [self hidePreferencesWindow: sender];
     } else {
         [self showPreferencesWindow: sender];
@@ -79,17 +63,17 @@
 #pragma mark -
 
 - (void)loadPreferencePanes {
-    [preferencePaneManager loadPreferencePanes];
+    [_preferencePaneManager loadPreferencePanes];
 }
 
 #pragma mark -
 
 - (NSArray *)loadedPreferencePanes {
-    if (![preferencePaneManager preferencePanesAreReady]) {
-        [preferencePaneManager loadPreferencePanes];
+    if (!_preferencePaneManager.preferencePanesAreReady) {
+        [_preferencePaneManager loadPreferencePanes];
     }
     
-    return [preferencePaneManager preferencePanes];
+    return _preferencePaneManager.preferencePanes;
 }
 
 #pragma mark -
@@ -102,29 +86,25 @@
 #pragma mark -
 
 - (NSArray *)toolbarAllowedItemIdentifiers: (NSToolbar *)toolbar {
-    return [preferencePaneManager preferencePaneOrder];
+    return [_preferencePaneManager preferencePaneOrder];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers: (NSToolbar *)toolbar {
-    return [preferencePaneManager preferencePaneOrder];
+    return [_preferencePaneManager preferencePaneOrder];
 }
 
 - (NSArray *)toolbarSelectableItemIdentifiers: (NSToolbar *)toolbar {
-    return [preferencePaneManager preferencePaneOrder];
+    return [_preferencePaneManager preferencePaneOrder];
 }
 
 - (NSToolbarItem *)toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag {
-    return toolbarItems[itemIdentifier];
+    return _toolbarItems[itemIdentifier];
 }
-
-@end
 
 #pragma mark -
 
-@implementation ZKPreferencesWindowController (ZKPreferencesWindowControllerPrivate)
-
 - (void)windowDidLoad {
-    if (!toolbar) {
+    if (!_toolbar) {
         [self createToolbar];
     }
     
@@ -134,7 +114,7 @@
 #pragma mark -
 
 - (id<ZKPreferencePaneProtocol>)preferencePaneWithName: (NSString *)name {
-    return [preferencePaneManager preferencePaneWithName: name];
+    return [_preferencePaneManager preferencePaneWithName: name];
 }
 
 - (void)displayPreferencePaneWithName: (NSString *)name initialPreferencePane: (BOOL)initialPreferencePane {
@@ -143,17 +123,16 @@
     NSLog(@"Displaying the %@ preference pane.", name);
     
     if (preferencePane) {
-        NSWindow *preferencesWindow = [self window];
-        NSView *preferencePaneView = [preferencePane view];
-        NSRect preferencesWindowFrame = [preferencesWindow frame];
-        NSView *transitionView = [[NSView alloc] initWithFrame: [[preferencesWindow contentView] frame]];
+        NSWindow *preferencesWindow = self.window;
+        NSView *preferencePaneView = preferencePane.view;
+        NSRect preferencesWindowFrame = preferencesWindow.frame;
+        NSView *transitionView = [[NSView alloc] initWithFrame: [preferencesWindow.contentView frame]];
         
-        [preferencesWindow setContentView: transitionView];
+        preferencesWindow.contentView = transitionView;
         
-        
-        preferencesWindowFrame.size.height = [preferencePaneView frame].size.height + ([preferencesWindow frame].size.height - [[preferencesWindow contentView] frame].size.height);
-        preferencesWindowFrame.size.width = [preferencePaneView frame].size.width;
-        preferencesWindowFrame.origin.y += ([[preferencesWindow contentView] frame].size.height - [preferencePaneView frame].size.height);
+        preferencesWindowFrame.size.height = preferencePaneView.frame.size.height + (preferencesWindow.frame.size.height - [preferencesWindow.contentView frame].size.height);
+        preferencesWindowFrame.size.width = preferencePaneView.frame.size.width;
+        preferencesWindowFrame.origin.y += ([[preferencesWindow contentView] frame].size.height - preferencePaneView.frame.size.height);
         
         [preferencesWindow setFrame: preferencesWindowFrame display: YES animate: YES];
         
@@ -161,17 +140,18 @@
         NSArray *preferencePaneViewAnimations = @[preferencePaneViewAnimation];
         NSViewAnimation *viewAnimation = [[NSViewAnimation alloc] initWithViewAnimations: preferencePaneViewAnimations];
         
-        [preferencesWindow setContentView: preferencePaneView];
+        preferencesWindow.contentView = preferencePaneView;
         
         if (!initialPreferencePane) {
-            [viewAnimation setAnimationBlockingMode: NSAnimationNonblockingThreaded];
+            viewAnimation.animationBlockingMode = NSAnimationNonblockingThreaded;
+            
             [viewAnimation startAnimation];
         }
         
         
-        [preferencesWindow setShowsResizeIndicator: YES];
+        preferencesWindow.showsResizeIndicator = YES;
         
-        [preferencesWindow setTitle: name];
+        preferencesWindow.title = name;
     } else {
         NSLog(@"Unable to locate a preference pane with the name: %@", name);
     }
@@ -180,17 +160,17 @@
 #pragma mark -
 
 - (void)preparePreferencesWindow {
-    NSWindow *preferencesWindow = [self window];
-    NSArray *preferencePaneOrder = [preferencePaneManager preferencePaneOrder];
+    NSWindow *preferencesWindow = self.window;
+    NSArray *preferencePaneOrder = _preferencePaneManager.preferencePaneOrder;
     NSString *preferencePaneName = preferencePaneOrder[0];
     
-    if (![preferencePaneManager preferencePanesAreReady]) {
-        NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey: ZKApplicationBundleName];
+    if (!_preferencePaneManager.preferencePanesAreReady) {
+        NSString *applicationName = [NSBundle.mainBundle objectForInfoDictionaryKey: ZKApplicationBundleName];
         
         NSLog(@"No preference panes are available for %@.", applicationName);
     }
     
-    [toolbar setSelectedItemIdentifier: preferencePaneName];
+    _toolbar.selectedItemIdentifier = preferencePaneName;
     
     [self displayPreferencePaneWithName: preferencePaneName initialPreferencePane: YES];
     
@@ -200,41 +180,40 @@
 #pragma mark -
 
 - (void)createToolbar {
-    NSWindow *preferencesWindow = [self window];
-    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    NSArray *preferencePanes = [preferencePaneManager preferencePanes];
-    NSEnumerator *preferencePaneEnumerator = [preferencePanes objectEnumerator];
+    NSWindow *preferencesWindow = self.window;
+    NSString *bundleIdentifier = NSBundle.mainBundle.bundleIdentifier;
+    NSArray *preferencePanes = _preferencePaneManager.preferencePanes;
+    NSEnumerator *preferencePaneEnumerator = preferencePanes.objectEnumerator;
     id<ZKPreferencePaneProtocol> preferencePane;
     
     while ((preferencePane = [preferencePaneEnumerator nextObject])) {
-        NSString *preferencePaneName = [preferencePane name];
-        NSString *preferencePaneToolTip = [preferencePane toolTip];
+        NSString *preferencePaneName = preferencePane.name;
+        NSString *preferencePaneToolTip = preferencePane.toolTip;
         NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier: preferencePaneName];
         
-        [toolbarItem setLabel: preferencePaneName];
-        [toolbarItem setImage: [preferencePane icon]];
+        toolbarItem.label = preferencePaneName;
+        toolbarItem.image = preferencePane.icon;
         
         if (![ZKUtilities isStringEmpty: preferencePaneToolTip]) {
-            [toolbarItem setToolTip: preferencePaneToolTip];
+            toolbarItem.toolTip = preferencePaneToolTip;
         } else {
-            [toolbarItem setToolTip: nil];
+            toolbarItem.toolTip = nil;
         }
         
-        [toolbarItem setTarget: self];
-        [toolbarItem setAction: @selector(toolbarItemWasSelected:)];
+        toolbarItem.target = self;
+        toolbarItem.action = @selector(toolbarItemWasSelected:);
         
-        toolbarItems[preferencePaneName] = toolbarItem;
-        
+        _toolbarItems[preferencePaneName] = toolbarItem;
     }
     
-    toolbar = [[NSToolbar alloc] initWithIdentifier: bundleIdentifier];
+    _toolbar = [[NSToolbar alloc] initWithIdentifier: bundleIdentifier];
     
-    [toolbar setDelegate: self];
-    [toolbar setAllowsUserCustomization: NO];
-    [toolbar setAutosavesConfiguration: NO];
+    _toolbar.delegate = self;
+    _toolbar.allowsUserCustomization = NO;
+    _toolbar.autosavesConfiguration = NO;
     
-    if (toolbarItems && ([toolbarItems count] > 0)) {
-        [preferencesWindow setToolbar: toolbar];
+    if (_toolbarItems && (_toolbarItems.count > 0)) {
+        preferencesWindow.toolbar = _toolbar;
     } else {
         NSLog(@"No toolbar items were found, the preferences window will not display a toolbar.");
     }
@@ -243,10 +222,10 @@
 #pragma mark -
 
 - (void)toolbarItemWasSelected: (NSToolbarItem *)toolbarItem {
-    NSWindow *preferencesWindow = [self window];
-    NSString *toolbarItemIdentifier = [toolbarItem itemIdentifier];
+    NSWindow *preferencesWindow = self.window;
+    NSString *toolbarItemIdentifier = toolbarItem.itemIdentifier;
     
-    if (![toolbarItemIdentifier isEqualToString: [preferencesWindow title]]) {
+    if (![toolbarItemIdentifier isEqualToString: preferencesWindow.title]) {
         [self displayPreferencePaneWithName: toolbarItemIdentifier initialPreferencePane: NO];
     }
 }

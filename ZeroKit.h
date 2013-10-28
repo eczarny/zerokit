@@ -9,6 +9,4 @@
 #import <ZeroKit/ZKHotKeyValidatorProtocol.h>
 #import <ZeroKit/ZKPreferencePaneProtocol.h>
 #import <ZeroKit/ZKPreferencesWindowController.h>
-#import <ZeroKit/ZKURLConnectionDelegate.h>
-#import <ZeroKit/ZKURLConnectionManager.h>
 #import <ZeroKit/ZKUtilities.h>

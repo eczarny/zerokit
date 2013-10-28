@@ -3,43 +3,13 @@
 
 @class ZKHotKeyRecorder, ZKHotKey;
 
-@interface ZKHotKeyRecorderCell : NSCell {
-    ZKHotKeyRecorder *hotKeyRecorder;
-    NSString *hotKeyName;
-    ZKHotKey *hotKey;
-    id<ZKHotKeyRecorderDelegate> delegate;
-    NSArray *additionalHotKeyValidators;
-    NSInteger modifierFlags;
-    BOOL isRecording;
-    NSTrackingArea *trackingArea;
-    BOOL isMouseAboveBadge;
-    BOOL isMouseDown;
-    void *hotKeyMode;
-}
+@interface ZKHotKeyRecorderCell : NSCell
 
-- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)aHotKeyRecorder;
-
-#pragma mark -
-
-- (NSString *)hotKeyName;
-
-- (void)setHotKeyName: (NSString *)aHotKeyName;
-
-#pragma mark -
-
-- (ZKHotKey *)hotKey;
-
-- (void)setHotKey: (ZKHotKey *)aHotKey;
-
-#pragma mark -
-
-- (id<ZKHotKeyRecorderDelegate>)delegate;
-
-- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)aDelegate;
-
-#pragma mark -
-
-- (void)setAdditionalHotKeyValidators: (NSArray *)theAdditionalHotKeyValidators;
+@property (nonatomic) ZKHotKeyRecorder *hotKeyRecorder;
+@property (nonatomic) NSString *hotKeyName;
+@property (nonatomic) ZKHotKey *hotKey;
+@property (nonatomic, weak) id<ZKHotKeyRecorderDelegate> delegate;
+@property (nonatomic) NSArray *additionalHotKeyValidators;
 
 #pragma mark -
 

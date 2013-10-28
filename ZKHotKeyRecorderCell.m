@@ -10,29 +10,14 @@
 
 #pragma mark -
 
-@interface ZKHotKeyRecorderCell (ZKHotKeyRecorderCellPrivate)
+@interface ZKHotKeyRecorderCell ()
 
-- (void)drawBorderInRect: (NSRect)rect withRadius: (CGFloat)radius;
-
-- (void)drawBackgroundInRect: (NSRect)rect withRadius: (CGFloat)radius;
-
-#pragma mark -
-
-- (void)drawBadgeInRect: (NSRect)rect;
-
-#pragma mark -
-
-- (void)drawClearHotKeyBadgeInRect: (NSRect)rect withOpacity: (CGFloat)opacity;
-
-- (void)drawRevertHotKeyBadgeInRect: (NSRect)rect;
-
-#pragma mark -
-
-- (void)drawLabelInRect: (NSRect)rect;
-
-#pragma mark -
-
-- (void)drawString: (NSString *)string withForegroundColor: (NSColor *)foregroundcolor inRect: (NSRect)rect;
+@property (nonatomic) NSInteger modifierFlags;
+@property (nonatomic) BOOL isRecording;
+@property (nonatomic) NSTrackingArea *trackingArea;
+@property (nonatomic) BOOL isMouseAboveBadge;
+@property (nonatomic) BOOL isMouseDown;
+@property (nonatomic) void *hotKeyMode;
 
 @end
 
@@ -42,16 +27,16 @@
 
 - (id)init {
     if (self = [super init]) {
-        hotKeyRecorder = nil;
-        hotKeyName = nil;
-        hotKey = nil;
-        delegate = nil;
-        additionalHotKeyValidators = [NSArray new];
-        modifierFlags = 0;
-        isRecording = NO;
-        trackingArea = nil;
-        isMouseAboveBadge = NO;
-        isMouseDown = NO;
+        _hotKeyRecorder = nil;
+        _hotKeyName = nil;
+        _hotKey = nil;
+        _delegate = nil;
+        _additionalHotKeyValidators = [NSArray new];
+        _modifierFlags = 0;
+        _isRecording = NO;
+        _trackingArea = nil;
+        _isMouseAboveBadge = NO;
+        _isMouseDown = NO;
     }
     
     return self;
@@ -59,55 +44,13 @@
 
 #pragma mark -
 
-- (void)setHotKeyRecorder: (ZKHotKeyRecorder *)aHotKeyRecorder {
-    hotKeyRecorder = aHotKeyRecorder;
-}
-
-#pragma mark -
-
-- (NSString *)hotKeyName {
-    return hotKeyName;
-}
-
-- (void)setHotKeyName: (NSString *)aHotKeyName {
-    hotKeyName = aHotKeyName;
-}
-
-#pragma mark -
-
-- (ZKHotKey *)hotKey {
-    return hotKey;
-}
-
-- (void)setHotKey: (ZKHotKey *)aHotKey {
-    hotKey = aHotKey;
-}
-
-#pragma mark -
-
-- (id<ZKHotKeyRecorderDelegate>)delegate {
-    return delegate;
-}
-
-- (void)setDelegate: (id<ZKHotKeyRecorderDelegate>)aDelegate {
-    delegate = aDelegate;
-}
-
-#pragma mark -
-
-- (void)setAdditionalHotKeyValidators: (NSArray *)theAdditionalHotKeyValidators {
-    additionalHotKeyValidators = theAdditionalHotKeyValidators;
-}
-
-#pragma mark -
-
 - (BOOL)resignFirstResponder {
-    if (isRecording) {
-        PopSymbolicHotKeyMode(hotKeyMode);
+    if (_isRecording) {
+        PopSymbolicHotKeyMode(_hotKeyMode);
         
-        isRecording = NO;
+        _isRecording = NO;
         
-        [[self controlView] setNeedsDisplay: YES];
+        [self.controlView setNeedsDisplay: YES];
     }
     
     return YES;
@@ -116,36 +59,36 @@
 #pragma mark -
 
 - (BOOL)performKeyEquivalent: (NSEvent *)event {
-    NSInteger keyCode = [event keyCode];
-    NSInteger newModifierFlags = modifierFlags | [event modifierFlags];
+    NSInteger keyCode = event.keyCode;
+    NSInteger newModifierFlags = _modifierFlags | event.modifierFlags;
     
-    if (isRecording && [ZKHotKey validCocoaModifiers: newModifierFlags]) {
-        NSString *characters = [[event charactersIgnoringModifiers] uppercaseString];
+    if (_isRecording && [ZKHotKey validCocoaModifiers: newModifierFlags]) {
+        NSString *characters = event.charactersIgnoringModifiers.uppercaseString;
         
-        if ([characters length]) {
+        if (characters.length) {
             ZKHotKey *newHotKey = [[ZKHotKey alloc] initWithHotKeyCode: keyCode hotKeyModifiers: newModifierFlags];
             NSError *error = nil;
             
-            if (![ZKHotKeyValidator isHotKeyValid: newHotKey withValidators: additionalHotKeyValidators error: &error]) {
+            if (![ZKHotKeyValidator isHotKeyValid: newHotKey withValidators: _additionalHotKeyValidators error: &error]) {
                 [[NSAlert alertWithError: error] runModal];
             } else {
-                [newHotKey setHotKeyName: hotKeyName];
+                newHotKey.hotKeyName = _hotKeyName;
                 
-                [self setHotKey: newHotKey];
+                self.hotKey = newHotKey;
                 
-                [delegate hotKeyRecorder: hotKeyRecorder didReceiveNewHotKey: newHotKey];
+                [_delegate hotKeyRecorder: _hotKeyRecorder didReceiveNewHotKey: newHotKey];
             }
         } else {
             NSBeep();
         }
         
-        modifierFlags = 0;
+        _modifierFlags = 0;
         
-        PopSymbolicHotKeyMode(hotKeyMode);
+        PopSymbolicHotKeyMode(_hotKeyMode);
         
-        isRecording = NO;
+        _isRecording = NO;
         
-        [[self controlView] setNeedsDisplay: YES];
+        [self.controlView setNeedsDisplay: YES];
         
         return YES;
     }
@@ -154,14 +97,14 @@
 }
 
 - (void)flagsChanged: (NSEvent *)event {
-    if (isRecording) {
-        modifierFlags = [event modifierFlags];
+    if (_isRecording) {
+        _modifierFlags = event.modifierFlags;
         
-        if (modifierFlags == 256) {
-            modifierFlags = 0;
+        if (_modifierFlags == 256) {
+            _modifierFlags = 0;
         }
         
-        [[self controlView] setNeedsDisplay: YES];
+        [self.controlView setNeedsDisplay: YES];
     }
 }
 
@@ -171,50 +114,50 @@
     NSEvent *currentEvent = event;
     
     do {
-        NSPoint mouseLocation = [view convertPoint: [currentEvent locationInWindow] fromView: nil];
+        NSPoint mouseLocation = [view convertPoint: currentEvent.locationInWindow fromView: nil];
         
         switch ([currentEvent type]) {
             case NSLeftMouseDown:
-                isMouseDown = YES;
+                _isMouseDown = YES;
                 
                 [view setNeedsDisplay: YES];
                 
                 break;
             case NSLeftMouseDragged:
                 if ([view mouse: mouseLocation inRect: rect]) {
-                    isMouseDown = YES;
+                    _isMouseDown = YES;
                 } else {
-                    isMouseDown = NO;
+                    _isMouseDown = NO;
                 }
                 
-                if (isMouseAboveBadge && [view mouse: mouseLocation inRect: [trackingArea rect]]) {
-                    isMouseDown = YES;
-                    isMouseAboveBadge = YES;
+                if (_isMouseAboveBadge && [view mouse: mouseLocation inRect: _trackingArea.rect]) {
+                    _isMouseDown = YES;
+                    _isMouseAboveBadge = YES;
                 } else {
-                    isMouseDown = NO;
-                    isMouseAboveBadge = NO;
+                    _isMouseDown = NO;
+                    _isMouseAboveBadge = NO;
                 }
                 
                 [view setNeedsDisplay: YES];
                 
                 break;
             default:
-                isMouseDown = NO;
+                _isMouseDown = NO;
                 
-                if ([view mouse: mouseLocation inRect: rect] && !isRecording && !isMouseAboveBadge) {
-                    isRecording = YES;
+                if ([view mouse: mouseLocation inRect: rect] && !_isRecording && !_isMouseAboveBadge) {
+                    _isRecording = YES;
                     
-                    hotKeyMode = PushSymbolicHotKeyMode(kHIHotKeyModeAllDisabled);
+                    _hotKeyMode = PushSymbolicHotKeyMode(kHIHotKeyModeAllDisabled);
                     
-                    [[view window] makeFirstResponder: view];
-                } else if (isRecording && isMouseAboveBadge) {
-                    PopSymbolicHotKeyMode(hotKeyMode);
+                    [view.window makeFirstResponder: view];
+                } else if (_isRecording && _isMouseAboveBadge) {
+                    PopSymbolicHotKeyMode(_hotKeyMode);
                     
-                    isRecording = NO;
-                } else if (!isRecording && hotKey && isMouseAboveBadge) {
-                    [delegate hotKeyRecorder: hotKeyRecorder didClearExistingHotKey: hotKey];
+                    _isRecording = NO;
+                } else if (!_isRecording && _hotKey && _isMouseAboveBadge) {
+                    [_delegate hotKeyRecorder: _hotKeyRecorder didClearExistingHotKey: _hotKey];
                     
-                    [self setHotKey: nil];
+                    self.hotKey = nil;
                 }
                 
                 [view setNeedsDisplay: YES];
@@ -222,7 +165,7 @@
                 return YES;
         }
     } while ((currentEvent = [[view window] nextEventMatchingMask: (NSLeftMouseDraggedMask | NSLeftMouseUpMask)
-                                                        untilDate: [NSDate distantFuture]
+                                                        untilDate: NSDate.distantFuture
                                                            inMode: NSEventTrackingRunLoopMode
                                                           dequeue: YES]));
     
@@ -232,15 +175,15 @@
 #pragma mark -
 
 - (void)mouseEntered: (NSEvent *)event {
-    isMouseAboveBadge = YES;
+    _isMouseAboveBadge = YES;
     
-    [[self controlView] setNeedsDisplay: YES];
+    [self.controlView setNeedsDisplay: YES];
 }
 
 - (void)mouseExited: (NSEvent *)event {
-    isMouseAboveBadge = NO;
+    _isMouseAboveBadge = NO;
     
-    [[self controlView] setNeedsDisplay: YES];
+    [self.controlView setNeedsDisplay: YES];
 }
 
 #pragma mark -
@@ -261,24 +204,20 @@
     [self drawLabelInRect: frame];
 }
 
-@end
-
 #pragma mark -
-
-@implementation ZKHotKeyRecorderCell (ZKHotKeyRecorderCellPrivate)
 
 - (void)drawBorderInRect: (NSRect)rect withRadius: (CGFloat)radius {
     NSBezierPath *roundedPath = [NSBezierPath bezierPathWithRoundedRect: rect xRadius: radius yRadius: radius];
     
-    [[NSGraphicsContext currentContext] saveGraphicsState];
+    [NSGraphicsContext.currentContext saveGraphicsState];
     
     [roundedPath addClip];
     
-    [[NSColor windowFrameColor] set];
+    [NSColor.windowFrameColor set];
     
     [NSBezierPath fillRect: rect];
     
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [NSGraphicsContext.currentContext restoreGraphicsState];
 }
 
 - (void)drawBackgroundInRect: (NSRect)rect withRadius: (CGFloat)radius {
@@ -287,19 +226,19 @@
     NSColor *gradientEndingColor = nil;
     NSGradient *gradient = nil;
     
-    [[NSGraphicsContext currentContext] saveGraphicsState];
+    [NSGraphicsContext.currentContext saveGraphicsState];
     
     [roundedPath addClip];
     
-    if (isRecording) {
+    if (_isRecording) {
         gradientStartingColor = [NSColor colorWithDeviceRed: 0.784f green: 0.953f blue: 1.0f alpha: 1.0f];
         gradientEndingColor = [NSColor colorWithDeviceRed: 0.694f green: 0.859f blue: 1.0f alpha: 1.0f];
     } else {
-        gradientStartingColor = [[[NSColor whiteColor] shadowWithLevel: 0.2f] colorWithAlphaComponent: 0.9f];
-        gradientEndingColor = [[[NSColor whiteColor] highlightWithLevel: 0.2f] colorWithAlphaComponent: 0.9f];
+        gradientStartingColor = [[NSColor.whiteColor shadowWithLevel: 0.2f] colorWithAlphaComponent: 0.9f];
+        gradientEndingColor = [[NSColor.whiteColor highlightWithLevel: 0.2f] colorWithAlphaComponent: 0.9f];
     }
     
-    if (!isRecording && isMouseDown && !isMouseAboveBadge) {
+    if (!_isRecording && _isMouseDown && !_isMouseAboveBadge) {
         gradient = [[NSGradient alloc] initWithStartingColor: gradientEndingColor endingColor: gradientStartingColor];
     } else {
         gradient = [[NSGradient alloc] initWithStartingColor: gradientStartingColor endingColor: gradientEndingColor];
@@ -307,7 +246,7 @@
     
     [gradient drawInRect: rect angle: 90.0f];
     
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [NSGraphicsContext.currentContext restoreGraphicsState];
 }
 
 #pragma mark -
@@ -323,25 +262,25 @@
     badgeRect.origin = NSMakePoint(NSMaxX(rect) - badgeSize.width - 4.0f, floor((NSMaxY(rect) - badgeSize.height) / 2.0f));
     badgeRect.size = badgeSize;
     
-    if (isRecording && !hotKey) {
+    if (_isRecording && !_hotKey) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.25f];
-    } else if (isRecording) {
+    } else if (_isRecording) {
         [self drawRevertHotKeyBadgeInRect: badgeRect];
-    } else if (hotKey) {
+    } else if (_hotKey) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.25f];
     }
     
-    if (((hotKey && !isRecording) || (!hotKey && isRecording)) && isMouseAboveBadge && isMouseDown) {
+    if (((_hotKey && !_isRecording) || (!_hotKey && _isRecording)) && _isMouseAboveBadge && _isMouseDown) {
         [self drawClearHotKeyBadgeInRect: badgeRect withOpacity: 0.50f];
     }
     
-    if (!trackingArea) {
-        trackingArea = [[NSTrackingArea alloc] initWithRect: badgeRect
-                                                      options: (NSTrackingActiveInKeyWindow | NSTrackingMouseEnteredAndExited)
-                                                        owner: self
-                                                     userInfo: nil];
+    if (!_trackingArea) {
+        _trackingArea = [[NSTrackingArea alloc] initWithRect: badgeRect
+                                                     options: (NSTrackingActiveInKeyWindow | NSTrackingMouseEnteredAndExited)
+                                                       owner: self
+                                                    userInfo: nil];
         
-        [[self controlView] addTrackingArea: trackingArea];
+        [self.controlView addTrackingArea: _trackingArea];
     }
 }
 
@@ -351,13 +290,13 @@
     CGFloat horizontalScale = (rect.size.width / 13.0f);
     CGFloat verticalScale = (rect.size.height / 13.0f);
     
-    [[NSGraphicsContext currentContext] saveGraphicsState];
+    [NSGraphicsContext.currentContext saveGraphicsState];
     
     [[NSColor colorWithCalibratedWhite: 0.0f alpha: opacity] setFill];
     
     [[NSBezierPath bezierPathWithOvalInRect: rect] fill];
     
-    [[NSColor whiteColor] setStroke];
+    [NSColor.whiteColor setStroke];
     
     NSBezierPath *cross = [NSBezierPath new];
     
@@ -370,14 +309,14 @@
     
     [cross stroke];
     
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [NSGraphicsContext.currentContext restoreGraphicsState];
 }
 
 - (void)drawRevertHotKeyBadgeInRect: (NSRect)rect {
     CGFloat horizontalScale = (rect.size.width / 1.0f);
     CGFloat verticalScale = (rect.size.height / 1.0f);
     
-    [[NSGraphicsContext currentContext] saveGraphicsState];
+    [NSGraphicsContext.currentContext saveGraphicsState];
     
     NSBezierPath *swoosh = [NSBezierPath new];
     
@@ -404,37 +343,37 @@
     
     [swoosh fill];
     
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [NSGraphicsContext.currentContext restoreGraphicsState];
 }
 
 #pragma mark -
 
 - (void)drawLabelInRect: (NSRect)rect {
     NSString *label = nil;
-    NSColor *foregroundColor = [NSColor blackColor];
+    NSColor *foregroundColor = NSColor.blackColor;
     
-    if (isRecording && !isMouseAboveBadge) {
+    if (_isRecording && !_isMouseAboveBadge) {
         label = ZKLocalizedStringFromCurrentBundle(@"Enter hot key");
-    } else if (isRecording && isMouseAboveBadge && !hotKey) {
+    } else if (_isRecording && _isMouseAboveBadge && !_hotKey) {
         label = ZKLocalizedStringFromCurrentBundle(@"Stop recording");
-    } else if (isRecording && isMouseAboveBadge) {
+    } else if (_isRecording && _isMouseAboveBadge) {
         label = ZKLocalizedStringFromCurrentBundle(@"Use existing");
-    } else if (hotKey) {
-        label = [hotKey displayString];
+    } else if (_hotKey) {
+        label = _hotKey.displayString;
     } else {
         label = ZKLocalizedStringFromCurrentBundle(@"Click to record");
     }
     
     // Recording is in progress and modifier flags have already been set, display them.
-    if (isRecording && (modifierFlags > 0)) {
-        label = [ZKHotKeyTranslator translateCocoaModifiers: modifierFlags];
+    if (_isRecording && (_modifierFlags > 0)) {
+        label = [ZKHotKeyTranslator translateCocoaModifiers: _modifierFlags];
     }
     
-    if (![self isEnabled]) {
-        foregroundColor = [NSColor disabledControlTextColor];
+    if (!self.isEnabled) {
+        foregroundColor = NSColor.disabledControlTextColor;
     }
     
-    if (isRecording) {
+    if (_isRecording) {
         [self drawString: label withForegroundColor: foregroundColor inRect: rect];
     } else {
         [self drawString: label withForegroundColor: foregroundColor inRect: rect];
@@ -444,10 +383,10 @@
 #pragma mark -
 
 - (void)drawString: (NSString *)string withForegroundColor: (NSColor *)foregroundColor inRect: (NSRect)rect {
-    NSMutableDictionary *attributes = [ZKUtilities createStringAttributesWithShadow];
+    NSMutableDictionary *attributes = ZKUtilities.stringAttributesWithShadow;
     NSRect labelRect = rect;
     
-    attributes[NSFontAttributeName] = [NSFont systemFontOfSize: [NSFont smallSystemFontSize]];
+    attributes[NSFontAttributeName] = [NSFont systemFontOfSize: NSFont.smallSystemFontSize];
     attributes[NSForegroundColorAttributeName] = foregroundColor;
     
     labelRect.origin.y = -(NSMidY(rect) - [string sizeWithAttributes: attributes].height / 2.0f);

@@ -4,13 +4,13 @@
 @implementation ZKUtilities
 
 + (NSBundle *)applicationBundle {
-    return [NSBundle mainBundle];
+    return NSBundle.mainBundle;
 }
 
 #pragma mark -
 
 + (NSString *)applicationVersion {
-    return [ZKUtilities versionOfBundle: [ZKUtilities applicationBundle]];
+    return [ZKUtilities versionOfBundle: ZKUtilities.applicationBundle];
 }
 
 #pragma mark -
@@ -28,7 +28,7 @@
 #pragma mark -
 
 + (void)registerDefaultsForBundle: (NSBundle *)bundle {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     NSString *path = [bundle pathForResource: ZKDefaultPreferencesFile ofType: ZKPropertyListFileExtension];
     NSDictionary *applicationDefaults = [[NSDictionary alloc] initWithContentsOfFile: path];
     
@@ -40,8 +40,8 @@
 + (NSString *)applicationSupportPathForBundle: (NSBundle *)bundle {
     NSString *applicationName = [bundle objectForInfoDictionaryKey: ZKApplicationBundleName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *applicationSupportPath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *applicationSupportPath = (paths.count > 0) ? paths[0] : NSTemporaryDirectory();
+    NSFileManager *fileManager = NSFileManager.defaultManager;
     
     applicationSupportPath = [applicationSupportPath stringByAppendingPathComponent: applicationName];
     
@@ -60,7 +60,7 @@
 
 + (NSString *)pathForPreferencePaneNamed: (NSString *)preferencePaneName {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSAllDomainsMask, YES);
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSFileManager *fileManager = NSFileManager.defaultManager;
     NSString *preferencePanePath = nil;
     
     if (preferencePaneName) {
@@ -88,7 +88,7 @@
 
 + (BOOL)isLoginItemEnabledForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [bundle bundlePath];
+    NSString *applicationPath = bundle.bundlePath;
     BOOL result = NO;
     
     if (sharedFileList) {
@@ -128,7 +128,7 @@
 
 + (void)enableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [bundle bundlePath];
+    NSString *applicationPath = bundle.bundlePath;
     CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     
     if (sharedFileList) {
@@ -146,7 +146,7 @@
 
 + (void)disableLoginItemForBundle: (NSBundle *)bundle {
     LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    NSString *applicationPath = [bundle bundlePath];
+    NSString *applicationPath = bundle.bundlePath;
     CFURLRef applicationPathURL = CFBridgingRetain([NSURL fileURLWithPath: applicationPath]);
     
     if (sharedFileList) {
@@ -193,17 +193,17 @@
 
 #pragma mark -
 
-+ (NSMutableDictionary *)createStringAttributesWithShadow {
-    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
++ (NSMutableDictionary *)stringAttributesWithShadow {
+    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
     NSShadow *textShadow = [NSShadow new];
     NSMutableDictionary *stringAttributes = [NSMutableDictionary new];
     
-    [paragraphStyle setLineBreakMode: NSLineBreakByTruncatingTail];
-    [paragraphStyle setAlignment: NSCenterTextAlignment];
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    paragraphStyle.alignment = NSCenterTextAlignment;
     
-    [textShadow setShadowColor: [NSColor whiteColor]];
-    [textShadow setShadowOffset: NSMakeSize(0.0f, -1.0)];
-    [textShadow setShadowBlurRadius: 0.0f];
+    textShadow.shadowColor = [NSColor whiteColor];
+    textShadow.shadowOffset = NSMakeSize(0.0f, -1.0);
+    textShadow.shadowBlurRadius = 0.0f;
     
     stringAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
     stringAttributes[NSShadowAttributeName] = textShadow;

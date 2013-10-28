@@ -21,11 +21,6 @@
 		0789F621148DABBE00929A10 /* ZKHotKeyValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0789F61F148DABBE00929A10 /* ZKHotKeyValidator.m */; };
 		07B6B74E148AD820003F924A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07B6B74C148AD820003F924A /* Localizable.strings */; };
 		07D91E371138E29B00FA237A /* ZKPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D91E351138E29B00FA237A /* ZKPreferencesWindow.xib */; };
-		07E9256F13552F3F00ECC319 /* ZKURLConnectionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9256D13552F3F00ECC319 /* ZKURLConnectionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		07E9257013552F3F00ECC319 /* ZKURLConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E9256E13552F3F00ECC319 /* ZKURLConnectionManager.m */; };
-		07E9257313552F5100ECC319 /* ZKURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9257113552F5100ECC319 /* ZKURLConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		07E9257413552F5100ECC319 /* ZKURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E9257213552F5100ECC319 /* ZKURLConnection.m */; };
-		07E9257D13552F8C00ECC319 /* ZKURLConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E9257C13552F8C00ECC319 /* ZKURLConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E925871355344A00ECC319 /* NSStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E925851355344A00ECC319 /* NSStringAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E925881355344A00ECC319 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E925861355344A00ECC319 /* NSStringAdditions.m */; };
 		2D1AE51E15D7115000EAC5BD /* ZKHotKeyValidatorProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D1AE51D15D7115000EAC5BD /* ZKHotKeyValidatorProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,11 +64,6 @@
 		0789F61F148DABBE00929A10 /* ZKHotKeyValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKHotKeyValidator.m; sourceTree = "<group>"; };
 		07B6B74D148AD820003F924A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Languages/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		07D91E361138E29B00FA237A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Languages/English.lproj/ZKPreferencesWindow.xib; sourceTree = "<group>"; };
-		07E9256D13552F3F00ECC319 /* ZKURLConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKURLConnectionManager.h; sourceTree = "<group>"; };
-		07E9256E13552F3F00ECC319 /* ZKURLConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKURLConnectionManager.m; sourceTree = "<group>"; };
-		07E9257113552F5100ECC319 /* ZKURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKURLConnection.h; sourceTree = "<group>"; };
-		07E9257213552F5100ECC319 /* ZKURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKURLConnection.m; sourceTree = "<group>"; };
-		07E9257C13552F8C00ECC319 /* ZKURLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKURLConnectionDelegate.h; sourceTree = "<group>"; };
 		07E925851355344A00ECC319 /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
 		07E925861355344A00ECC319 /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -156,9 +146,7 @@
 			children = (
 				2DBF58DC14742AA200419F7E /* Accessibility */,
 				07E925841355343A00ECC319 /* Additions */,
-				076BE6EA13E0F96300C608A6 /* Concurrency */,
 				2DBF58DB14742A3800419F7E /* Hot Keys */,
-				076BE6E913E0F94F00C608A6 /* HTTP */,
 				076BE6E813E0F92800C608A6 /* Preference Panes */,
 				07172B7911377CD90058CFF9 /* ZKUtilities.h */,
 				07172B7A11377CD90058CFF9 /* ZKUtilities.m */,
@@ -178,12 +166,9 @@
 		07172B7411377C490058CFF9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				07E9257B13552F7E00ECC319 /* Delegates */,
 				07172B8111377D0B0058CFF9 /* Protocols */,
 				2DBF58F314742CA100419F7E /* ZKHotKey.h */,
 				2DBF58F414742CA100419F7E /* ZKHotKey.m */,
-				07E9257113552F5100ECC319 /* ZKURLConnection.h */,
-				07E9257213552F5100ECC319 /* ZKURLConnection.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -213,36 +198,12 @@
 			name = "Preference Panes";
 			sourceTree = "<group>";
 		};
-		076BE6E913E0F94F00C608A6 /* HTTP */ = {
-			isa = PBXGroup;
-			children = (
-				07E9256D13552F3F00ECC319 /* ZKURLConnectionManager.h */,
-				07E9256E13552F3F00ECC319 /* ZKURLConnectionManager.m */,
-			);
-			name = HTTP;
-			sourceTree = "<group>";
-		};
-		076BE6EA13E0F96300C608A6 /* Concurrency */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Concurrency;
-			sourceTree = "<group>";
-		};
 		07D91E341138E28B00FA237A /* Interface Builder */ = {
 			isa = PBXGroup;
 			children = (
 				07D91E351138E29B00FA237A /* ZKPreferencesWindow.xib */,
 			);
 			name = "Interface Builder";
-			sourceTree = "<group>";
-		};
-		07E9257B13552F7E00ECC319 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				07E9257C13552F8C00ECC319 /* ZKURLConnectionDelegate.h */,
-			);
-			name = Delegates;
 			sourceTree = "<group>";
 		};
 		07E925841355343A00ECC319 /* Additions */ = {
@@ -379,9 +340,6 @@
 				2D1AE51E15D7115000EAC5BD /* ZKHotKeyValidatorProtocol.h in Headers */,
 				07172B8A11377D490058CFF9 /* ZKPreferencesWindowController.h in Headers */,
 				07172B8311377D1B0058CFF9 /* ZKPreferencePaneProtocol.h in Headers */,
-				07E9257313552F5100ECC319 /* ZKURLConnection.h in Headers */,
-				07E9257D13552F8C00ECC319 /* ZKURLConnectionDelegate.h in Headers */,
-				07E9256F13552F3F00ECC319 /* ZKURLConnectionManager.h in Headers */,
 				2DBF58EF14742C8600419F7E /* ZKHotKeyRecorderCell.h in Headers */,
 				07172B7B11377CD90058CFF9 /* ZKUtilities.h in Headers */,
 				0789F620148DABBE00929A10 /* ZKHotKeyValidator.h in Headers */,
@@ -486,8 +444,6 @@
 				0789F621148DABBE00929A10 /* ZKHotKeyValidator.m in Sources */,
 				07172B8011377CF90058CFF9 /* ZKPreferencePaneManager.m in Sources */,
 				07172B8B11377D490058CFF9 /* ZKPreferencesWindowController.m in Sources */,
-				07E9257413552F5100ECC319 /* ZKURLConnection.m in Sources */,
-				07E9257013552F3F00ECC319 /* ZKURLConnectionManager.m in Sources */,
 				07172B7C11377CD90058CFF9 /* ZKUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

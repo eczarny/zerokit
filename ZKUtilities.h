@@ -49,6 +49,6 @@
 
 #pragma mark -
 
-+ (NSMutableDictionary *)createStringAttributesWithShadow;
++ (NSMutableDictionary *)stringAttributesWithShadow;
 
 @end

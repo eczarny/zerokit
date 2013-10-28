@@ -28,15 +28,9 @@ enum {
     ZKHotKeyShiftCarbonKeyMask     = 1 << 9,
 };
 
-@interface ZKHotKeyTranslator (ZKHotKeyTranslatorPrivate)
+@interface ZKHotKeyTranslator ()
 
-+ (NSInteger)convertCocoaModifiersToCarbon: (NSInteger)modifiers;
-
-+ (NSInteger)convertCarbonModifiersToCocoa: (NSInteger)modifiers;
-
-#pragma mark -
-
-- (void)buildKeyCodeConvertorDictionary;
+@property (nonatomic) NSDictionary *specialHotKeyTranslations;
 
 @end
 
@@ -46,7 +40,7 @@ enum {
 
 - (id)init {
     if ((self = [super init])) {
-        specialHotKeyTranslations = nil;
+        _specialHotKeyTranslations = nil;
     }
     
     return self;
@@ -105,12 +99,12 @@ enum {
     
     [self buildKeyCodeConvertorDictionary];
     
-    keyCodeTranslations = specialHotKeyTranslations[ZKHotKeyTranslationsKey];
+    keyCodeTranslations = _specialHotKeyTranslations[ZKHotKeyTranslationsKey];
     
     result = keyCodeTranslations[[NSString stringWithFormat: @"%d", (UInt32)keyCode]];
     
     if (result) {
-        NSDictionary *glyphTranslations = specialHotKeyTranslations[ZKHotKeyGlyphTranslationsKey];
+        NSDictionary *glyphTranslations = _specialHotKeyTranslations[ZKHotKeyGlyphTranslationsKey];
         id translatedGlyph = glyphTranslations[result];
         
         if (translatedGlyph) {
@@ -152,14 +146,10 @@ enum {
 - (NSString *)translateHotKey: (ZKHotKey *)hotKey {
     NSInteger modifiers = [ZKHotKeyTranslator convertCarbonModifiersToCocoa: [hotKey hotKeyModifiers]];
     
-    return [NSString stringWithFormat: @"%@%@", [ZKHotKeyTranslator translateCocoaModifiers: modifiers], [self translateKeyCode: [hotKey hotKeyCode]]];
+    return [NSString stringWithFormat: @"%@%@", [ZKHotKeyTranslator translateCocoaModifiers: modifiers], [self translateKeyCode: hotKey.hotKeyCode]];
 }
 
-@end
-
 #pragma mark -
-
-@implementation ZKHotKeyTranslator (ZKHotKeyTranslatorPrivate)
 
 + (NSInteger)convertCocoaModifiersToCarbon: (NSInteger)modifiers {
     NSInteger convertedModifiers = 0;
@@ -208,11 +198,11 @@ enum {
 #pragma mark -
 
 - (void)buildKeyCodeConvertorDictionary {
-    if (!specialHotKeyTranslations) {
+    if (!_specialHotKeyTranslations) {
         NSBundle *bundle = [NSBundle bundleForClass: [self class]];
         NSString *path = [bundle pathForResource: ZKHotKeyTranslationsPropertyListFile ofType: ZKPropertyListFileExtension];
         
-        specialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
+        _specialHotKeyTranslations = [[NSDictionary alloc] initWithContentsOfFile: path];
     }
 }
 
