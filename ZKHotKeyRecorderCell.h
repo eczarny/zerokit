@@ -8,7 +8,7 @@
 @property (nonatomic) ZKHotKeyRecorder *hotKeyRecorder;
 @property (nonatomic) NSString *hotKeyName;
 @property (nonatomic) ZKHotKey *hotKey;
-@property (nonatomic, weak) id<ZKHotKeyRecorderDelegate> delegate;
+@property (nonatomic, assign) id<ZKHotKeyRecorderDelegate> delegate;
 @property (nonatomic) NSArray *additionalHotKeyValidators;
 
 #pragma mark -
