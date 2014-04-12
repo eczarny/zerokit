@@ -96,7 +96,7 @@
 #pragma mark -
 
 + (BOOL)validCocoaModifiers: (NSInteger)modifiers {
-    return (modifiers & NSAlternateKeyMask) || (modifiers & NSCommandKeyMask) || (modifiers & NSControlKeyMask) || (modifiers & NSShiftKeyMask);
+    return (modifiers & NSAlternateKeyMask) || (modifiers & NSCommandKeyMask) || (modifiers & NSControlKeyMask) || (modifiers & NSShiftKeyMask) || (modifiers & NSFunctionKeyMask);
 }
 
 #pragma mark -
